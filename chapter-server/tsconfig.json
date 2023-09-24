@@ -1,0 +1,12 @@
+{
+    "extends": "@tsconfig/node18/tsconfig.json",
+    "compilerOptions": {
+        "module": "NodeNext",
+        "esModuleInterop":true,
+        "sourceMap": true,
+        "outDir": "dist"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+}
+  

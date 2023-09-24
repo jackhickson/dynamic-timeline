@@ -1,0 +1,17 @@
+{
+    "media": {
+        "volumes": {
+            "1": {
+                "base":{},
+                "chapters":{
+                    "1.01": {
+                        "nodes":[],
+                        "edges":[]
+                    }
+                }
+            }
+        },
+        "books":{
+        }
+    }
+}
