@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Handle, useReactFlow, useStoreApi, Position, Node } from 'reactflow';
-import { PlotNodeInfo } from './Definitions';
+import { PlotPointData } from './Definitions';
 
-function PlotPointNode({ data  }: { data: PlotNodeInfo}) {
+function PlotPointNode({ data  }: { data: PlotPointData}) {
 
     /*if(!(plotInfo instanceof PlotPointInfo)) {
         throw new Error("PlotPointInfo in incorrect format found: " + JSON.stringify(plotInfo, undefined, 2) + "\nneed object of: ");

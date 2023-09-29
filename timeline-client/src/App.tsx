@@ -1,11 +1,11 @@
-import { useState, MouseEvent as ReactMouseEvent } from 'react'
+import { useState, MouseEvent as ReactMouseEvent, lazy, useCallback, useEffect } from 'react'
 import ReactFlow, {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
 import PlotPointDialog from './components/PlotPointDialog';
 import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
-import { PlotPointChapter } from './Definitions';
+import { PlotPointData, chaptersInfoToMap, createPlotPointData } from './Definitions';
 
 const minimapStyle = {
   height: 120
@@ -13,41 +13,50 @@ const minimapStyle = {
 
 const allChapters: string[] =["1.01", "1.02", "1.03"];
 
-const initialNodes: Node[] = [{"id":"1",position:{x:0,y:0},data:{label:"origin"}}];
+const initialNodes: Node[] = [{"id":"1.01-1",position:{x:0,y:0},data:{label:"origin"}}];
 const initialEdges: Edge[] = [];
 
-let plotData = new Map<string, PlotPointChapter>();
+let initialPlotPointData = createPlotPointData("1.01-1", "1.01");
+
+initialNodes[0].data = initialPlotPointData;
 
 let intialSelectedNodeId = initialNodes[0].id;
 
-if(!intialSelectedNodeId || intialSelectedNodeId === '') {
-
-   console.error(`Initial selected node id "${intialSelectedNodeId}" is not set`);
-}
-
 let chapters = ["1.01"];
-let currentChapter = chapters[0];
 
 function App (): any {
 
     const [selectedNodeId, setSelectedNodeId] = useState<string>(intialSelectedNodeId);
-    const {nodes,
+    const [selectedNodeData, setSelectedNodeData] = useState<PlotPointData>(initialPlotPointData);
+    const [selectedChapterId, setSelectedChapterId] = useState<string>(chapters[0]);
+
+    const {
+        nodes,
         edges,
         setNodes,
         setEdges,
         onNodesChange,
         onEdgesChange,
         onConnect,
-        onAdd,
-        onUpdateNode} = useNodeEdgeUpdate({initialNodes, initialEdges, selectedNodeId, currentChapter, chapters});
+        onAddNode,
+        onUpdateNode
+    } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedChapterId, chapters, selectedNodeId});
 
-    const {setRfInstance, onSave, onRestore} = useFlow({setNodes, setEdges});
+    const { setRfInstance, onSave, onRestore } = useFlow({ setNodes, setEdges });
     const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 
-        setSelectedNodeId(node.id)
-        handleDialogOpen()
+        console.info("node clicked", node);
+
+        setSelectedNodeId(node.id);
+        setSelectedNodeData(node.data);
+        handleDialogOpen();
+    }
+
+    const addNewNode = () => {
+
+        onAddNode(selectedChapterId + "-" + "2");
     }
 
     return (
@@ -65,17 +74,17 @@ function App (): any {
                 <Panel position="top-right">
                     <button onClick={onSave}>save</button>
                     <button onClick={onRestore}>restore</button>
-                    <button onClick={onAdd}>add node</button>
+                    <button onClick={addNewNode}>add node</button>
                 </Panel>
                 <Background color="#aaa" gap={16} />
             </ReactFlow>
 
             <PlotPointDialog
                 open={dialogOpen}
-                onClose={handleDialogClose}
+                onDialogClose={handleDialogClose}
                 onSubmit={onUpdateNode}
-                data={selectedNode?.data}
-                selectedChapterId='1.01'/>
+                formData={selectedNodeData}
+                selectedChapterId={selectedChapterId}/>
         </div>
     )
 }

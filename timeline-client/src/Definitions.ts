@@ -1,58 +1,17 @@
-import {Node, Edge, XYPosition} from 'reactflow';
+import {Node, Edge} from 'reactflow';
 
-export function toChaptersJsonData(json: any): ChaptersJsonData {
+export const DEFAULT_LABEL = "Plot Name";
 
-    let base: NodesEdgesPair = toNodeEdgePair(json.base);
-    let chapters: Map<String, NodesEdgesPair> = json.chapters;//toNodeEdgePairMap(json.chapters);
+export function chaptersInfoToMap(chapters: PlotPointData[]) : Map<String, PlotPointData> {
 
-    return {base, chapters};
-}
-
-function toNodeEdgePair(base: any): NodesEdgesPair {
-
-    let nodes: Node<NodePlotPointData>[] = base.nodes;
-    let edges: Edge[] = base.edges;
-
-    return {nodes, edges};
-}
-
-/*function toNodeEdgePairMap(chapters: any): Map<String,NodeEdgesPair> {
-
-
-
-}*/
-
-/*function toNode(nodeData: any): Node<PlotNodeInfo> {
-
-    let id: string = nodeData.id;
-    let position: XYPosition = nodeData.position;
-    let data: PlotNodeInfo = nodeData.data;
-
-    return {id, position, data};
-}
-
-// dont care about the handles
-function toEdge(edgeData: any): Edge {
-
-    let id = edgeData.id;
-    let source = edgeData.source;
-    let target = edgeData.target;
-
-    return {id, source, target};
-}*/
-
-export function chaptersInfoToMap(chapters: PlotPointChapter[]) : Map<String, PlotPointChapterInfo> {
-
-    let map: Map<String, PlotPointChapterInfo> = new Map();
+    let map: Map<String, PlotPointData> = new Map();
 
     chapters.map(chapter => {
-        let info: PlotPointChapterInfo = {characters: chapter.characters, description: chapter.description};
-        map.set(chapter.chapterId, info);
+        map.set(chapter.id, chapter);
     })
 
     return map;
 }
-
 
 export interface ChaptersJsonData {
     base: NodesEdgesPair;
@@ -60,32 +19,38 @@ export interface ChaptersJsonData {
 };
 
 export interface NodesEdgesPair {
-    nodes: Node<NodePlotPointData>[];
+    nodes: Node<PlotPointData>[];
     edges: Edge[];
 };
 
-export interface NodePlotPointData {
-    chapters: PlotPointChapter[];
+export interface PlotPointData {
+    chaptersMap: Map<string, PlotPointChapter>;
     id: string;
     label: string;
     location: string;
 };
 
-export function createNewPlotPointChapterData(selectedChapter: string, allChapters: string[]) : PlotPointChapter {
+export function createPlotPointData(id: string, selectedChapterId: string) : PlotPointData {
 
-    let data: PlotPointChapter  = {chapterId: '', characters:[], description: ''};
+    let chapterData: PlotPointChapter  = createPlotPointChapterData(selectedChapterId);
 
-    if(!allChapters.includes(selectedChapter)) {
+    let chaptersMap = new Map();
 
-        const deaultChapterId = allChapters[0];
+    chaptersMap.set(selectedChapterId, chapterData);
 
-        console.error(`Selected Chapter not found in all chapters defaulting to ${deaultChapterId}`);
-        
-        data["chapterId"] = deaultChapterId;
-        return data;
+    let plotPointData: PlotPointData = {id: id, location: "", label: DEFAULT_LABEL, chaptersMap: chaptersMap};
+
+    return plotPointData;
+}
+
+export function createPlotPointChapterData(selectedChapterId: string) : PlotPointChapter {
+
+    if(!selectedChapterId) {
+
+        console.error(`when creating a new plot point chapter object the selected chapter was found to be ${selectedChapterId}`);
     }
 
-    data["chapterId"] = selectedChapter;
+    let data: PlotPointChapter  = {chapterId: selectedChapterId, characters:[], description: ''};
 
     return data;
 }

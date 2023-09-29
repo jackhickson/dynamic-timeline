@@ -1,19 +1,18 @@
 import { useCallback, useState } from "react";
 import { Node, Edge, NodeChange, EdgeChange, applyNodeChanges, applyEdgeChanges, Connection, addEdge } from "reactflow";
-import { NodePlotPointData } from "../Definitions";
+import { PlotPointData, createPlotPointData } from "../Definitions";
 
 interface UseFlowProps {
     initialNodes: Node[];
     initialEdges: Edge[];
     selectedNodeId: string;
-    currentChapter: string;
+    selectedChapterId: string;
     chapters: string[];
 }
 
-
 export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
-    const { initialNodes, initialEdges, currentChapter, chapters } = props;
+    const { initialNodes, initialEdges, selectedChapterId, chapters } = props;
 
     let { selectedNodeId } = props;
 
@@ -35,10 +34,13 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
         [setEdges]
     );
 
-    const onAdd = useCallback(() => {
+    const onAddNode = useCallback((id: string) => {
+
+        const addedPlotPointData = createPlotPointData(id, selectedChapterId);
+
         const newNode = {
-          id: "2",
-          data: { label: 'Added node' },
+          id: id,
+          data: addedPlotPointData,
           position: {
             x: 0,
             y: 0,
@@ -48,16 +50,19 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
     }, [setNodes]);
 
     // when a submit comes back from the Plot Dialog this gets updated
-    const onUpdateNode = useCallback((updatedData: NodePlotPointData) => {
+    const onUpdateNode = useCallback((updatedData: PlotPointData) => {
+
         setNodes((nds) =>
             nds.map((node) => {
+
                 if(node.id === selectedNodeId){
                     node.data = {
                         ...node.data,
                         ...updatedData
                     };
                 }
-            return node;
+                
+                return node;
             })
         );
     }, [setNodes, selectedNodeId]);
@@ -66,5 +71,5 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
     // when the chapter selection changes, map the hidden setting depending on the node
     //https://reactflow.dev/docs/examples/nodes/update-node/
 
-    return {nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange, onConnect, onAdd, onUpdateNode};
+    return {nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange, onConnect, onAddNode, onUpdateNode};
 }
