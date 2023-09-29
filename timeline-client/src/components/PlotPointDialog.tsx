@@ -34,7 +34,12 @@ interface PlotPointDialogProps {
   allChapters: string[];
 }
 
-function getPlotPointChapters(formData: PlotPointData, allChapters: string[]): string[] {
+interface ChapterId {
+  index: number;
+  id: string;
+}
+
+function getPlotPointChapters(formData: PlotPointData, allChapters: string[]): ChapterId[] {
 
   if (!formData || !formData.chaptersMap) {
     return [];
@@ -42,7 +47,7 @@ function getPlotPointChapters(formData: PlotPointData, allChapters: string[]): s
 
   const chapterIndexes: number[] = Array.from(formData.chaptersMap.keys()).sort();
 
-  return chapterIndexes.map(index => allChapters[index]);
+  return chapterIndexes.map(index => ({index, id: allChapters[index]}));
 }
 
 /**
@@ -98,7 +103,7 @@ function PlotPointDialog(props: PlotPointDialogProps) {
 
   const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters } = props;
 
-  let chapterIds: string[] = getPlotPointChapters(formData, allChapters);
+  let chapterIds: ChapterId[] = getPlotPointChapters(formData, allChapters);
 
   /**
    * Get the chapterData from the formData for the selectedChapterId
@@ -139,6 +144,17 @@ function PlotPointDialog(props: PlotPointDialogProps) {
     onDialogClose();
   }
 
+  function sameChapterIndexAsSelected(chapterIndex: number): boolean {
+
+    return chapterIndex === selectedChapterIndex;
+  }
+
+  function onDelete(chapterIndex: number) {
+
+    removeChapterDataFromFormDataMap(formData, selectedChapterIndex);
+    onDialogClose()
+  }
+
   return (
     <Dialog
       open={open}
@@ -161,7 +177,11 @@ function PlotPointDialog(props: PlotPointDialogProps) {
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
           {chapterIds.map((chapterId) => {
-            return <Chip key={chapterId} label={chapterId} />
+            return <Chip 
+                      key={chapterId.id} 
+                      label={chapterId.id} 
+                      variant={sameChapterIndexAsSelected(chapterId.index) ? 'filled': 'outlined'} 
+                      onDelete={() => {if(chapterIds.length != 1) onDelete}}/>
           })}
         </Box>
 
