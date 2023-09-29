@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Handle, useReactFlow, useStoreApi, Position, Node } from 'reactflow';
-import { PlotPointData } from './Definitions';
+import { PlotPointData } from '../Definitions';
 
 function PlotPointNode({ data  }: { data: PlotPointData}) {
 
