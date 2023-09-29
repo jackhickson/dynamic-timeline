@@ -2,6 +2,7 @@ import { useState, MouseEvent as ReactMouseEvent, lazy, useCallback, useEffect }
 import ReactFlow, {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
 import PlotPointDialog from './components/PlotPointDialog';
+import ChapterSlider from './components/ChapterSlider';
 import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
@@ -59,8 +60,13 @@ function App (): any {
         onAddNode(selectedChapterId + "-" + "2");
     }
 
+    const onChapterIdChange = (newChapterId: string) => {
+        console.info(newChapterId);
+    }
+
     return (
         <div style={{height: "100vh", width: "100vw"}}>
+            <ChapterSlider chapters={allChapters} onChapterIdChange={onChapterIdChange}/>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
