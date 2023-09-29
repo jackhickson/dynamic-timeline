@@ -30,16 +30,19 @@ interface PlotPointDialogProps {
   onDialogClose: () => void;
   onSubmit: (data: PlotPointData) => void;
   formData: PlotPointData;
-  selectedChapterId: string;
+  selectedChapterIndex: number;
+  allChapters: string[];
 }
 
-function getPlotPointChapters(formData: PlotPointData): string[] {
+function getPlotPointChapters(formData: PlotPointData, allChapters: string[]): string[] {
 
   if (!formData || !formData.chaptersMap) {
     return [];
   }
 
-  return Array.from(formData.chaptersMap.keys());
+  const chapterIndexes: number[] = Array.from(formData.chaptersMap.keys()).sort();
+
+  return chapterIndexes.map(index => allChapters[index]);
 }
 
 /**
@@ -59,33 +62,30 @@ function makeSureChapterMapExists(formData: PlotPointData) {
  * If the chapterData does not exist then create it
  * 
  * @param formData 
- * @param selectedChapterId 
+ * @param selectedChapterIndex 
  * @returns chapterData: PlotPointChapter
  */
-function getChapterDataFromMap(formData: PlotPointData, selectedChapterId: string): PlotPointChapter {
+function getChapterDataFromMap(formData: PlotPointData, selectedChapterIndex: number): PlotPointChapter {
 
   //find the chapter data on this plot point with the selectedChapterId
-  let chapter = formData.chaptersMap.get(selectedChapterId);
+  let chapter = formData.chaptersMap.get(selectedChapterIndex);
 
   // new chapter for this plot point
   if (chapter === undefined) {
 
-    chapter = createPlotPointChapterData(selectedChapterId);
-
-    // TODO: maybe dont set as when data isnt added the map will have an empty 
-    formData.chaptersMap.set(selectedChapterId, chapter);
+    chapter = createPlotPointChapterData(selectedChapterIndex);
   }
 
   return chapter;
 }
 
-function removeChapterDataFromFormDataMap(formData: PlotPointData, selectedChapterId: string) {
+function removeChapterDataFromFormDataMap(formData: PlotPointData, selectedChapterIndex: number) {
 
   if(!formData.chaptersMap) {
     return;
   }
 
-  formData.chaptersMap.delete(selectedChapterId);
+  formData.chaptersMap.delete(selectedChapterIndex)
 }
 
 /**
@@ -96,15 +96,20 @@ function removeChapterDataFromFormDataMap(formData: PlotPointData, selectedChapt
  */
 function PlotPointDialog(props: PlotPointDialogProps) {
 
-  const { open, onDialogClose, onSubmit, formData, selectedChapterId } = props;
+  const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters } = props;
 
-  let chapterIds = getPlotPointChapters(formData);
+  let chapterIds: string[] = getPlotPointChapters(formData, allChapters);
 
+  /**
+   * Get the chapterData from the formData for the selectedChapterId
+   * If it doesnt exist it will be created
+   * 
+   */
   const getPlotPointChapter = (): PlotPointChapter => {
 
     makeSureChapterMapExists(formData);
 
-    return getChapterDataFromMap(formData, selectedChapterId);
+    return getChapterDataFromMap(formData, selectedChapterIndex);
   }
 
   let plotPointChapter: PlotPointChapter = getPlotPointChapter();
@@ -113,8 +118,6 @@ function PlotPointDialog(props: PlotPointDialogProps) {
     const { id, value } = event.target;
 
     plotPointChapter = { ...plotPointChapter, [id]: value };
-
-    formData.chaptersMap.set(selectedChapterId, plotPointChapter);
   }
 
   function handleLocationChange(event: ChangeEvent<HTMLInputElement>) {
@@ -130,26 +133,16 @@ function PlotPointDialog(props: PlotPointDialogProps) {
 
     // if the selected chapter id is the same as the first in the chapters list then the location must also but updateable
 
-    formData.chaptersMap.set(selectedChapterId, plotPointChapter);
+    formData.chaptersMap.set(selectedChapterIndex, plotPointChapter);
 
     onSubmit(formData);
     onDialogClose();
   }
 
-  /**
-   * This is used when the data is not submitted so do not keep the inputed chapterData
-   * When a node is added it will, by default have a placeholder for the chapter that it was created on
-   */
-  function onClose() {
-
-    removeChapterDataFromFormDataMap(formData, selectedChapterId);
-    onDialogClose()
-  }
-
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={onDialogClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
 

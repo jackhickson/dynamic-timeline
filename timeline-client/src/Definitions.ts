@@ -24,39 +24,39 @@ export interface NodesEdgesPair {
 };
 
 export interface PlotPointData {
-    chaptersMap: Map<string, PlotPointChapter>;
+    chaptersMap: Map<number, PlotPointChapter>;
     id: string;
     label: string;
     location: string;
 };
 
-export function createPlotPointData(id: string, selectedChapterId: string) : PlotPointData {
+export function createPlotPointData(id: string, selectedChapterIndex: number) : PlotPointData {
 
-    let chapterData: PlotPointChapter  = createPlotPointChapterData(selectedChapterId);
+    let chapterData: PlotPointChapter  = createPlotPointChapterData(selectedChapterIndex);
 
-    let chaptersMap = new Map();
+    let chaptersMap: Map<number, PlotPointChapter> = new Map();
 
-    chaptersMap.set(selectedChapterId, chapterData);
+    chaptersMap.set(selectedChapterIndex, chapterData);
 
     let plotPointData: PlotPointData = {id: id, location: "", label: DEFAULT_LABEL, chaptersMap: chaptersMap};
 
     return plotPointData;
 }
 
-export function createPlotPointChapterData(selectedChapterId: string) : PlotPointChapter {
+export function createPlotPointChapterData(selectedChapterIndex: number) : PlotPointChapter {
 
-    if(!selectedChapterId) {
+    if(selectedChapterIndex < 0) {
 
-        console.error(`when creating a new plot point chapter object the selected chapter was found to be ${selectedChapterId}`);
+        console.error(`when creating a new plot point chapter object the selected chapter was found to be ${selectedChapterIndex}`);
     }
 
-    let data: PlotPointChapter  = {chapterId: selectedChapterId, characters:[], description: ''};
+    let data: PlotPointChapter  = {chapterIndex: selectedChapterIndex, characters:[], description: ''};
 
     return data;
 }
 
 export interface PlotPointChapter extends PlotPointChapterInfo {
-    chapterId: string;
+    chapterIndex: number;
 }
 
 export interface PlotPointChapterInfo {

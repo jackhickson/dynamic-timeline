@@ -6,13 +6,11 @@ interface UseFlowProps {
     initialNodes: Node[];
     initialEdges: Edge[];
     selectedNodeId: string;
-    selectedChapterId: string;
-    chapters: string[];
 }
 
 export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
-    const { initialNodes, initialEdges, selectedChapterId, chapters } = props;
+    const { initialNodes, initialEdges } = props;
 
     let { selectedNodeId } = props;
 
@@ -34,9 +32,13 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
         [setEdges]
     );
 
-    const onAddNode = useCallback((id: string) => {
+    const onAddNode = useCallback((selectedChapterIndex: number, plotPointId: number) => {
 
-        const addedPlotPointData = createPlotPointData(id, selectedChapterId);
+        const id = selectedChapterIndex + "-" + plotPointId;
+
+        const addedPlotPointData = createPlotPointData(id, selectedChapterIndex);
+
+        console.info("add", id, addedPlotPointData,selectedChapterIndex);
 
         const newNode = {
           id: id,

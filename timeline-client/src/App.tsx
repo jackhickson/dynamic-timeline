@@ -14,22 +14,20 @@ const minimapStyle = {
 
 const allChapters: string[] =["1.01", "1.02", "1.03"];
 
-const initialNodes: Node[] = [{"id":"1.01-1",position:{x:0,y:0},data:{label:"origin"}}];
+const initialNodes: Node[] = [{"id":"0-1",position:{x:0,y:0},data:{label:"origin"}}];
 const initialEdges: Edge[] = [];
 
-let initialPlotPointData = createPlotPointData("1.01-1", "1.01");
+let initialPlotPointData = createPlotPointData("0-1", 0);
 
 initialNodes[0].data = initialPlotPointData;
 
 let intialSelectedNodeId = initialNodes[0].id;
 
-let chapters = ["1.01"];
-
 function App (): any {
 
     const [selectedNodeId, setSelectedNodeId] = useState<string>(intialSelectedNodeId);
     const [selectedNodeData, setSelectedNodeData] = useState<PlotPointData>(initialPlotPointData);
-    const [selectedChapterId, setSelectedChapterId] = useState<string>(chapters[0]);
+    const [selectedChapterIndex, setSelectedChapterIndex] = useState<number>(0);
 
     const {
         nodes,
@@ -41,7 +39,7 @@ function App (): any {
         onConnect,
         onAddNode,
         onUpdateNode
-    } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedChapterId, chapters, selectedNodeId});
+    } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedNodeId});
 
     const { setRfInstance, onSave, onRestore } = useFlow({ setNodes, setEdges });
     const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
@@ -57,16 +55,19 @@ function App (): any {
 
     const addNewNode = () => {
 
-        onAddNode(selectedChapterId + "-" + "2");
+        const plotPointId = 2;
+
+        onAddNode(selectedChapterIndex, plotPointId);
     }
 
-    const onChapterIdChange = (newChapterId: string) => {
-        console.info(newChapterId);
+    const onChapterIdChange = (newChapterIndex: number) => {
+
+        setSelectedChapterIndex(newChapterIndex);
     }
 
     return (
         <div style={{height: "100vh", width: "100vw"}}>
-            <ChapterSlider chapters={allChapters} onChapterIdChange={onChapterIdChange}/>
+            <ChapterSlider chapters={allChapters} onChapterIndexChange={onChapterIdChange}/>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -90,7 +91,8 @@ function App (): any {
                 onDialogClose={handleDialogClose}
                 onSubmit={onUpdateNode}
                 formData={selectedNodeData}
-                selectedChapterId={selectedChapterId}/>
+                selectedChapterIndex={selectedChapterIndex}
+                allChapters={allChapters}/>
         </div>
     )
 }

@@ -4,7 +4,7 @@ import Slider from '@mui/material/Slider';
 
 interface ChapterSliderProps {
     chapters: string[];
-    onChapterIdChange: (newChapterId: string) => void;
+    onChapterIndexChange: (newChapterId: number) => void;
 }
 
 interface Mark {
@@ -42,7 +42,7 @@ export default function ChapterSlider( props : ChapterSliderProps) {
         // scale value (0-100) to marker length
         let index = Math.floor(value / delta);
 
-        props.onChapterIdChange(marks[index].label);
+        props.onChapterIndexChange(index);
     }
 
     return (
