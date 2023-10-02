@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
-import { Node, Edge, NodeChange, EdgeChange, applyNodeChanges, applyEdgeChanges, Connection, addEdge } from "reactflow";
-import { ChapterAction, PlotPointData, createPlotPointData, isPlotPointData } from "../Definitions";
+import { useCallback } from "react";
+import { Node, Edge, Connection, addEdge, useNodesState, useEdgesState } from "reactflow";
+import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData } from "../Definitions";
 import { keysToSortedArray } from '../utils';
 
 interface UseFlowProps {
@@ -14,18 +14,8 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
     const { initialNodes, initialEdges, selectedNodeId, hideEnabled } = props;
 
-    const [nodes, setNodes] = useState<Node[]>(initialNodes);
-    const [edges, setEdges] = useState<Edge[]>(initialEdges);
-
-    const onNodesChange = useCallback(
-        (changes: NodeChange[]) => setNodes((nds: Node[]) => applyNodeChanges(changes, nds)),
-        [setNodes]
-    );
-
-    const onEdgesChange = useCallback(
-        (changes: EdgeChange[]) => setEdges((eds: Edge[]) => applyEdgeChanges(changes, eds)),
-        [setEdges]
-    );
+    const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
+    const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
 
     const onConnect = useCallback(
         (connection: Connection) => setEdges((eds: Edge[]) => addEdge(connection, eds)),
@@ -39,7 +29,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
         const addedPlotPointData: PlotPointData = createPlotPointData(id, selectedChapterIndex);
 
-        const newNode = {
+        const newNode: Node = {
           id: id,
           type: 'custom',
           data: addedPlotPointData,
@@ -84,9 +74,14 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
     const onUpdateFromChapterChange = useCallback((selectedChapterIndex: number) => {
 
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
-        let updatedNodes: Node<PlotPointData>[] = nodes.map((node) => {
+        let updatedNodes: Node[] = nodes.map((node) => {
 
-            return updateNode(node, selectedChapterIndex, hideEnabled)
+            if(isNodePlotPointData(node)) {
+
+                return updateNode(node, selectedChapterIndex, hideEnabled)
+            }
+
+            return node;
         });
 
         setNodes(updatedNodes);
@@ -119,7 +114,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
         let newNode = {...node};
 
-        if(isPlotPointData(newNode.data)) {
+        if(isNodePlotPointData(newNode)) {
 
             let plotPointData: PlotPointData = newNode.data;
 

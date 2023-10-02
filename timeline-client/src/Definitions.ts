@@ -32,8 +32,8 @@ export interface PlotPointData {
     chapterAction: ChapterAction;
 };
 
-export function isPlotPointData(object: any): object is PlotPointData {
-    return 'chaptersMap' in object && 'chapterAction' in object;
+export function isNodePlotPointData(object: Node): object is Node<PlotPointData> {
+    return 'chaptersMap' in object.data && 'chapterAction' in object.data;
 }
 
 export function createPlotPointData(id: string, selectedChapterIndex: number) : PlotPointData {
