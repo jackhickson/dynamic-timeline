@@ -9,6 +9,7 @@ import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
 import { PlotPointData, chaptersInfoToMap, createPlotPointData } from './Definitions';
 
 import PlotPointNode from './components/PlotPointNode';
+import { Checkbox } from '@mui/material';
 
 const minimapStyle = {
   height: 120
@@ -30,6 +31,7 @@ function App (): any {
     const [selectedNodeId, setSelectedNodeId] = useState<string>(intialSelectedNodeId);
     const [selectedNodeData, setSelectedNodeData] = useState<PlotPointData>(initialPlotPointData);
     const [selectedChapterIndex, setSelectedChapterIndex] = useState<number>(0);
+    const [hideEnabled, setHideEnabled] =  useState<boolean>(true);
 
     const {
         nodes,
@@ -42,7 +44,7 @@ function App (): any {
         onAddNode,
         onUpdateNode,
         onUpdateFromChapterChange
-    } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedNodeId});
+    } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedNodeId, hideEnabled});
 
     const { setRfInstance, onSave, onRestore } = useFlow({ setNodes, setEdges });
     const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
@@ -71,9 +73,21 @@ function App (): any {
         onUpdateFromChapterChange(newChapterIndex);
     }
 
+    const onHideChange = (event: any, checked: boolean) => {
+
+        setHideEnabled(checked);
+    };
+
+    // used to hide/ unhide when not changing chapters
+    useEffect(() => {
+        
+        onUpdateFromChapterChange(selectedChapterIndex);
+    }, [hideEnabled])
+
     return (
         <div style={{height: "100vh", width: "100vw"}}>
             <ChapterSlider chapters={allChapters} onChapterIndexChange={onChapterIdChange}/>
+            <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}

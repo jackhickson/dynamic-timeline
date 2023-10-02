@@ -7,13 +7,12 @@ interface UseFlowProps {
     initialNodes: Node[];
     initialEdges: Edge[];
     selectedNodeId: string;
+    hideEnabled: boolean;
 }
 
 export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
-    const { initialNodes, initialEdges } = props;
-
-    let { selectedNodeId } = props;
+    const { initialNodes, initialEdges, selectedNodeId, hideEnabled } = props;
 
     const [nodes, setNodes] = useState<Node[]>(initialNodes);
     const [edges, setEdges] = useState<Edge[]>(initialEdges);
@@ -87,7 +86,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
         let updatedNodes: Node<PlotPointData>[] = nodes.map((node) => {
 
-            return updateNode(node, selectedChapterIndex)
+            return updateNode(node, selectedChapterIndex, hideEnabled)
         });
 
         setNodes(updatedNodes);
@@ -108,7 +107,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
             })
         );
 
-    }, [setNodes, setEdges, selectedNodeId, nodes]);
+    }, [setNodes, setEdges, selectedNodeId, nodes, hideEnabled]);
 
     /**
      * Update the PlotPointData of the node and other settings
@@ -116,7 +115,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * @param selectedChapterIndex 
      * @returns node
      */
-    const updateNode = (node: Node<PlotPointData>, selectedChapterIndex: number): Node<PlotPointData> => {
+    const updateNode = (node: Node<PlotPointData>, selectedChapterIndex: number, hideEnabled: boolean): Node<PlotPointData> => {
 
         let newNode = {...node};
 
@@ -142,7 +141,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
             plotPointData.chapterAction = action
 
             // if the chapter this node was created on is in the future hide the node
-            newNode.hidden = indexes[0] > selectedChapterIndex ? true : false;
+            newNode.hidden = indexes[0] > selectedChapterIndex && hideEnabled ? true : false;
 
             newNode.data = plotPointData;
         }
