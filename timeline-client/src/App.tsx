@@ -18,13 +18,11 @@ const minimapStyle = {
 const storyBatches: StoryBatch[] = [{name: "Volume 1", chapters: ["1.01", "1.02", "1.03"]}, {name: "Volume 2", chapters: ["2.01"]}];
 const allChapters: string[] = storyBatchesToChapterList(storyBatches);
 
-const initialNodes: Node[] = [{"id":"0-1",type:'custom',position:{x:0,y:0},data:{label:"origin"}}];
+const initialNodes: Node[] = [{"id":"0-0",type:'custom',position:{x:0,y:0},data:{label:"origin"}}];
 const initialEdges: Edge[] = [];
 
-let initialPlotPointData = createPlotPointData("0-1", 0);
-
+let initialPlotPointData = createPlotPointData("0-0", 0);
 initialNodes[0].data = initialPlotPointData;
-
 let intialSelectedNodeId = initialNodes[0].id;
 
 function App (): any {
@@ -33,6 +31,27 @@ function App (): any {
     const [selectedNodeData, setSelectedNodeData] = useState<PlotPointData>(initialPlotPointData);
     const [selectedChapterIndex, setSelectedChapterIndex] = useState<number>(0);
     const [hideEnabled, setHideEnabled] =  useState<boolean>(true);
+    const [chapterNodeIdsMap, setChapterNodeIdsMap] = useState<Map<number, number[]>>(new Map());
+
+    useEffect(()=> {
+
+        allChapters.forEach((_, index) => {
+            let nodeIDs: number[] = [];
+
+            if(index === 0) {
+
+                nodeIDs.push(0);
+            }
+
+            // need to make sure they are in order when doing it for real
+
+            chapterNodeIdsMap.set(index, nodeIDs);
+
+            console.info(chapterNodeIdsMap);
+        })
+
+        setChapterNodeIdsMap(chapterNodeIdsMap);
+    }, [setChapterNodeIdsMap, chapterNodeIdsMap])
 
     const {
         nodes,
@@ -63,7 +82,30 @@ function App (): any {
 
     const addNewNode = () => {
 
-        const plotPointId = 2;
+        console.info(chapterNodeIdsMap);
+
+        let nodeIds: number[] | undefined = chapterNodeIdsMap.get(selectedChapterIndex);
+
+        if(nodeIds == undefined) {
+
+            nodeIds = [];
+            setChapterNodeIdsMap(chapterNodeIdsMap.set(selectedChapterIndex, nodeIds));
+        }
+
+        let plotPointId: number = -1;
+        const lastId = nodeIds.slice(-1);
+
+        if(lastId.length == 0) {
+
+            // first node for this cahpter
+            plotPointId = 1;
+
+        } else if (lastId.length == 1) {
+
+            plotPointId = lastId[0] + 1;
+        }
+
+        nodeIds.push(plotPointId);
 
         onAddNode(selectedChapterIndex, plotPointId);
     }
