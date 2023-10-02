@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { Button, Dialog, Chip, Box } from '@mui/material';
 import { PlotPointData, PlotPointChapterInfo, CharacterAlias, createPlotPointChapterData, PlotPointChapter } from '../Definitions';
 import MultipleSelectChip from './MultipleSelectChip';
+import {keysToSortedArray} from '../utils';
 
 const fandomCharacterUrl = "https://thewanderinginn.fandom.com/wiki/";
 
@@ -45,7 +46,7 @@ function getPlotPointChapters(formData: PlotPointData, allChapters: string[]): C
     return [];
   }
 
-  const chapterIndexes: number[] = Array.from(formData.chaptersMap.keys()).sort();
+  const chapterIndexes: number[] = keysToSortedArray(formData.chaptersMap.keys());
 
   return chapterIndexes.map(index => ({index, id: allChapters[index]}));
 }

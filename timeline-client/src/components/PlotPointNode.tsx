@@ -1,20 +1,41 @@
-import React, { memo } from 'react';
-import { Handle, useReactFlow, useStoreApi, Position, Node } from 'reactflow';
-import { PlotPointData } from '../Definitions';
+import React, { memo, useMemo } from 'react';
+import { Handle, useReactFlow, useStoreApi, Position, Node, NodeProps } from 'reactflow';
+import { ChapterAction, PlotPointData } from '../Definitions';
 
-function PlotPointNode({ data  }: { data: PlotPointData}) {
+import './PlotPointNode.scss';
 
-    /*if(!(plotInfo instanceof PlotPointInfo)) {
-        throw new Error("PlotPointInfo in incorrect format found: " + JSON.stringify(plotInfo, undefined, 2) + "\nneed object of: ");
-    }*/
+function PlotPointNode(props: NodeProps<PlotPointData>) {
+
+    console.info("rerender node");
+
+    const { data } = props;
+
+    const action = data.chapterAction;
+
+    const colorClass = useMemo(
+        () => {
+            let colorClass = 'none';
+
+            // for some reason the nodes dont update when the data changes so this isnt working right now
+            /*if( data.chapterAction == ChapterAction.Added) {
+                colorClass = 'added'
+            } else if (data.chapterAction == ChapterAction.Modified) {
+                colorClass = 'modified';
+            }
+
+            console.info(colorClass);*/
+
+            return colorClass;
+        },
+        [action]
+    );
 
     return (
-        <>
+        <div className={colorClass}>
             <Handle
                 type="target"
                 position={Position.Left}
                 style={{ background: '#555' }}
-                onConnect={(params) => console.log('handle onConnect', params)}
                 isConnectable={true}
             />
             <div className="custom-node__header">
@@ -23,11 +44,10 @@ function PlotPointNode({ data  }: { data: PlotPointData}) {
             <Handle
                 type="source"
                 position={Position.Right}
-                id="b"
-                style={{ bottom: 10, top: 'auto', background: '#555' }}
-                isConnectable={false}
+                style={{ background: '#555' }}
+                isConnectable={true}
             />
-        </>
+        </div>
     );
 }
   

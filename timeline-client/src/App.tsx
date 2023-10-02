@@ -1,4 +1,4 @@
-import { useState, MouseEvent as ReactMouseEvent, lazy, useCallback, useEffect } from 'react'
+import { useState, MouseEvent as ReactMouseEvent, lazy, useCallback, useEffect, useMemo } from 'react'
 import ReactFlow, {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
 import PlotPointDialog from './components/PlotPointDialog';
@@ -8,13 +8,15 @@ import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
 import { PlotPointData, chaptersInfoToMap, createPlotPointData } from './Definitions';
 
+import PlotPointNode from './components/PlotPointNode';
+
 const minimapStyle = {
   height: 120
 };
 
 const allChapters: string[] =["1.01", "1.02", "1.03"];
 
-const initialNodes: Node[] = [{"id":"0-1",position:{x:0,y:0},data:{label:"origin"}}];
+const initialNodes: Node[] = [{"id":"0-1",type:'custom',position:{x:0,y:0},data:{label:"origin"}}];
 const initialEdges: Edge[] = [];
 
 let initialPlotPointData = createPlotPointData("0-1", 0);
@@ -38,11 +40,14 @@ function App (): any {
         onEdgesChange,
         onConnect,
         onAddNode,
-        onUpdateNode
+        onUpdateNode,
+        onUpdateFromChapterChange
     } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedNodeId});
 
     const { setRfInstance, onSave, onRestore } = useFlow({ setNodes, setEdges });
     const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
+
+    const nodeTypes = useMemo(() => ({ custom: PlotPointNode }), []);
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 
@@ -63,6 +68,7 @@ function App (): any {
     const onChapterIdChange = (newChapterIndex: number) => {
 
         setSelectedChapterIndex(newChapterIndex);
+        onUpdateFromChapterChange(newChapterIndex);
     }
 
     return (
@@ -76,6 +82,7 @@ function App (): any {
                 onConnect={onConnect}
                 onInit={setRfInstance}
                 onNodeClick={onNodeClick}
+                nodeTypes={nodeTypes}
                 fitView
             >
                 <Panel position="top-right">

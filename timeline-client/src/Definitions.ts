@@ -28,7 +28,12 @@ export interface PlotPointData {
     id: string;
     label: string;
     location: string;
+    chapterAction: ChapterAction;
 };
+
+export function isPlotPointData(object: any): object is PlotPointData {
+    return 'chaptersMap' in object && 'chapterAction' in object;
+}
 
 export function createPlotPointData(id: string, selectedChapterIndex: number) : PlotPointData {
 
@@ -38,7 +43,7 @@ export function createPlotPointData(id: string, selectedChapterIndex: number) : 
 
     chaptersMap.set(selectedChapterIndex, chapterData);
 
-    let plotPointData: PlotPointData = {id: id, location: "", label: DEFAULT_LABEL, chaptersMap: chaptersMap};
+    let plotPointData: PlotPointData = {id: id, location: "", label: DEFAULT_LABEL, chaptersMap: chaptersMap, chapterAction: ChapterAction.Added};
 
     return plotPointData;
 }
@@ -69,3 +74,9 @@ export interface CharacterAlias {
     realName: string;
     aliases: string[];
 };
+
+export enum ChapterAction {
+    None,
+    Added,
+    Modified
+}
