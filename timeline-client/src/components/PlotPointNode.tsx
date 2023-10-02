@@ -6,8 +6,6 @@ import './PlotPointNode.scss';
 
 function PlotPointNode(props: NodeProps<PlotPointData>) {
 
-    console.info("rerender node");
-
     const { data } = props;
 
     const action = data.chapterAction;

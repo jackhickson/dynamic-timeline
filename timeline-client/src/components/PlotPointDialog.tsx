@@ -179,7 +179,7 @@ function PlotPointDialog(props: PlotPointDialogProps) {
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
           {chapterIds.map((chapterId) => {
             return <Chip 
-                      key={chapterId.id} 
+                      key={"form-chip-" + chapterId.id} 
                       label={chapterId.id} 
                       variant={sameChapterIndexAsSelected(chapterId.index) ? 'filled': 'outlined'} 
                       onDelete={() => {if(chapterIds.length != 1) onDelete}}/>

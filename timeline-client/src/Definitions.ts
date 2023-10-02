@@ -1,3 +1,4 @@
+import { all } from 'axios';
 import {Node, Edge} from 'reactflow';
 
 export const DEFAULT_LABEL = "Plot Name";
@@ -79,4 +80,22 @@ export enum ChapterAction {
     None,
     Added,
     Modified
+}
+
+// ie volumes, books, audio books
+export interface StoryBatch {
+    name: string;
+    chapters: string[];
+}
+
+export function storyBatchesToChapterList(storyBatches: StoryBatch[]): string[] {
+
+    let allChapters: string[] = [];
+
+    storyBatches.forEach((batch) => {
+
+        allChapters.concat(batch.chapters);
+    })
+
+    return allChapters;
 }

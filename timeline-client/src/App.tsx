@@ -1,12 +1,12 @@
-import { useState, MouseEvent as ReactMouseEvent, lazy, useCallback, useEffect, useMemo } from 'react'
+import { useState, MouseEvent as ReactMouseEvent, useEffect, useMemo } from 'react'
 import ReactFlow, {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
 import PlotPointDialog from './components/PlotPointDialog';
-import ChapterSlider from './components/ChapterSlider';
+import ChapterSelect from './components/ChapterSelect';
 import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
-import { PlotPointData, chaptersInfoToMap, createPlotPointData } from './Definitions';
+import { PlotPointData, chaptersInfoToMap, createPlotPointData, StoryBatch, storyBatchesToChapterList } from './Definitions';
 
 import PlotPointNode from './components/PlotPointNode';
 import { Checkbox } from '@mui/material';
@@ -15,7 +15,8 @@ const minimapStyle = {
   height: 120
 };
 
-const allChapters: string[] =["1.01", "1.02", "1.03"];
+const storyBatches: StoryBatch[] = [{name: "Volume 1", chapters: ["1.01", "1.02", "1.03"]}, {name: "Volume 2", chapters: ["2.01"]}];
+const allChapters: string[] = storyBatchesToChapterList(storyBatches);
 
 const initialNodes: Node[] = [{"id":"0-1",type:'custom',position:{x:0,y:0},data:{label:"origin"}}];
 const initialEdges: Edge[] = [];
@@ -80,13 +81,13 @@ function App (): any {
 
     // used to hide/ unhide when not changing chapters
     useEffect(() => {
-        
+
         onUpdateFromChapterChange(selectedChapterIndex);
     }, [hideEnabled])
 
     return (
         <div style={{height: "100vh", width: "100vw"}}>
-            <ChapterSlider chapters={allChapters} onChapterIndexChange={onChapterIdChange}/>
+            <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIdChange}/>
             <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
             <ReactFlow
                 nodes={nodes}
