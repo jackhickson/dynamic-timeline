@@ -6,7 +6,7 @@ import ChapterSelect from './components/ChapterSelect';
 import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
-import { PlotPointData, chaptersInfoToMap, createPlotPointData, StoryBatch, storyBatchesToChapterList } from './Definitions';
+import { PlotPointData, createPlotPointData, StoryBatch, storyBatchesToChapterList } from './Definitions';
 
 import PlotPointNode from './components/PlotPointNode';
 import { Checkbox } from '@mui/material';

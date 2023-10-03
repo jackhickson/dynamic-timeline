@@ -3,15 +3,35 @@ import {Node, Edge} from 'reactflow';
 
 export const DEFAULT_LABEL = "Plot Name";
 
-export function chaptersInfoToMap(chapters: PlotPointData[]) : Map<String, PlotPointData> {
+export function nodeJsonToData(json: any) : PlotPointData {
 
-    let map: Map<String, PlotPointData> = new Map();
+    let data: PlotPointData = {
+        id: json.id,
+        location: json.location,
+        label: json.label,
+        chaptersMap: new Map(),
+        chapterAction: ChapterAction.None
+    };
 
-    chapters.map(chapter => {
-        map.set(chapter.id, chapter);
-    })
+    let chapterMapObject = Object.entries(json.chaptersMap);
 
-    return map;
+    console.info(chapterMapObject);
+
+    chapterMapObject.forEach((chapterProperty: [string, any]) => (data.chaptersMap.set(+chapterProperty[0], chapterProperty[1])))
+
+    console.info(data);
+
+    return data;
+}
+
+export function nodeDataToJson(data: PlotPointData): any {
+
+    let jsonPlotData: any = {
+        ...data,
+        chaptersMap: Object.fromEntries(data.chaptersMap)
+    }
+
+    return jsonPlotData;
 }
 
 export interface ChaptersJsonData {
