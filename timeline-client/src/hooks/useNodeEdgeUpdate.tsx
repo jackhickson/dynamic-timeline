@@ -112,7 +112,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      */
     const updateNode = (node: Node<PlotPointData>, selectedChapterIndex: number, hideEnabled: boolean): Node<PlotPointData> => {
 
-        let newNode = {...node};
+        const newNode = structuredClone(node);
 
         if(isNodePlotPointData(newNode)) {
 
