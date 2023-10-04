@@ -1,35 +1,46 @@
-import React, { memo, useMemo } from 'react';
-import { Handle, useReactFlow, useStoreApi, Position, Node, NodeProps } from 'reactflow';
+import { memo } from 'react';
+import { Handle, Position, NodeProps } from 'reactflow';
 import { ChapterAction, PlotPointData } from '../Definitions';
+import styled from 'styled-components';
 
-import './PlotPointNode.scss';
+const nodeBackGroundStyle = (action: ChapterAction, theme: any): string => {
+
+    let backgroundColor = theme.nodeBg;
+
+    if(action == ChapterAction.Added) {
+        backgroundColor = theme.nodeAdded;
+    } else if( action == ChapterAction.Modified) {
+        backgroundColor = theme.nodeModified;
+    } else if (action == ChapterAction.None) {
+        backgroundColor = theme.nodeNone;
+    }
+
+    return backgroundColor;
+}
+
+const Node = styled.div<{ selected: boolean; action: ChapterAction}>`
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: ${(props) => nodeBackGroundStyle(props.action, props.theme)};
+    color: ${(props) => props.theme.nodeColor};
+    border: 1px solid ${(props) => (props.selected ? props.theme.primary : props.theme.nodeBorder)};
+
+    .react-flow__handle {
+        background: ${(props) => props.theme.primary};
+        width: 8px;
+        height: 10px;
+        border-radius: 3px;
+    }
+`;
 
 function PlotPointNode(props: NodeProps<PlotPointData>) {
 
-    const { data } = props;
+    const { data, selected } = props;
 
     const action = data.chapterAction;
 
-    const colorClass = useMemo(
-        () => {
-            let colorClass = 'none';
-
-            // for some reason the nodes dont update when the data changes so this isnt working right now
-            /*if( data.chapterAction == ChapterAction.Added) {
-                colorClass = 'added'
-            } else if (data.chapterAction == ChapterAction.Modified) {
-                colorClass = 'modified';
-            }
-
-            console.info(colorClass);*/
-
-            return colorClass;
-        },
-        [action]
-    );
-
     return (
-        <div className={colorClass}>
+        <Node selected={selected} action={action}>
             <Handle
                 type="target"
                 position={Position.Left}
@@ -45,7 +56,7 @@ function PlotPointNode(props: NodeProps<PlotPointData>) {
                 style={{ background: '#555' }}
                 isConnectable={true}
             />
-        </div>
+        </Node>
     );
 }
   
