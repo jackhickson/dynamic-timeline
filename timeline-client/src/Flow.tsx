@@ -51,8 +51,6 @@ function Flow ({children}: FlowProps): any {
             // need to make sure they are in order when doing it for real
 
             chapterNodeIdsMap.set(index, nodeIDs);
-
-            console.info(chapterNodeIdsMap);
         })
 
         setChapterNodeIdsMap(chapterNodeIdsMap);
@@ -103,7 +101,7 @@ function Flow ({children}: FlowProps): any {
         if(lastId.length == 0) {
 
             // first node for this cahpter
-            plotPointId = 1;
+            plotPointId = 0;
 
         } else if (lastId.length == 1) {
 

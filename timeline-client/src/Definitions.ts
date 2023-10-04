@@ -114,7 +114,7 @@ export function storyBatchesToChapterList(storyBatches: StoryBatch[]): string[] 
 
     storyBatches.forEach((batch) => {
 
-        allChapters.concat(batch.chapters);
+        allChapters = allChapters.concat(batch.chapters);
     })
 
     return allChapters;

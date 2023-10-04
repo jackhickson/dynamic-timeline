@@ -104,7 +104,7 @@ function PlotPointDialog(props: PlotPointDialogProps) {
 
   const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters } = props;
 
-  let chapterIds: ChapterId[] = getPlotPointChapters(formData, allChapters);
+  let chapterIds: ChapterId[] = useMemo(()=>getPlotPointChapters(formData, allChapters),[formData, allChapters]);
 
   /**
    * Get the chapterData from the formData for the selectedChapterId
