@@ -10,7 +10,8 @@ export function nodeJsonToData(json: any) : PlotPointData {
         location: json.location,
         label: json.label,
         chaptersMap: new Map(),
-        chapterAction: ChapterAction.None
+        chapterAction: ChapterAction.None,
+        inCharacterTimeline: false
     };
 
     let chapterMapObject = Object.entries(json.chaptersMap);
@@ -44,12 +45,17 @@ export interface NodesEdgesPair {
     edges: Edge[];
 };
 
+export interface EdgeData {
+    inCharacterTimeline: boolean;
+}
+
 export interface PlotPointData {
     chaptersMap: Map<number, PlotPointChapter>;
     id: string;
     label: string;
     location: string;
     chapterAction: ChapterAction;
+    inCharacterTimeline: boolean;
 };
 
 export function isNodePlotPointData(object: Node): object is Node<PlotPointData> {
@@ -64,7 +70,7 @@ export function createPlotPointData(id: string, selectedChapterIndex: number) : 
 
     chaptersMap.set(selectedChapterIndex, chapterData);
 
-    let plotPointData: PlotPointData = {id: id, location: "", label: DEFAULT_LABEL, chaptersMap: chaptersMap, chapterAction: ChapterAction.Added};
+    let plotPointData: PlotPointData = {id: id, location: "", label: DEFAULT_LABEL, chaptersMap: chaptersMap, chapterAction: ChapterAction.Added, inCharacterTimeline: false};
 
     return plotPointData;
 }

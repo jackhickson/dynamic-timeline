@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Node, Edge, Connection, addEdge, useNodesState, useEdgesState } from "reactflow";
-import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData } from "../Definitions";
+import { ChapterAction, PlotPointData, EdgeData, createPlotPointData, isNodePlotPointData } from "../Definitions";
 import { keysToSortedArray } from '../utils';
 
 interface UseFlowProps {
@@ -14,8 +14,8 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
     const { initialNodes, initialEdges, selectedNodeId, hideEnabled } = props;
 
-    const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
+    const [nodes, setNodes, onNodesChange] = useNodesState<PlotPointData>(initialNodes);
+    const [edges, setEdges, onEdgesChange] = useEdgesState<EdgeData>(initialEdges);
 
     const onConnect = useCallback(
         (connection: Connection) => setEdges((eds: Edge[]) => addEdge(connection, eds)),
@@ -78,7 +78,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
             if(isNodePlotPointData(node)) {
 
-                return updateNode(node, selectedChapterIndex, hideEnabled)
+                return updateNodeByChapter(node, selectedChapterIndex, hideEnabled)
             }
 
             return node;
@@ -97,8 +97,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
                     return edge;
                 }
 
-                // need to some how get the updated nodes as input
-                return updateEdge(edge, edgeNodes);
+                return updateEdgeByChapter(edge, edgeNodes);
             })
         );
 
@@ -110,36 +109,36 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * @param selectedChapterIndex 
      * @returns node
      */
-    const updateNode = (node: Node<PlotPointData>, selectedChapterIndex: number, hideEnabled: boolean): Node<PlotPointData> => {
+    const updateNodeByChapter = (node: Node<PlotPointData>, selectedChapterIndex: number, hideEnabled: boolean): Node<PlotPointData> => {
 
         const newNode = structuredClone(node);
 
-        if(isNodePlotPointData(newNode)) {
-
-            let plotPointData: PlotPointData = newNode.data;
-
-            let indexes: number[] = keysToSortedArray(plotPointData.chaptersMap.keys());
-
-            let action: ChapterAction = ChapterAction.None;
-
-            if(indexes[0] == selectedChapterIndex) {
-
-                action = ChapterAction.Added;
-
-            } else if (plotPointData.chaptersMap.get(selectedChapterIndex)) {
-
-                action = ChapterAction.Modified;
-            }
-
-            //console.info(action);
-
-            plotPointData.chapterAction = action
-
-            // if the chapter this node was created on is in the future hide the node
-            newNode.hidden = indexes[0] > selectedChapterIndex && hideEnabled ? true : false;
-
-            newNode.data = plotPointData;
+        if(!isNodePlotPointData(newNode)) {
+            return node;
         }
+
+        let plotPointData: PlotPointData = newNode.data;
+
+        let indexes: number[] = keysToSortedArray(plotPointData.chaptersMap.keys());
+
+        let action: ChapterAction = ChapterAction.None;
+
+        if(indexes[0] == selectedChapterIndex) {
+
+            action = ChapterAction.Added;
+
+        } else if (plotPointData.chaptersMap.get(selectedChapterIndex)) {
+
+            action = ChapterAction.Modified;
+        }
+
+        plotPointData.chapterAction = action
+
+        // if the chapter this node was created on is in the future hide the node
+        newNode.hidden = indexes[0] > selectedChapterIndex && hideEnabled ? true : false;
+
+        newNode.data = plotPointData;
+
         
         return newNode;
     }
@@ -150,9 +149,99 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * @param edgeNodes 
      * @returns 
      */
-    const updateEdge = (edge: Edge, edgeNodes: [Node<PlotPointData>, Node<PlotPointData>]): Edge => {
+    const updateEdgeByChapter = (edge: Edge<EdgeData>, edgeNodes: [Node<PlotPointData>, Node<PlotPointData>]): Edge<EdgeData> => {
 
         edge.hidden = edgeNodes != undefined && (edgeNodes[0].hidden || edgeNodes[1].hidden);
+    
+        return edge;
+    }
+
+    /**
+     * This is used to hide nodes and edges when a chapter is change.
+     * Also changes the node action to what the state of the ChapterInfo for this chapterIndex
+     */
+    const onUpdateFromCharacterChange = useCallback((selectedChapterIndex: number, selectedCharacterId: string | undefined) => {
+
+        // need to do this as the both the setNodes and setEdges need the new nodes at the same time
+        let updatedNodes: Node[] = nodes.map((node) => {
+
+            if(isNodePlotPointData(node)) {
+
+                return updateNodeByCharacter(node, selectedChapterIndex, selectedCharacterId)
+            }
+
+            return node;
+        });
+
+        setNodes(updatedNodes);
+
+        setEdges((edges) =>
+
+            edges.map((edge) => {
+
+                let edgeNodes = getNodesOfEdge(edge, updatedNodes);
+
+                if(!edgeNodes || edgeNodes.length != 2) {
+                    console.info(`Invalid nodes of edge ${edge}`)
+                    return edge;
+                }
+
+                return updateEdgeByCharacter(edge, edgeNodes);
+            })
+        );
+
+    }, [setNodes, setEdges, selectedNodeId, nodes, hideEnabled]);
+
+    /**
+     * Update the PlotPointData when a charaterId is selected
+     * @param node 
+     * @param selectedChapterIndex
+     * @param selectedCharacterId 
+     * @returns node
+     */
+    const updateNodeByCharacter = (node: Node<PlotPointData>, selectedChapterIndex: number, selectedCharacterId: string | undefined): Node<PlotPointData> => {
+
+        const newNode = structuredClone(node);
+
+        if(!isNodePlotPointData(newNode)) {
+            return node;
+        }
+
+        let plotPointData: PlotPointData = newNode.data;
+
+        
+        if(selectedCharacterId == undefined) {
+
+            // when character is unselected turn off all animated nodes and edges
+            plotPointData.inCharacterTimeline = false;
+
+        } else {
+
+            for (let [chapterIndex, chapter] of plotPointData.chaptersMap.entries()){
+
+                // if the chapter the current selected chapter doesnt have knowledge of the character do not put it in animated timeline
+                if(chapterIndex <= selectedChapterIndex && chapter.characters.includes(selectedCharacterId)) {
+
+                    plotPointData.inCharacterTimeline = true;
+                    break;
+                }
+            }
+        }
+
+        newNode.data = plotPointData;
+        
+        return newNode;
+    }
+
+    /**
+     * Modifiy the given edge due to properties of the nodes the edge is associated with
+     * @param edge 
+     * @param edgeNodes 
+     * @returns 
+     */
+    const updateEdgeByCharacter = (edge: Edge<EdgeData>, edgeNodes: [Node<PlotPointData>, Node<PlotPointData>]): Edge<EdgeData> => {
+
+        edge.data = {inCharacterTimeline: edgeNodes != undefined && (edgeNodes[0].data.inCharacterTimeline && edgeNodes[1].data.inCharacterTimeline)};
     
         return edge;
     }
@@ -183,5 +272,6 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
         return [edgeNodes[0], edgeNodes[1]];
     };
 
-    return {nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange, onConnect, onAddNode, onUpdateNode, onUpdateFromChapterChange};
+    return {nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange,
+        onConnect, onAddNode, onUpdateNode, onUpdateFromChapterChange, onUpdateFromCharacterChange};
 }

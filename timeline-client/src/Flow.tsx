@@ -66,7 +66,8 @@ function Flow ({children}: FlowProps): any {
         onConnect,
         onAddNode,
         onUpdateNode,
-        onUpdateFromChapterChange
+        onUpdateFromChapterChange,
+        onUpdateFromCharacterChange
     } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedNodeId, hideEnabled});
 
     const { setRfInstance, onSave, onRestore } = useFlow({ setNodes, setEdges });
@@ -119,7 +120,7 @@ function Flow ({children}: FlowProps): any {
         onUpdateFromChapterChange(newChapterIndex);
     }
 
-    const onHideChange = (event: any, checked: boolean) => {
+    const onHideChange = (_: any, checked: boolean) => {
 
         setHideEnabled(checked);
     };
