@@ -1,30 +1,11 @@
-import React, { useState, ChangeEvent, useEffect, useMemo } from 'react';
+import React, { ChangeEvent, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import { Button, Dialog, Chip, Box } from '@mui/material';
-import { PlotPointData, PlotPointChapterInfo, CharacterAlias, createPlotPointChapterData, PlotPointChapter } from '../Definitions';
+import { PlotPointData, createPlotPointChapterData, PlotPointChapter, CharacterAliases } from '../Definitions';
 import MultipleSelectChip from './MultipleSelectChip';
 import {keysToSortedArray} from '../utils';
 
 const fandomCharacterUrl = "https://thewanderinginn.fandom.com/wiki/";
-
-const allCharactersAlias: CharacterAlias[] = [
-  {
-    id: "1",
-    realName: "Erin Solstice",
-    aliases: [
-      "The Crazy Human Innkeeper"
-    ]
-  },
-  {
-    id: "2",
-    realName: "Teriarch",
-    aliases: [
-      "Eldalvin",
-      "Bronze Dragon",
-      "Demsleth"
-    ]
-  }
-];
 
 interface PlotPointDialogProps {
   open: boolean;
@@ -33,6 +14,7 @@ interface PlotPointDialogProps {
   formData: PlotPointData;
   selectedChapterIndex: number;
   allChapters: string[];
+  allCharacterAlias: CharacterAliases[];
 }
 
 interface ChapterId {
@@ -102,7 +84,7 @@ function removeChapterDataFromFormDataMap(formData: PlotPointData, selectedChapt
  */
 function PlotPointDialog(props: PlotPointDialogProps) {
 
-  const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters } = props;
+  const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters, allCharacterAlias } = props;
 
   let chapterIds: ChapterId[] = useMemo(()=>getPlotPointChapters(formData, allChapters),[formData, allChapters]);
 
@@ -185,6 +167,8 @@ function PlotPointDialog(props: PlotPointDialogProps) {
                       onDelete={() => {if(chapterIds.length != 1) onDelete}}/>
           })}
         </Box>
+
+        <MultipleSelectChip id="characters" allCharacterAliases={allCharacterAlias} map={new Map()}/>
 
         <TextField id="characters" label="Charaters list" defaultValue={plotPointChapter.characters} onChange={handleChapterInputChange} />
         <TextField id="description" label="Description" defaultValue={plotPointChapter.description} onChange={handleChapterInputChange} />

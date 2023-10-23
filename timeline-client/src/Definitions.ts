@@ -45,10 +45,6 @@ export interface NodesEdgesPair {
     edges: Edge[];
 };
 
-export interface EdgeData {
-    inCharacterTimeline: boolean;
-}
-
 export interface PlotPointData {
     chaptersMap: Map<number, PlotPointChapter>;
     id: string;
@@ -92,15 +88,21 @@ export interface PlotPointChapter extends PlotPointChapterInfo {
 }
 
 export interface PlotPointChapterInfo {
-    characters: string[];
+    characters: SelectedCharacterAlias[];
     description: string;
 }
 
-export interface CharacterAlias {
+export interface CharacterAliases {
     id: string;
-    realName: string;
     aliases: string[];
 };
+
+export interface SelectedCharacterAlias {
+    id: string;
+    alias: string;
+};
+
+export const UNSELECTED_CHARACTER_ID = "None";
 
 export enum ChapterAction {
     None,

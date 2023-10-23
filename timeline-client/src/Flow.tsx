@@ -6,15 +6,32 @@ import ChapterSelect from './components/ChapterSelect';
 import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
-import { PlotPointData, createPlotPointData, StoryBatch, storyBatchesToChapterList } from './Definitions';
+import { PlotPointData, createPlotPointData, StoryBatch, storyBatchesToChapterList, CharacterAliases, UNSELECTED_CHARACTER_ID } from './Definitions';
 import { ReactFlowStyled, MiniMapStyled, ControlsStyled} from './components/StyledReactFlow';
 
 import PlotPointNode from './components/PlotPointNode';
-import { Checkbox } from '@mui/material';
+import { Checkbox, MenuItem, Select, SelectChangeEvent, useTheme } from '@mui/material';
 
 const minimapStyle = {
   height: 120
 };
+
+const allCharactersAlias: CharacterAliases[] = [
+    {
+      id: "Erin Solstice",
+      aliases: [
+        "The Crazy Human Innkeeper"
+      ]
+    },
+    {
+      id: "Teriarch",
+      aliases: [
+        "Eldalvin",
+        "Bronze Dragon",
+        "Demsleth"
+      ]
+    }
+];
 
 const storyBatches: StoryBatch[] = [{name: "Volume 1", chapters: ["1.01", "1.02", "1.03"]}, {name: "Volume 2", chapters: ["2.01"]}];
 const allChapters: string[] = storyBatchesToChapterList(storyBatches);
@@ -37,6 +54,9 @@ function Flow ({children}: FlowProps): any {
     const [selectedChapterIndex, setSelectedChapterIndex] = useState<number>(0);
     const [hideEnabled, setHideEnabled] =  useState<boolean>(true);
     const [chapterNodeIdsMap, setChapterNodeIdsMap] = useState<Map<number, number[]>>(new Map());
+    const [selectedCharacterId, setSelectedCharacterId] = useState<string>('');
+
+    const theme = useTheme();
 
     useEffect(()=> {
 
@@ -114,10 +134,18 @@ function Flow ({children}: FlowProps): any {
         onAddNode(selectedChapterIndex, plotPointId);
     }
 
-    const onChapterIdChange = (newChapterIndex: number) => {
+    const onChapterIndexChange = (newChapterIndex: number) => {
 
         setSelectedChapterIndex(newChapterIndex);
         onUpdateFromChapterChange(newChapterIndex);
+    }
+
+    const onCharacterIdChange = (event: SelectChangeEvent<string>) => {
+
+        const newCharacter: string = event.target.value;
+
+        setSelectedCharacterId(newCharacter);
+        onUpdateFromCharacterChange(selectedChapterIndex,newCharacter);
     }
 
     const onHideChange = (_: any, checked: boolean) => {
@@ -133,7 +161,29 @@ function Flow ({children}: FlowProps): any {
 
     return (
         <div style={{height: "100vh", width: "100vw"}}>
-            <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIdChange}/>
+            <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIndexChange}/>
+            
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectedCharacterId}
+                label="Age"
+                onChange={onCharacterIdChange}
+                >
+                {allCharactersAlias.map((alias) => (
+                <MenuItem
+                    key={"alias-" + alias.id}
+                    value={alias.id}
+                    style={{fontWeight:
+                        alias.id == selectedCharacterId
+                          ? theme.typography.fontWeightRegular
+                          : theme.typography.fontWeightMedium,}}
+                >
+                    {alias.id}
+                </MenuItem>
+                ))}
+
+            </Select>
             <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
             <ReactFlowStyled
                 nodes={nodes}
@@ -161,7 +211,8 @@ function Flow ({children}: FlowProps): any {
                 onSubmit={onUpdateNode}
                 formData={selectedNodeData}
                 selectedChapterIndex={selectedChapterIndex}
-                allChapters={allChapters}/>
+                allChapters={allChapters}
+                allCharacterAlias={allCharactersAlias}/>
         </div>
     )
 }

@@ -18,7 +18,7 @@ const nodeBackGroundStyle = (action: ChapterAction, theme: any): string => {
     return backgroundColor;
 }
 
-const Node = styled.div<{ selected: boolean; action: ChapterAction}>`
+const Node = styled.div<{ selected: boolean; action: ChapterAction, inCharacterTimeLine: boolean}>`
     padding: 10px 20px;
     border-radius: 5px;
     background: ${(props) => nodeBackGroundStyle(props.action, props.theme)};
@@ -39,8 +39,10 @@ function PlotPointNode(props: NodeProps<PlotPointData>) {
 
     const action = data.chapterAction;
 
+    const inCharacterTimeLine = data.inCharacterTimeline;
+
     return (
-        <Node selected={selected} action={action}>
+        <Node selected={selected} action={action} inCharacterTimeLine={inCharacterTimeLine}>
             <Handle
                 type="target"
                 position={Position.Left}

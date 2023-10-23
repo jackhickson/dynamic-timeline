@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Node, Edge, Connection, addEdge, useNodesState, useEdgesState } from "reactflow";
-import { ChapterAction, PlotPointData, EdgeData, createPlotPointData, isNodePlotPointData } from "../Definitions";
+import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData, UNSELECTED_CHARACTER_ID } from "../Definitions";
 import { keysToSortedArray } from '../utils';
 
 interface UseFlowProps {
@@ -15,7 +15,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
     const { initialNodes, initialEdges, selectedNodeId, hideEnabled } = props;
 
     const [nodes, setNodes, onNodesChange] = useNodesState<PlotPointData>(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState<EdgeData>(initialEdges);
+    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
     const onConnect = useCallback(
         (connection: Connection) => setEdges((eds: Edge[]) => addEdge(connection, eds)),
@@ -149,7 +149,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * @param edgeNodes 
      * @returns 
      */
-    const updateEdgeByChapter = (edge: Edge<EdgeData>, edgeNodes: [Node<PlotPointData>, Node<PlotPointData>]): Edge<EdgeData> => {
+    const updateEdgeByChapter = (edge: Edge, edgeNodes: [Node<PlotPointData>, Node<PlotPointData>]): Edge => {
 
         edge.hidden = edgeNodes != undefined && (edgeNodes[0].hidden || edgeNodes[1].hidden);
     
@@ -160,7 +160,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * This is used to hide nodes and edges when a chapter is change.
      * Also changes the node action to what the state of the ChapterInfo for this chapterIndex
      */
-    const onUpdateFromCharacterChange = useCallback((selectedChapterIndex: number, selectedCharacterId: string | undefined) => {
+    const onUpdateFromCharacterChange = useCallback((selectedChapterIndex: number, selectedCharacterId: string) => {
 
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
         let updatedNodes: Node[] = nodes.map((node) => {
@@ -199,7 +199,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * @param selectedCharacterId 
      * @returns node
      */
-    const updateNodeByCharacter = (node: Node<PlotPointData>, selectedChapterIndex: number, selectedCharacterId: string | undefined): Node<PlotPointData> => {
+    const updateNodeByCharacter = (node: Node<PlotPointData>, selectedChapterIndex: number, selectedCharacterId: string): Node<PlotPointData> => {
 
         const newNode = structuredClone(node);
 
@@ -210,7 +210,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
         let plotPointData: PlotPointData = newNode.data;
 
         
-        if(selectedCharacterId == undefined) {
+        if(selectedCharacterId == UNSELECTED_CHARACTER_ID) {
 
             // when character is unselected turn off all animated nodes and edges
             plotPointData.inCharacterTimeline = false;
@@ -220,7 +220,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
             for (let [chapterIndex, chapter] of plotPointData.chaptersMap.entries()){
 
                 // if the chapter the current selected chapter doesnt have knowledge of the character do not put it in animated timeline
-                if(chapterIndex <= selectedChapterIndex && chapter.characters.includes(selectedCharacterId)) {
+                if(chapterIndex <= selectedChapterIndex && chapter.characters.some((character) => character.id == selectedCharacterId)) {
 
                     plotPointData.inCharacterTimeline = true;
                     break;
@@ -239,9 +239,9 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * @param edgeNodes 
      * @returns 
      */
-    const updateEdgeByCharacter = (edge: Edge<EdgeData>, edgeNodes: [Node<PlotPointData>, Node<PlotPointData>]): Edge<EdgeData> => {
+    const updateEdgeByCharacter = (edge: Edge, edgeNodes: [Node<PlotPointData>, Node<PlotPointData>]): Edge => {
 
-        edge.data = {inCharacterTimeline: edgeNodes != undefined && (edgeNodes[0].data.inCharacterTimeline && edgeNodes[1].data.inCharacterTimeline)};
+        edge.animated = edgeNodes != undefined && (edgeNodes[0].data.inCharacterTimeline && edgeNodes[1].data.inCharacterTimeline);
     
         return edge;
     }
