@@ -60,7 +60,7 @@ export function isNodePlotPointData(object: Node): object is Node<PlotPointData>
 
 export function createPlotPointData(id: string, selectedChapterIndex: number) : PlotPointData {
 
-    let chapterData: PlotPointChapter  = createPlotPointChapterData(selectedChapterIndex);
+    let chapterData: PlotPointChapter  = createPlotPointChapterData(selectedChapterIndex, undefined);
 
     let chaptersMap: Map<number, PlotPointChapter> = new Map();
 
@@ -71,7 +71,7 @@ export function createPlotPointData(id: string, selectedChapterIndex: number) : 
     return plotPointData;
 }
 
-export function createPlotPointChapterData(selectedChapterIndex: number) : PlotPointChapter {
+export function createPlotPointChapterData(selectedChapterIndex: number, defaultChapterInfo: PlotPointChapter| undefined) : PlotPointChapter {
 
     if(selectedChapterIndex < 0) {
 
@@ -79,6 +79,13 @@ export function createPlotPointChapterData(selectedChapterIndex: number) : PlotP
     }
 
     let data: PlotPointChapter  = {chapterIndex: selectedChapterIndex, characters:[], description: ''};
+
+    // when a new chapter is opened default the data to this chapterInfo
+    if(defaultChapterInfo) {
+
+        data.characters = defaultChapterInfo.characters;
+        data.description = defaultChapterInfo.description;
+    }
 
     return data;
 }
@@ -101,6 +108,23 @@ export interface SelectedCharacterAlias {
     id: string;
     alias: string;
 };
+
+export function mapToSelectedCharacterAliases(characterAliasMap: Map<string, string>): SelectedCharacterAlias[] {
+
+    let selectedAliases: SelectedCharacterAlias[] = [];
+
+    for (let [id, alias] of characterAliasMap) {
+
+        selectedAliases.push({id, alias})
+    }
+
+    return selectedAliases;
+}
+
+export function selectedCharacterAliasToMap(selectedAliases: SelectedCharacterAlias[]): Map<string, string> {
+
+    return new Map(selectedAliases.map((alias) => [alias.id, alias.alias]));
+}
 
 export const UNSELECTED_CHARACTER_ID = "None";
 

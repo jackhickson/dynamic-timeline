@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem, { MenuItemProps } from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { CharacterAliases, SelectedCharacterAlias } from '../Definitions';
+import { CharacterAliases, SelectedCharacterAlias, mapToSelectedCharacterAliases } from '../Definitions';
 import Popper, { PopperProps } from '@mui/material/Popper';
 import { MenuList, Paper } from '@mui/material';
 
@@ -105,11 +105,12 @@ interface MultipleSelectChipProps {
   id: string
   allCharacterAliases: CharacterAliases[];
   map: Map<string, string>;
+  onCharactersChange: (selectedAlias: SelectedCharacterAlias[]) => void;
 }
 
 export default function MultipleSelectChip(props: MultipleSelectChipProps) {
 
-  const { id, allCharacterAliases, map } = props;
+  const { id, allCharacterAliases, map, onCharactersChange } = props;
 
   const [selectedCharacterAliasMap, setSelectedCharacterAliasMap] = useState<Map<string, string>>(map);
 
@@ -117,7 +118,14 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
 
   const theme = useTheme();
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
+  const handleChange = (newCharacterMap: Map<string, string>) => {
+
+    setSelectedCharacterAliasMap(newCharacterMap);
+
+    onCharactersChange(mapToSelectedCharacterAliases(newCharacterMap));
+  }
+
+  const handleRealNameChange = (event: SelectChangeEvent<string[]>) => {
 
     event.preventDefault();
 
@@ -139,7 +147,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
     const newMap = new Map<string, string>();
     value.forEach((s) => newMap.set(s, s))
 
-    setSelectedCharacterAliasMap(newMap);
+    handleChange(newMap);
   };
 
   /**
@@ -168,10 +176,8 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
     // let the select handle to ignore this event
     changeFromNested = true;
 
-    setSelectedCharacterAliasMap(newMap);
+    handleChange(newMap);
   }
-
-  console.info(Array.from(selectedCharacterAliasMap.keys()))
 
   return (
     <>
@@ -181,7 +187,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
         id={id}
         multiple
         value={Array.from(selectedCharacterAliasMap.keys())}
-        onChange={handleChange}
+        onChange={handleRealNameChange}
         input={<OutlinedInput id="select-multiple-chip" label={id} />}
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>

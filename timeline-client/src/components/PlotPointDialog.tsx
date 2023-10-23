@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import { Button, Dialog, Chip, Box } from '@mui/material';
-import { PlotPointData, createPlotPointChapterData, PlotPointChapter, CharacterAliases } from '../Definitions';
+import { PlotPointData, createPlotPointChapterData, PlotPointChapter, CharacterAliases, SelectedCharacterAlias, selectedCharacterAliasToMap } from '../Definitions';
 import MultipleSelectChip from './MultipleSelectChip';
 import {keysToSortedArray} from '../utils';
 
@@ -61,7 +61,9 @@ function getChapterDataFromMap(formData: PlotPointData, selectedChapterIndex: nu
   // new chapter for this plot point
   if (chapter === undefined) {
 
-    chapter = createPlotPointChapterData(selectedChapterIndex);
+    const mostRecenetChapterInfo: PlotPointChapter| undefined = Array.from(formData.chaptersMap.values()).pop();
+
+    chapter = createPlotPointChapterData(selectedChapterIndex, mostRecenetChapterInfo);
   }
 
   return chapter;
@@ -106,6 +108,11 @@ function PlotPointDialog(props: PlotPointDialogProps) {
     const { id, value } = event.target;
 
     plotPointChapter = { ...plotPointChapter, [id]: value };
+  }
+
+  function handlCharaterInputChange(selectedAliases: SelectedCharacterAlias[]) {
+
+    plotPointChapter.characters = selectedAliases;
   }
 
   function handleLocationChange(event: ChangeEvent<HTMLInputElement>) {
@@ -168,9 +175,8 @@ function PlotPointDialog(props: PlotPointDialogProps) {
           })}
         </Box>
 
-        <MultipleSelectChip id="characters" allCharacterAliases={allCharacterAlias} map={new Map()}/>
+        <MultipleSelectChip id="characters" allCharacterAliases={allCharacterAlias} map={selectedCharacterAliasToMap(plotPointChapter.characters)} onCharactersChange={handlCharaterInputChange}/>
 
-        <TextField id="characters" label="Charaters list" defaultValue={plotPointChapter.characters} onChange={handleChapterInputChange} />
         <TextField id="description" label="Description" defaultValue={plotPointChapter.description} onChange={handleChapterInputChange} />
         <TextField id="location" label="Location" defaultValue={formData.location} onChange={handleLocationChange} />
         <Button type='submit'>Submit</Button>
