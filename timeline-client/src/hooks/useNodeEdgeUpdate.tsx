@@ -139,7 +139,6 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
         newNode.data = plotPointData;
 
-        
         return newNode;
     }
 
@@ -217,15 +216,19 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
 
         } else {
 
+            let characterFound = false;
+
             for (let [chapterIndex, chapter] of plotPointData.chaptersMap.entries()){
 
                 // if the chapter the current selected chapter doesnt have knowledge of the character do not put it in animated timeline
                 if(chapterIndex <= selectedChapterIndex && chapter.characters.some((character) => character.id == selectedCharacterId)) {
 
-                    plotPointData.inCharacterTimeline = true;
+                    characterFound = true;
                     break;
                 }
             }
+
+            plotPointData.inCharacterTimeline = characterFound;
         }
 
         newNode.data = plotPointData;
