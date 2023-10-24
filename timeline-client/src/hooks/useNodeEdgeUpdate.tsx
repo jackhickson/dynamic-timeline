@@ -1,7 +1,7 @@
-import { useCallback } from "react";
 import { Node, Edge, Connection, addEdge, useNodesState, useEdgesState } from "reactflow";
 import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData, UNSELECTED_CHARACTER_ID } from "../Definitions";
 import { keysToSortedArray } from '../utils';
+import React from "react";
 
 interface UseFlowProps {
     initialNodes: Node[];
@@ -17,13 +17,13 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
     const [nodes, setNodes, onNodesChange] = useNodesState<PlotPointData>(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-    const onConnect = useCallback(
+    const onConnect = React.useCallback(
         (connection: Connection) => setEdges((eds: Edge[]) => addEdge(connection, eds)),
         [setEdges]
     );
 
     // new node
-    const onAddNode = useCallback((selectedChapterIndex: number, plotPointId: number) => {
+    const onAddNode = React.useCallback((selectedChapterIndex: number, plotPointId: number) => {
 
         const id = selectedChapterIndex + "-" + plotPointId;
 
@@ -42,7 +42,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
     }, [setNodes]);
 
     // when a submit comes back from the Plot Dialog this gets updated
-    const onUpdateNode = useCallback((updatedData: PlotPointData) => {
+    const onUpdateNode = React.useCallback((updatedData: PlotPointData) => {
 
         updatedData.chapterAction = ChapterAction.Modified;
 
@@ -71,7 +71,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * This is used to hide nodes and edges when a chapter is change.
      * Also changes the node action to what the state of the ChapterInfo for this chapterIndex
      */
-    const onUpdateFromChapterChange = useCallback((selectedChapterIndex: number) => {
+    const onUpdateFromChapterChange = React.useCallback((selectedChapterIndex: number) => {
 
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
         let updatedNodes: Node[] = nodes.map((node) => {
@@ -159,7 +159,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      * This is used to hide nodes and edges when a chapter is change.
      * Also changes the node action to what the state of the ChapterInfo for this chapterIndex
      */
-    const onUpdateFromCharacterChange = useCallback((selectedChapterIndex: number, selectedCharacterId: string) => {
+    const onUpdateFromCharacterChange = React.useCallback((selectedChapterIndex: number, selectedCharacterId: string) => {
 
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
         let updatedNodes: Node[] = nodes.map((node) => {

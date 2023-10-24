@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo } from 'react';
+import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import { Button, Dialog, Chip, Box } from '@mui/material';
 import { PlotPointData, createPlotPointChapterData, PlotPointChapter, CharacterAliases, SelectedCharacterAlias, selectedCharacterAliasToMap } from '../Definitions';
@@ -88,7 +88,7 @@ function PlotPointDialog(props: PlotPointDialogProps) {
 
   const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters, allCharacterAlias } = props;
 
-  let chapterIds: ChapterId[] = useMemo(()=>getPlotPointChapters(formData, allChapters),[formData, allChapters]);
+  let chapterIds: ChapterId[] = React.useMemo(()=>getPlotPointChapters(formData, allChapters),[formData, allChapters]);
 
   /**
    * Get the chapterData from the formData for the selectedChapterId

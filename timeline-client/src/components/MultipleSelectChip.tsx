@@ -1,4 +1,4 @@
-import { MouseEventHandler, useRef, useState } from 'react';
+import React from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -50,8 +50,8 @@ type NestedAliasMenuItemProps = MenuItemProps & {
 
 const NestedAliasMenuItem = (props: NestedAliasMenuItemProps) => {
 
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLLIElement | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLLIElement | null>(null);
 
   const { characterAliases, button, label, onSelectAlias, selectedAlias, ...supProps } = props;
   const { id, aliases } = characterAliases;
@@ -112,7 +112,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
 
   const { id, allCharacterAliases, map, onCharactersChange } = props;
 
-  const [selectedCharacterAliasMap, setSelectedCharacterAliasMap] = useState<Map<string, string>>(map);
+  const [selectedCharacterAliasMap, setSelectedCharacterAliasMap] = React.useState<Map<string, string>>(map);
 
   let changeFromNested = false;
 

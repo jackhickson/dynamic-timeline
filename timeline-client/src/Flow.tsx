@@ -1,4 +1,4 @@
-import { useState, MouseEvent as ReactMouseEvent, useEffect, useMemo, ReactNode } from 'react'
+import React, { MouseEvent as ReactMouseEvent, ReactNode } from 'react'
 import {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
 import PlotPointDialog from './components/PlotPointDialog';
@@ -49,16 +49,16 @@ interface FlowProps {
 
 function Flow ({children}: FlowProps): any {
 
-    const [selectedNodeId, setSelectedNodeId] = useState<string>(intialSelectedNodeId);
-    const [selectedNodeData, setSelectedNodeData] = useState<PlotPointData>(initialPlotPointData);
-    const [selectedChapterIndex, setSelectedChapterIndex] = useState<number>(0);
-    const [hideEnabled, setHideEnabled] =  useState<boolean>(true);
-    const [chapterNodeIdsMap, setChapterNodeIdsMap] = useState<Map<number, number[]>>(new Map());
-    const [selectedCharacterId, setSelectedCharacterId] = useState<string>('');
+    const [selectedNodeId, setSelectedNodeId] = React.useState<string>(intialSelectedNodeId);
+    const [selectedNodeData, setSelectedNodeData] = React.useState<PlotPointData>(initialPlotPointData);
+    const [selectedChapterIndex, setSelectedChapterIndex] = React.useState<number>(0);
+    const [hideEnabled, setHideEnabled] = React.useState<boolean>(true);
+    const [chapterNodeIdsMap, setChapterNodeIdsMap] = React.useState<Map<number, number[]>>(new Map());
+    const [selectedCharacterId, setSelectedCharacterId] = React.useState<string>('');
 
     const theme = useTheme();
 
-    useEffect(()=> {
+    React.useEffect(()=> {
 
         allChapters.forEach((_, index) => {
             let nodeIDs: number[] = [];
@@ -93,7 +93,7 @@ function Flow ({children}: FlowProps): any {
     const { setRfInstance, onSave, onRestore } = useFlow({ setNodes, setEdges });
     const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
 
-    const nodeTypes = useMemo(() => ({ custom: PlotPointNode }), []);
+    const nodeTypes = React.useMemo(() => ({ custom: PlotPointNode }), []);
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 
@@ -154,7 +154,7 @@ function Flow ({children}: FlowProps): any {
     };
 
     // used to hide/ unhide when not changing chapters
-    useEffect(() => {
+    React.useEffect(() => {
 
         onUpdateFromChapterChange(selectedChapterIndex);
     }, [hideEnabled])
