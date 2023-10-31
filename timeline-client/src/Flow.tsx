@@ -6,6 +6,7 @@ import ChapterSelect from './components/ChapterSelect';
 import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
+import { useAppElements } from './hooks/useAppElements';
 import { PlotPointData, createPlotPointData, StoryBatch, storyBatchesToChapterList, CharacterAliases, UNSELECTED_CHARACTER_ID } from './Definitions';
 import { ReactFlowStyled, MiniMapStyled, ControlsStyled} from './components/StyledReactFlow';
 
@@ -76,11 +77,9 @@ function Flow ({children}: FlowProps): any {
         setChapterNodeIdsMap(chapterNodeIdsMap);
     }, [setChapterNodeIdsMap, chapterNodeIdsMap])
 
+    const {elements, setElements, triggerUpdate, undo, redo, reset} = useAppElements({initialNodes, initialEdges});
+
     const {
-        nodes,
-        edges,
-        setNodes,
-        setEdges,
         onNodesChange,
         onEdgesChange,
         onConnect,
@@ -88,9 +87,9 @@ function Flow ({children}: FlowProps): any {
         onUpdateNode,
         onUpdateFromChapterChange,
         onUpdateFromCharacterChange
-    } = useNodeEdgeUpdate({initialNodes, initialEdges, selectedNodeId, hideEnabled});
+    } = useNodeEdgeUpdate({elements, setElements, triggerUpdate, selectedNodeId, hideEnabled});
 
-    const { setRfInstance, onSave, onRestore } = useFlow({ setNodes, setEdges });
+    const { setRfInstance, onSave, onRestore } = useFlow({setElements});
     const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
 
     const nodeTypes = React.useMemo(() => ({ custom: PlotPointNode }), []);
@@ -186,8 +185,8 @@ function Flow ({children}: FlowProps): any {
             </Select>
             <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
             <ReactFlowStyled
-                nodes={nodes}
-                edges={edges}
+                nodes={elements.nodes}
+                edges={elements.edges}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
@@ -198,6 +197,9 @@ function Flow ({children}: FlowProps): any {
             >
                 {children}
                 <Panel position="top-right">
+                    <button onClick={undo}>Undo</button>
+                    <button onClick={redo}>Redo</button>
+                    <button onClick={()=> reset()}>Reset</button>
                     <button onClick={onSave}>save</button>
                     <button onClick={onRestore}>restore</button>
                     <button onClick={addNewNode}>add node</button>

@@ -41,6 +41,8 @@ function PlotPointNode(props: NodeProps<PlotPointData>) {
 
     const inCharacterTimeLine: boolean = data.inCharacterTimeline;
 
+    console.info(inCharacterTimeLine);
+
     return (
         <Node selected={selected} action={action} $dashed={inCharacterTimeLine}>
             <Handle

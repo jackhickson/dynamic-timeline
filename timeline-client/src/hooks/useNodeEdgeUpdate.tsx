@@ -1,26 +1,67 @@
-import { Node, Edge, Connection, addEdge, useNodesState, useEdgesState } from "reactflow";
+import { Node, Edge, Connection, addEdge, applyNodeChanges, applyEdgeChanges, EdgeChange, NodeChange, NodePositionChange } from "reactflow";
 import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData, UNSELECTED_CHARACTER_ID } from "../Definitions";
 import { keysToSortedArray } from '../utils';
 import React from "react";
+import { AppElements, TriggerUpdateProp, SetElementProp } from "./useAppElements";
 
-interface UseFlowProps {
-    initialNodes: Node[];
-    initialEdges: Edge[];
+interface UseNodeUpdateProps {
+    elements: AppElements;
+    setElements: SetElementProp;
+    triggerUpdate: TriggerUpdateProp;
     selectedNodeId: string;
     hideEnabled: boolean;
 }
 
-export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
+enum UpdateElementsMode {
+    Nodes,
+    Edges
+}
 
-    const { initialNodes, initialEdges, selectedNodeId, hideEnabled } = props;
+export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
-    const [nodes, setNodes, onNodesChange] = useNodesState<PlotPointData>(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const { elements, setElements, triggerUpdate, selectedNodeId, hideEnabled } = props;
+
+	// We declare these callbacks as React Flow suggests,
+	// but we don't set the state directly. Instead, we pass
+	// it to the triggerUpdate function so that it alone can
+	// handle the state updates.
+
+	const onNodesChange = React.useCallback(
+		(changes: NodeChange[]) => {
+
+            const ignoreChanges = hasDraggingChange(changes);
+
+			triggerUpdate(UpdateElementsMode.Nodes, applyNodeChanges(changes, elements.nodes), ignoreChanges);
+		},
+		[triggerUpdate, elements.nodes]
+	);
+
+    const hasDraggingChange = (changes: NodeChange[]): boolean => {
+
+        return changes.some(change => {
+
+            if('dragging' in change) {
+
+                return change.dragging == true;
+            }
+    
+            return true;
+        });
+    }
+
+	const onEdgesChange = React.useCallback(
+		(changes: EdgeChange[]) => {
+			triggerUpdate(UpdateElementsMode.Edges, applyEdgeChanges(changes, elements.edges));
+		},
+		[triggerUpdate, elements.edges]
+	);
 
     const onConnect = React.useCallback(
-        (connection: Connection) => setEdges((eds: Edge[]) => addEdge(connection, eds)),
-        [setEdges]
-    );
+		(connection: Connection) => {
+			triggerUpdate(UpdateElementsMode.Edges, addEdge(connection, elements.edges));
+		},
+		[triggerUpdate, elements.edges]
+	);
 
     // new node
     const onAddNode = React.useCallback((selectedChapterIndex: number, plotPointId: number) => {
@@ -38,8 +79,9 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
             y: 0,
           },
         };
-        setNodes((nds) => nds.concat(newNode));
-    }, [setNodes]);
+
+        triggerUpdate(UpdateElementsMode.Nodes, elements.nodes.concat(newNode));
+    }, [triggerUpdate]);
 
     // when a submit comes back from the Plot Dialog this gets updated
     const onUpdateNode = React.useCallback((updatedData: PlotPointData) => {
@@ -52,8 +94,8 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
             updatedData.chapterAction = ChapterAction.Added;
         }
 
-        setNodes((nds) =>
-            nds.map((node) => {
+        triggerUpdate(UpdateElementsMode.Nodes,
+            elements.nodes.map((node) => {
 
                 if(node.id === selectedNodeId){
                     node.data = {
@@ -65,7 +107,7 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
                 return node;
             })
         );
-    }, [setNodes, selectedNodeId]);
+    }, [triggerUpdate, selectedNodeId]);
 
     /**
      * This is used to hide nodes and edges when a chapter is change.
@@ -73,8 +115,12 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      */
     const onUpdateFromChapterChange = React.useCallback((selectedChapterIndex: number) => {
 
+        if(elements.nodes.length == 0) {
+            return;
+        }
+
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
-        let updatedNodes: Node[] = nodes.map((node) => {
+        let updatedNodes: Node[] = elements.nodes.map((node) => {
 
             if(isNodePlotPointData(node)) {
 
@@ -84,24 +130,24 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
             return node;
         });
 
-        setNodes(updatedNodes);
+        let updatedEdges = elements.edges.map((edge) => {
 
-        setEdges((edges) =>
+            let edgeNodes = getNodesOfEdge(edge, updatedNodes);
 
-            edges.map((edge) => {
+            if(!edgeNodes || edgeNodes.length != 2) {
+                console.info(`Invalid nodes of edge ${edge}`)
+                return edge;
+            }
 
-                let edgeNodes = getNodesOfEdge(edge, updatedNodes);
+            return updateEdgeByChapter(edge, edgeNodes);
+        })
 
-                if(!edgeNodes || edgeNodes.length != 2) {
-                    console.info(`Invalid nodes of edge ${edge}`)
-                    return edge;
-                }
+        setElements(e => ({
+            nodes: updatedNodes,
+            edges: updatedEdges,
+        }), 'mergePastReversed', true)
 
-                return updateEdgeByChapter(edge, edgeNodes);
-            })
-        );
-
-    }, [setNodes, setEdges, selectedNodeId, nodes, hideEnabled]);
+    }, [setElements, selectedNodeId, elements, hideEnabled]);
 
     /**
      * Update the PlotPointData of the node and other settings
@@ -161,8 +207,12 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
      */
     const onUpdateFromCharacterChange = React.useCallback((selectedChapterIndex: number, selectedCharacterId: string) => {
 
+        if(elements.nodes.length == 0) {
+            return;
+        }
+
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
-        let updatedNodes: Node[] = nodes.map((node) => {
+        let updatedNodes: Node[] = elements.nodes.map((node) => {
 
             if(isNodePlotPointData(node)) {
 
@@ -172,24 +222,24 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
             return node;
         });
 
-        setNodes(updatedNodes);
+        let updatedEdges = elements.edges.map((edge) => {
 
-        setEdges((edges) =>
+            let edgeNodes = getNodesOfEdge(edge, updatedNodes);
 
-            edges.map((edge) => {
+            if(!edgeNodes || edgeNodes.length != 2) {
+                console.info(`Invalid nodes of edge ${edge}`)
+                return edge;
+            }
 
-                let edgeNodes = getNodesOfEdge(edge, updatedNodes);
+            return updateEdgeByCharacter(edge, edgeNodes);
+        })
 
-                if(!edgeNodes || edgeNodes.length != 2) {
-                    console.info(`Invalid nodes of edge ${edge}`)
-                    return edge;
-                }
+        setElements(e => ({
+            nodes: updatedNodes,
+            edges: updatedEdges,
+        }), 'mergePastReversed', true)
 
-                return updateEdgeByCharacter(edge, edgeNodes);
-            })
-        );
-
-    }, [setNodes, setEdges, selectedNodeId, nodes, hideEnabled]);
+    }, [setElements, selectedNodeId, elements, hideEnabled]);
 
     /**
      * Update the PlotPointData when a charaterId is selected
@@ -275,6 +325,6 @@ export const useNodeEdgeUpdate = ( props: UseFlowProps ) => {
         return [edgeNodes[0], edgeNodes[1]];
     };
 
-    return {nodes, edges, setNodes, setEdges, onNodesChange, onEdgesChange,
-        onConnect, onAddNode, onUpdateNode, onUpdateFromChapterChange, onUpdateFromCharacterChange};
+    return {onNodesChange, onEdgesChange, onConnect, onAddNode, onUpdateNode,
+        onUpdateFromChapterChange, onUpdateFromCharacterChange};
 }

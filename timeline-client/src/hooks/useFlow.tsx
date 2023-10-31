@@ -1,17 +1,17 @@
 import React from "react";
 import { Node, Edge, ReactFlowInstance, ReactFlowJsonObject } from "reactflow";
 import { nodeDataToJson, nodeJsonToData } from "../Definitions";
+import { SetElementProp } from "./useAppElements";
 
 interface UseFlowProps {
-    setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
-    setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
+    setElements: SetElementProp;
 }
 
 const flowKey = 'flow-data';
 
 export const useFlow = ( props: UseFlowProps ) => {
 
-    const { setNodes, setEdges } = props
+    const { setElements } = props
 
     const [rfInstance, setRfInstance] = React.useState<ReactFlowInstance | null>(null);
 
@@ -34,13 +34,15 @@ export const useFlow = ( props: UseFlowProps ) => {
             flow.nodes = flow.nodes.map((node: Node) => ({...node, data: nodeJsonToData(node.data)}));
         
             if (flow) {
-                setNodes(flow.nodes || []);
-                setEdges(flow.edges || []);
+                setElements({
+                    nodes: flow.nodes || [],
+                    edges: flow.edges || []
+                });
             }
         };
     
         restoreFlow();
-    }, [setNodes]);
+    }, [setElements]);
 
     const toObject = (rfInstance: ReactFlowInstance) : ReactFlowJsonObject<any, any> => {
 
