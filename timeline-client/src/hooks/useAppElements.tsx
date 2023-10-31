@@ -49,12 +49,6 @@ export const useAppElements = ( props: UseAppElementsProps ) => {
     const triggerUpdate: TriggerUpdateProp = React.useCallback(
 		(t: UpdateElementsMode, v: any, ignoreAction: boolean = false) => {
 
-            if(!ignoreAction) {
-                console.info("not ignore");
-            }
-
-            console.info(t, v);
-
 			// To prevent a mismatch of state updates,
 			// we'll use the value passed into this
 			// function instead of the state directly.
