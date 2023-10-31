@@ -152,6 +152,11 @@ function Flow ({children}: FlowProps): any {
         setHideEnabled(checked);
     };
 
+    const submitUpdatedNode = (updatedData: PlotPointData) => {
+
+        onUpdateNode(updatedData, selectedCharacterId, selectedChapterIndex);
+    } 
+
     // used to hide/ unhide when not changing chapters
     React.useEffect(() => {
 
@@ -210,7 +215,7 @@ function Flow ({children}: FlowProps): any {
             <PlotPointDialog
                 open={dialogOpen}
                 onDialogClose={handleDialogClose}
-                onSubmit={onUpdateNode}
+                onSubmit={submitUpdatedNode}
                 formData={selectedNodeData}
                 selectedChapterIndex={selectedChapterIndex}
                 allChapters={allChapters}

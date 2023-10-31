@@ -29,6 +29,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 	const onNodesChange = React.useCallback(
 		(changes: NodeChange[]) => {
 
+            // we want to ignore the changes for the undo/redo when the node is still being dragged
             const ignoreChanges = hasDraggingChange(changes);
 
 			triggerUpdate(UpdateElementsMode.Nodes, applyNodeChanges(changes, elements.nodes), ignoreChanges);
@@ -84,7 +85,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
     }, [triggerUpdate]);
 
     // when a submit comes back from the Plot Dialog this gets updated
-    const onUpdateNode = React.useCallback((updatedData: PlotPointData) => {
+    const onUpdateNode = React.useCallback((updatedData: PlotPointData, selectedCharacterId: string, selectedChapterIndex: number) => {
 
         updatedData.chapterAction = ChapterAction.Modified;
 
@@ -93,6 +94,15 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
             updatedData.chapterAction = ChapterAction.Added;
         }
+
+        const chapterInfo = updatedData.chaptersMap.get(selectedChapterIndex);
+
+        if(chapterInfo !== undefined) {
+
+            updatedData.inCharacterTimeline = chapterInfo.characters.some(selectedAlias => selectedAlias.id == selectedCharacterId);
+        }
+
+        if(selectedCharacterId)
 
         triggerUpdate(UpdateElementsMode.Nodes,
             elements.nodes.map((node) => {
