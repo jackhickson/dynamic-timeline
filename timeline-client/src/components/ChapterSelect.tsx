@@ -4,6 +4,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { StoryBatch } from '../Definitions';
+import styled from 'styled-components';
 
 interface ChapterSelectProps {
     storyBatches: StoryBatch[];
@@ -25,24 +26,24 @@ export default function ChapterSelect(props: ChapterSelectProps) {
 
     return (
         <div>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel htmlFor="chapter-select">Chapter</InputLabel>
-            <Select defaultValue="0" id="chapter-select" label="Chapter" onChange={onChange}>
-                {storyBatches.map(function(batch: StoryBatch, batchIndex){
-                    return [
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel htmlFor="chapter-select">Chapter</InputLabel>
+                <Select defaultValue="0" id="chapter-select" label="Chapter" onChange={onChange}>
+                    {storyBatches.map(function(batch: StoryBatch, batchIndex){
+                        return [
 
-                        <ListSubheader key={"batch-" + batchIndex}>{batch.name}</ListSubheader>,
+                            <ListSubheader key={"batch-" + batchIndex}>{batch.name}</ListSubheader>,
 
-                        batch.chapters.map((chapter: string) => {
+                            batch.chapters.map((chapter: string) => {
 
-                            chapterCount++;
-                            // set the chapterCount to one less as can increment after return
-                            return <MenuItem key={"chapter" + chapter} value={chapterCount-1}>{chapter}</MenuItem>
-                        })
-                    ]
-                })}
-            </Select>
-        </FormControl>
+                                chapterCount++;
+                                // set the chapterCount to one less as can increment after return
+                                return <MenuItem key={"chapter" + chapter} value={chapterCount-1}>{chapter}</MenuItem>
+                            })
+                        ]
+                    })}
+                </Select>
+            </FormControl>
         </div>
     );
 }

@@ -1,17 +1,21 @@
 import React, { MouseEvent as ReactMouseEvent, ReactNode } from 'react'
 import {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
-import PlotPointDialog from './components/PlotPointDialog';
-import ChapterSelect from './components/ChapterSelect';
+import { Checkbox, SelectChangeEvent } from '@mui/material';
+
 import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
 import { useAppElements } from './hooks/useAppElements';
-import { PlotPointData, createPlotPointData, StoryBatch, storyBatchesToChapterList, CharacterAliases, UNSELECTED_CHARACTER_ID } from './Definitions';
-import { ReactFlowStyled, MiniMapStyled, ControlsStyled} from './components/StyledReactFlow';
+import { useTheme } from 'styled-components'
 
+import { PlotPointData, createPlotPointData, StoryBatch, storyBatchesToChapterList, CharacterAliases, miniMapNodeBackGroundStyle } from './Definitions';
+
+import { ReactFlowStyled, MiniMapStyled, CustomControls} from './components/StyledReactFlow';
 import PlotPointNode from './components/PlotPointNode';
-import { Checkbox, MenuItem, Select, SelectChangeEvent, useTheme } from '@mui/material';
+import PlotPointDialog from './components/PlotPointDialog';
+import ChapterSelect from './components/ChapterSelect';
+import CharacterSelect from './components/CharacterSelect';
 
 const minimapStyle = {
   height: 120
@@ -56,8 +60,6 @@ function Flow ({children}: FlowProps): any {
     const [hideEnabled, setHideEnabled] = React.useState<boolean>(true);
     const [chapterNodeIdsMap, setChapterNodeIdsMap] = React.useState<Map<number, number[]>>(new Map());
     const [selectedCharacterId, setSelectedCharacterId] = React.useState<string>('');
-
-    const theme = useTheme();
 
     React.useEffect(()=> {
 
@@ -163,32 +165,11 @@ function Flow ({children}: FlowProps): any {
         onUpdateFromChapterChange(selectedChapterIndex);
     }, [hideEnabled])
 
+    const theme = useTheme()
+
     return (
         <div style={{height: "100vh", width: "100vw"}}>
-            <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIndexChange}/>
-            
-            <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={selectedCharacterId}
-                label="Age"
-                onChange={onCharacterIdChange}
-                >
-                {allCharactersAlias.map((alias) => (
-                <MenuItem
-                    key={"alias-" + alias.id}
-                    value={alias.id}
-                    style={{fontWeight:
-                        alias.id == selectedCharacterId
-                          ? theme.typography.fontWeightRegular
-                          : theme.typography.fontWeightMedium,}}
-                >
-                    {alias.id}
-                </MenuItem>
-                ))}
 
-            </Select>
-            <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
             <ReactFlowStyled
                 nodes={elements.nodes}
                 edges={elements.edges}
@@ -201,15 +182,28 @@ function Flow ({children}: FlowProps): any {
                 fitView
             >
                 {children}
-                <Panel position="top-right">
-                    <button onClick={undo}>Undo</button>
-                    <button onClick={redo}>Redo</button>
-                    <button onClick={()=> reset()}>Reset</button>
-                    <button onClick={onSave}>save</button>
-                    <button onClick={onRestore}>restore</button>
-                    <button onClick={addNewNode}>add node</button>
+
+                <Panel position="top-center" style={{display: 'inline-flex'}}>
+        
+                    <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIndexChange}/>
+                    <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
+
+                    <CharacterSelect 
+                        allCharactersAlias={allCharactersAlias} 
+                        onCharacterIdChange={onCharacterIdChange} 
+                        selectedCharacterId={selectedCharacterId} 
+                    />
                 </Panel>
+
+                <Panel position="top-right">
+
+                </Panel>
+
                 <Background color="#aaa" gap={16} />
+                <MiniMapStyled nodeColor={((node: Node<PlotPointData>): string => miniMapNodeBackGroundStyle(node, theme))} />
+
+                <CustomControls onAddNode={addNewNode} onRedo={redo} onReset={reset} onSave={onSave} onRestore={onRestore} onUndo={undo}/>
+
             </ReactFlowStyled>
 
             <PlotPointDialog

@@ -151,3 +151,27 @@ export function storyBatchesToChapterList(storyBatches: StoryBatch[]): string[] 
 
     return allChapters;
 }
+
+export function miniMapNodeBackGroundStyle(node: Node<PlotPointData>, theme: any): string {
+
+    console.info(node, theme.nodeBg, theme.nodeAdded);
+
+    return nodeBackGroundStyle(node.data.chapterAction, theme);
+}
+
+export function nodeBackGroundStyle(action: ChapterAction, theme: any): string {
+
+    console.info(action, theme)
+
+    let backgroundColor = theme.nodeBg;
+
+    if(action == ChapterAction.Added) {
+        backgroundColor = theme.nodeAdded;
+    } else if( action == ChapterAction.Modified) {
+        backgroundColor = theme.nodeModified;
+    } else if (action == ChapterAction.None) {
+        backgroundColor = theme.nodeNone;
+    }
+
+    return backgroundColor;
+}

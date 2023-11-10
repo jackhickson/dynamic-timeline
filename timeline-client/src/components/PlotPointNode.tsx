@@ -1,22 +1,7 @@
 import { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { ChapterAction, PlotPointData } from '../Definitions';
+import { ChapterAction, PlotPointData, nodeBackGroundStyle } from '../Definitions';
 import styled from 'styled-components';
-
-const nodeBackGroundStyle = (action: ChapterAction, theme: any): string => {
-
-    let backgroundColor = theme.nodeBg;
-
-    if(action == ChapterAction.Added) {
-        backgroundColor = theme.nodeAdded;
-    } else if( action == ChapterAction.Modified) {
-        backgroundColor = theme.nodeModified;
-    } else if (action == ChapterAction.None) {
-        backgroundColor = theme.nodeNone;
-    }
-
-    return backgroundColor;
-}
 
 const Node = styled.div<{ selected: boolean; action: ChapterAction, $dashed: boolean}>`
     padding: 10px 20px;

@@ -1,4 +1,4 @@
-import ReactFlow, { MiniMap,Controls } from 'reactflow';
+import ReactFlow, { MiniMap, Controls, ControlButton } from 'reactflow';
 import styled from 'styled-components';
 
 export const ReactFlowStyled = styled(ReactFlow)`
@@ -11,14 +11,9 @@ export const MiniMapStyled = styled(MiniMap)`
   .react-flow__minimap-mask {
     fill: ${(props) => props.theme.minimapMaskBg};
   }
-
-  .react-flow__minimap-node {
-    fill: ${(props) => props.theme.nodeBg};
-    stroke: none;
-  }
 `;
 
-export const ControlsStyled = styled(Controls)`
+const ControlsStyled = styled(Controls)`
   button {
     background-color: ${(props) => props.theme.controlsBg};
     color: ${(props) => props.theme.controlsColor};
@@ -28,8 +23,50 @@ export const ControlsStyled = styled(Controls)`
       background-color: ${(props) => props.theme.controlsBgHover};
     }
 
+    &.react-flow__controls-button {
+      width: 68px;
+    }
+
     path {
       fill: currentColor;
     }
   }
 `;
+
+interface ControlProps {
+  onAddNode: () => void;
+  onRedo:  () => void;
+  onReset: () => void;
+  onRestore: () => void;
+  onSave: () => void;
+  onUndo:  () => void;
+}
+
+// for some reason the style is not applying to this
+export function CustomControls(props: ControlProps) {
+
+  const {onAddNode, onRedo, onReset, onRestore, onSave, onUndo} = props;
+
+  return (
+    <ControlsStyled>
+      <ControlButton onClick={onAddNode} title="Add new node" >
+        <div>Add Node</div>
+      </ControlButton>
+      <ControlButton onClick={onRedo} title="Redo last change">
+        <div>redo</div>
+      </ControlButton>
+      <ControlButton onClick={onUndo} title="Undo last change">
+        <div>undo</div>
+      </ControlButton>
+      <ControlButton onClick={onReset} title="Reset graph">
+        <div>reset</div>
+      </ControlButton>
+      <ControlButton onClick={onSave} title="Save graph">
+        <div>save</div>
+      </ControlButton>
+      <ControlButton onClick={onRestore} title="Restore saved graph">
+        <div>restore</div>
+      </ControlButton>
+    </ControlsStyled>
+  );
+}
