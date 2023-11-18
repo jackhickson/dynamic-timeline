@@ -9,7 +9,8 @@ import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
 import { useAppElements } from './hooks/useAppElements';
 import { useTheme } from 'styled-components'
 
-import { PlotPointData, createPlotPointData, StoryBatch, storyBatchesToChapterList, CharacterAliases, miniMapNodeBackGroundStyle } from './Definitions';
+import { PlotPointData, createPlotPointData, storyBatchesToChapterList, miniMapNodeBackGroundStyle } from './Definitions';
+import { CharacterAliasList, StoryBatch } from '@backend/api-types';
 
 import { ReactFlowStyled, MiniMapStyled, CustomControls} from './components/StyledReactFlow';
 import PlotPointNode from './components/PlotPointNode';
@@ -21,7 +22,7 @@ const minimapStyle = {
   height: 120
 };
 
-const allCharactersAlias: CharacterAliases[] = [
+const allCharactersAlias: CharacterAliasList[] = [
     {
       id: "Erin Solstice",
       aliases: [

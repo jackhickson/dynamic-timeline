@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { StoryBatch } from '../Definitions';
+import { StoryBatch } from '@backend/api-types';
 import styled from 'styled-components';
 
 interface ChapterSelectProps {

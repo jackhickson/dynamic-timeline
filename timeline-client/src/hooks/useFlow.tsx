@@ -1,5 +1,5 @@
 import React from "react";
-import { Node, Edge, ReactFlowInstance, ReactFlowJsonObject } from "reactflow";
+import { Node, ReactFlowInstance, ReactFlowJsonObject } from "reactflow";
 import { nodeDataToJson, nodeJsonToData } from "../Definitions";
 import { SetElementProp } from "./useAppElements";
 

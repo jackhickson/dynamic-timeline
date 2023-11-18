@@ -1,5 +1,5 @@
-import { all } from 'axios';
-import {Node, Edge} from 'reactflow';
+import {Node} from 'reactflow';
+import { PlotPointChapter, SelectedCharacterAlias, StoryBatch } from '@backend/api-types';
 
 export const DEFAULT_LABEL = "Plot Name";
 
@@ -34,16 +34,6 @@ export function nodeDataToJson(data: PlotPointData): any {
 
     return jsonPlotData;
 }
-
-export interface ChaptersJsonData {
-    base: NodesEdgesPair;
-    chapters: Map<String, NodesEdgesPair>;
-};
-
-export interface NodesEdgesPair {
-    nodes: Node<PlotPointData>[];
-    edges: Edge[];
-};
 
 export interface PlotPointData {
     chaptersMap: Map<number, PlotPointChapter>;
@@ -90,25 +80,6 @@ export function createPlotPointChapterData(selectedChapterIndex: number, default
     return data;
 }
 
-export interface PlotPointChapter extends PlotPointChapterInfo {
-    chapterIndex: number;
-}
-
-export interface PlotPointChapterInfo {
-    characters: SelectedCharacterAlias[];
-    description: string;
-}
-
-export interface CharacterAliases {
-    id: string;
-    aliases: string[];
-};
-
-export interface SelectedCharacterAlias {
-    id: string;
-    alias: string;
-};
-
 export function mapToSelectedCharacterAliases(characterAliasMap: Map<string, string>): SelectedCharacterAlias[] {
 
     let selectedAliases: SelectedCharacterAlias[] = [];
@@ -126,18 +97,10 @@ export function selectedCharacterAliasToMap(selectedAliases: SelectedCharacterAl
     return new Map(selectedAliases.map((alias) => [alias.id, alias.alias]));
 }
 
-export const UNSELECTED_CHARACTER_ID = "None";
-
 export enum ChapterAction {
     None,
     Added,
     Modified
-}
-
-// ie volumes, books, audio books
-export interface StoryBatch {
-    name: string;
-    chapters: string[];
 }
 
 export function storyBatchesToChapterList(storyBatches: StoryBatch[]): string[] {

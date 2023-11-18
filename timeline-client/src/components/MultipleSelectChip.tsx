@@ -6,7 +6,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem, { MenuItemProps } from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { CharacterAliases, SelectedCharacterAlias, mapToSelectedCharacterAliases } from '../Definitions';
+import { mapToSelectedCharacterAliases } from '../Definitions';
+import { CharacterAliasList, SelectedCharacterAlias } from '@backend/api-types';
 import Popper, { PopperProps } from '@mui/material/Popper';
 import { MenuList, Paper } from '@mui/material';
 
@@ -40,7 +41,7 @@ function getStylesOfAliases(option: string, selectedOptions: string[], theme: Th
 }
 
 type NestedAliasMenuItemProps = MenuItemProps & {
-  characterAliases: CharacterAliases;
+  characterAliases: CharacterAliasList;
   button?: true;
   label: string;
   onSelectAlias: (id: string, alias: string) => void;
@@ -103,7 +104,7 @@ const NestedAliasMenuItem = (props: NestedAliasMenuItemProps) => {
 
 interface MultipleSelectChipProps {
   id: string
-  allCharacterAliases: CharacterAliases[];
+  allCharacterAliases: CharacterAliasList[];
   map: Map<string, string>;
   onCharactersChange: (selectedAlias: SelectedCharacterAlias[]) => void;
 }

@@ -1,9 +1,10 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import { Button, Dialog, Chip, Box } from '@mui/material';
-import { PlotPointData, createPlotPointChapterData, PlotPointChapter, CharacterAliases, SelectedCharacterAlias, selectedCharacterAliasToMap } from '../Definitions';
+import { PlotPointData, createPlotPointChapterData, selectedCharacterAliasToMap } from '../Definitions';
 import MultipleSelectChip from './MultipleSelectChip';
 import {keysToSortedArray} from '../utils';
+import { CharacterAliasList, SelectedCharacterAlias, PlotPointChapter } from '@backend/api-types';
 
 const fandomCharacterUrl = "https://thewanderinginn.fandom.com/wiki/";
 
@@ -14,7 +15,7 @@ interface PlotPointDialogProps {
   formData: PlotPointData;
   selectedChapterIndex: number;
   allChapters: string[];
-  allCharacterAlias: CharacterAliases[];
+  allCharacterAlias: CharacterAliasList[];
 }
 
 interface ChapterId {

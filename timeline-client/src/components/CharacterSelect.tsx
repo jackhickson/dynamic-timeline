@@ -1,8 +1,8 @@
 import { MenuItem, Select, SelectChangeEvent, useTheme } from "@mui/material";
-import { CharacterAliases } from "../Definitions";
+import { CharacterAliasList } from "@backend/api-types";
 
 interface CharacterSelectProps {
-    allCharactersAlias: CharacterAliases[];
+    allCharactersAlias: CharacterAliasList[];
     onCharacterIdChange: (event: SelectChangeEvent<string>) => void;
     selectedCharacterId: string;
 }
