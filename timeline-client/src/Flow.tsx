@@ -7,10 +7,15 @@ import { useDialog } from './hooks/useDialog';
 import { useFlow } from './hooks/useFlow';
 import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
 import { useAppElements } from './hooks/useAppElements';
+import { useStoryBatches } from './hooks/useStoryBatches';
+import { useCharactersAliasList } from './hooks/useCharacterAliases';
 import { useTheme } from 'styled-components'
 
-import { PlotPointData, createPlotPointData, storyBatchesToChapterList, miniMapNodeBackGroundStyle } from './Definitions';
-import { CharacterAliasList, StoryBatch } from '@backend/api-types';
+import { api } from './axiosApi';
+//import { isInitialState } from '../../chapter-server/src/api-types';
+import { PlotPointData, miniMapNodeBackGroundStyle, nodeJsonToData } from './Definitions';
+
+import { initialNodes, initialEdges, initialChapterAliasList, initialStoryBatches } from './initial-elements';
 
 import { ReactFlowStyled, MiniMapStyled, CustomControls} from './components/StyledReactFlow';
 import PlotPointNode from './components/PlotPointNode';
@@ -18,36 +23,10 @@ import PlotPointDialog from './components/PlotPointDialog';
 import ChapterSelect from './components/ChapterSelect';
 import CharacterSelect from './components/CharacterSelect';
 
+
 const minimapStyle = {
   height: 120
 };
-
-const allCharactersAlias: CharacterAliasList[] = [
-    {
-      id: "Erin Solstice",
-      aliases: [
-        "The Crazy Human Innkeeper"
-      ]
-    },
-    {
-      id: "Teriarch",
-      aliases: [
-        "Eldalvin",
-        "Bronze Dragon",
-        "Demsleth"
-      ]
-    }
-];
-
-const storyBatches: StoryBatch[] = [{name: "Volume 1", chapters: ["1.01", "1.02", "1.03"]}, {name: "Volume 2", chapters: ["2.01"]}];
-const allChapters: string[] = storyBatchesToChapterList(storyBatches);
-
-const initialNodes: Node[] = [{"id":"0-0",type:'custom',position:{x:0,y:0},data:{label:"origin"}}];
-const initialEdges: Edge[] = [];
-
-let initialPlotPointData = createPlotPointData("0-0", 0);
-initialNodes[0].data = initialPlotPointData;
-let intialSelectedNodeId = initialNodes[0].id;
 
 interface FlowProps {
     children: ReactNode
@@ -55,30 +34,13 @@ interface FlowProps {
 
 function Flow ({children}: FlowProps): any {
 
-    const [selectedNodeId, setSelectedNodeId] = React.useState<string>(intialSelectedNodeId);
-    const [selectedNodeData, setSelectedNodeData] = React.useState<PlotPointData>(initialPlotPointData);
+    const { storyBatches, setStoryBatches, allChapters, chapterNodeIdsMap } = useStoryBatches({initialStoryBatches});
+    const { charactersAliasList, setCharactersAliasList, selectedCharacterId, setSelectedCharacterId } = useCharactersAliasList({initialChapterAliasList});
+
+    const [selectedNodeId, setSelectedNodeId] = React.useState<string>(initialNodes[0].id);
+    const [selectedNodeData, setSelectedNodeData] = React.useState<PlotPointData>(initialNodes[0].data);
     const [selectedChapterIndex, setSelectedChapterIndex] = React.useState<number>(0);
     const [hideEnabled, setHideEnabled] = React.useState<boolean>(true);
-    const [chapterNodeIdsMap, setChapterNodeIdsMap] = React.useState<Map<number, number[]>>(new Map());
-    const [selectedCharacterId, setSelectedCharacterId] = React.useState<string>('');
-
-    React.useEffect(()=> {
-
-        allChapters.forEach((_, index) => {
-            let nodeIDs: number[] = [];
-
-            if(index === 0) {
-
-                nodeIDs.push(0);
-            }
-
-            // need to make sure they are in order when doing it for real
-
-            chapterNodeIdsMap.set(index, nodeIDs);
-        })
-
-        setChapterNodeIdsMap(chapterNodeIdsMap);
-    }, [setChapterNodeIdsMap, chapterNodeIdsMap])
 
     const {elements, setElements, triggerUpdate, undo, redo, reset} = useAppElements({initialNodes, initialEdges});
 
@@ -96,6 +58,29 @@ function Flow ({children}: FlowProps): any {
     const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
 
     const nodeTypes = React.useMemo(() => ({ custom: PlotPointNode }), []);
+
+    // calls chapter-server to set all the deafault information
+    React.useEffect(() => {
+
+        api.get("/all").then((response) => {
+
+            const data = response.data;
+        
+            if(true){//isInitialState(data)) {
+
+                data.flow.nodes = data.flow.nodes.map((node: Node) => ({...node, data: nodeJsonToData(node.data)}));
+        
+                setElements({
+                    nodes: data.flow.nodes || [],
+                    edges: data.flow.edges || []
+                })
+        
+                setCharactersAliasList(data.characterAliasList || []);
+                setStoryBatches(data.storyBatches || []);
+            }
+        });
+
+    }, [])
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 
@@ -115,7 +100,9 @@ function Flow ({children}: FlowProps): any {
         if(nodeIds == undefined) {
 
             nodeIds = [];
-            setChapterNodeIdsMap(chapterNodeIdsMap.set(selectedChapterIndex, nodeIds));
+
+            // need to take a look at this again
+            chapterNodeIdsMap.set(selectedChapterIndex, nodeIds);
         }
 
         let plotPointId: number = -1;
@@ -190,7 +177,7 @@ function Flow ({children}: FlowProps): any {
                     <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
 
                     <CharacterSelect 
-                        allCharactersAlias={allCharactersAlias} 
+                        allCharactersAlias={charactersAliasList} 
                         onCharacterIdChange={onCharacterIdChange} 
                         selectedCharacterId={selectedCharacterId} 
                     />
@@ -214,7 +201,7 @@ function Flow ({children}: FlowProps): any {
                 formData={selectedNodeData}
                 selectedChapterIndex={selectedChapterIndex}
                 allChapters={allChapters}
-                allCharacterAlias={allCharactersAlias}/>
+                allCharacterAlias={charactersAliasList}/>
         </div>
     )
 }

@@ -97,6 +97,9 @@ export function selectedCharacterAliasToMap(selectedAliases: SelectedCharacterAl
     return new Map(selectedAliases.map((alias) => [alias.id, alias.alias]));
 }
 
+// TODO: not sure what to do with this for now
+export const UNSELECTED_CHARACTER_ID = "None";
+
 export enum ChapterAction {
     None,
     Added,
@@ -117,14 +120,14 @@ export function storyBatchesToChapterList(storyBatches: StoryBatch[]): string[] 
 
 export function miniMapNodeBackGroundStyle(node: Node<PlotPointData>, theme: any): string {
 
-    console.info(node, theme.nodeBg, theme.nodeAdded);
+    //console.info(node, theme.nodeBg, theme.nodeAdded);
 
     return nodeBackGroundStyle(node.data.chapterAction, theme);
 }
 
 export function nodeBackGroundStyle(action: ChapterAction, theme: any): string {
 
-    console.info(action, theme)
+    //console.info(action, theme)
 
     let backgroundColor = theme.nodeBg;
 

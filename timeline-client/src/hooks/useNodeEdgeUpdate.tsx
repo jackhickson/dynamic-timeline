@@ -175,6 +175,8 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
         let plotPointData: PlotPointData = newNode.data;
 
+        console.info(plotPointData);
+
         let indexes: number[] = keysToSortedArray(plotPointData.chaptersMap.keys());
 
         let action: ChapterAction = ChapterAction.None;

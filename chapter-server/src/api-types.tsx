@@ -1,7 +1,11 @@
 export interface InitialState {
-    characterAliases: any,
+    characterAliasList: any,
     flow: any,
     storyBatches: any
+}
+
+export function isInitialState(object: any): object is InitialState {
+    return 'characterAliasList' in object && 'flow' in object && 'storyBatches' in object;
 }
 
 // ie volumes, books, audio books

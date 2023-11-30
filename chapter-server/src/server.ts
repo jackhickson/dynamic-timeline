@@ -1,7 +1,8 @@
-import express, {Express, Request, Response} from "express";
-import { getMediaMap } from './timeline-files.js';
+import express, {Request, Response} from "express";
 import bodyParser from "body-parser";
 const cors = require('cors');
+
+import { getAllData } from "./timeline-files";
 
 
 const app = express();
@@ -11,22 +12,10 @@ app.use(cors({
 }));
 const port = 8080; // default port to listen
 
-const mediaMap = getMediaMap("volumes");
-
 // define a route handler for the default home page
-app.get( "/series/:media/:mediaId", ( req: Request, res: Response ) => {
+app.get( "/all", ( _: Request, res: Response ) => {
 
-    let media = "volumes"; //req.media
-    let mediaId = "vol-1"; //req.mediaId
-
-    let map = getMediaMap(media);
-
-    var obj = Object.fromEntries(map);
-    var jsonString = JSON.stringify(obj);
-
-    console.info({jsonString})
-
-    res.send( jsonString);
+    res.send( getAllData());
 });
 
 // start the Express server
