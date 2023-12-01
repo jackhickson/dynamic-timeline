@@ -1,26 +1,10 @@
 {
-  "nodes": [
-    {
-      "id": "0-0",
-      "type": "custom",
-      "position": {
+    "nodes": [
+    ],
+    "edges": [],
+    "viewport": {
         "x": 0,
-        "y": 0
-      },
-      "data": {
-        "id": "0-0",
-        "location": "",
-        "label": "Plot Name",
-        "chaptersMap": {},
-        "chapterAction": 1,
-        "inCharacterTimeline": false
-      }
+        "y": 0,
+        "zoom": 1
     }
-  ],
-  "edges": [],
-  "viewport": {
-    "x": 0,
-    "y": 0,
-    "zoom": 1
-  }
 }

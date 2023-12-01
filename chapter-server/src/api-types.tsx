@@ -1,10 +1,10 @@
-export interface InitialState {
+export interface AppData {
     characterAliasList: any,
     flow: any,
     storyBatches: any
 }
 
-export function isInitialState(object: any): object is InitialState {
+export function isAppData(object: any): object is AppData {
     return 'characterAliasList' in object && 'flow' in object && 'storyBatches' in object;
 }
 

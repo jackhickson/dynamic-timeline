@@ -145,7 +145,13 @@ function Flow ({children}: FlowProps): any {
     const submitUpdatedNode = (updatedData: PlotPointData) => {
 
         onUpdateNode(updatedData, selectedCharacterId, selectedChapterIndex);
-    } 
+    }
+
+    const saveAppData = () => {
+
+        // save already has access to the rfInstance
+        onSave(storyBatches, charactersAliasList);
+    }
 
     // used to hide/ unhide when not changing chapters
     React.useEffect(() => {
@@ -190,7 +196,7 @@ function Flow ({children}: FlowProps): any {
                 <Background color="#aaa" gap={16} />
                 <MiniMapStyled nodeColor={((node: Node<PlotPointData>): string => miniMapNodeBackGroundStyle(node, theme))} />
 
-                <CustomControls onAddNode={addNewNode} onRedo={redo} onReset={reset} onSave={onSave} onRestore={onRestore} onUndo={undo}/>
+                <CustomControls onAddNode={addNewNode} onRedo={redo} onReset={reset} onSave={saveAppData} onRestore={onRestore} onUndo={undo}/>
 
             </ReactFlowStyled>
 

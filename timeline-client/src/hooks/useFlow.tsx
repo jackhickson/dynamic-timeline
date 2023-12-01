@@ -2,6 +2,8 @@ import React from "react";
 import { Node, ReactFlowInstance, ReactFlowJsonObject } from "reactflow";
 import { nodeDataToJson, nodeJsonToData } from "../Definitions";
 import { SetElementProp } from "./useAppElements";
+import { AppData, CharacterAliasList, StoryBatch } from "@backend/api-types";
+import { api } from "../axiosApi";
 
 interface UseFlowProps {
     setElements: SetElementProp;
@@ -15,13 +17,20 @@ export const useFlow = ( props: UseFlowProps ) => {
 
     const [rfInstance, setRfInstance] = React.useState<ReactFlowInstance | null>(null);
 
-    const onSave = React.useCallback(() => {
+    const onSave = React.useCallback((storyBatches: StoryBatch[], charactersAliasList: CharacterAliasList[]) => {
         if (rfInstance) {
             const flow = toObject(rfInstance);
-            console.info(flow);
-            const json = JSON.stringify(flow, null, 2);
-            console.info(json);
-            localStorage.setItem(flowKey, json);
+
+            const json : AppData = {
+                characterAliasList: charactersAliasList,
+                flow: flow,
+                storyBatches: storyBatches
+            }
+
+            api.post("/save", json).then((response) => {
+
+                console.info(response);
+            });
         }
     }, [rfInstance]);
     
@@ -42,7 +51,7 @@ export const useFlow = ( props: UseFlowProps ) => {
         };
     
         restoreFlow();
-    }, [setElements]);
+    }, []);
 
     const toObject = (rfInstance: ReactFlowInstance) : ReactFlowJsonObject<any, any> => {
 
