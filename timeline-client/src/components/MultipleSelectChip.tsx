@@ -1,15 +1,16 @@
 import React from 'react';
-import { Theme, useTheme } from '@mui/material/styles';
+import { Theme, styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem, { MenuItemProps } from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, { SelectChangeEvent, SelectProps } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { mapToSelectedCharacterAliases } from '../Definitions';
 import { CharacterAliasList, SelectedCharacterAlias } from '@backend/api-types';
 import Popper, { PopperProps } from '@mui/material/Popper';
-import { MenuList, Paper } from '@mui/material';
+import { FormControl, MenuList, Paper } from '@mui/material';
+import { blue, grey } from '../theme';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -38,6 +39,31 @@ function getStylesOfAliases(option: string, selectedOptions: string[], theme: Th
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
+}
+
+function renderChips(selected: string[], selectedCharacterAliasMap: Map<string, string>) {
+
+  return (<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+    {
+      selected.map(id => {
+
+        const selectedAlias = selectedCharacterAliasMap.get(id);
+
+        if (!selectedAlias) {
+
+          console.error(`Selected character alias ${id} could not be found`)
+          return "NotFound";
+        }
+
+        return selectedAlias
+
+      }).map((chipString) => (
+
+        <Chip key={chipString} label={chipString} />
+      ))
+    }
+  </Box>
+  )
 }
 
 type NestedAliasMenuItemProps = MenuItemProps & {
@@ -102,8 +128,7 @@ const NestedAliasMenuItem = (props: NestedAliasMenuItemProps) => {
   );
 };
 
-interface MultipleSelectChipProps {
-  id: string
+type MultipleSelectChipProps = SelectProps<string[]> & {
   allCharacterAliases: CharacterAliasList[];
   map: Map<string, string>;
   onCharactersChange: (selectedAlias: SelectedCharacterAlias[]) => void;
@@ -131,7 +156,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
     event.preventDefault();
 
     // if a click comes from the nested menu then it will bubble to here but that is not wanted
-    if(changeFromNested) {
+    if (changeFromNested) {
 
       changeFromNested = false;
       return;
@@ -162,7 +187,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
 
     const currentAlias = newMap.get(id);
 
-    if(currentAlias == incomingAlias) {
+    if (currentAlias == incomingAlias) {
 
       // toggle if the same alias is clicked
       newMap.delete(id);
@@ -181,36 +206,19 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
   }
 
   return (
-    <>
+    <FormControl>
       <InputLabel id="multiple-chip-label">{id}</InputLabel>
       <Select
         labelId="-multiple-chip-label"
-        id={id}
         multiple
         value={Array.from(selectedCharacterAliasMap.keys())}
         onChange={handleRealNameChange}
         input={<OutlinedInput id="select-multiple-chip" label={id} />}
         renderValue={(selected) => (
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {selected.map(id => {
-
-              const selectedAlias = selectedCharacterAliasMap.get(id);
-
-              if (!selectedAlias) {
-
-                console.error(`Selected character alias ${id} could not be found`)
-                return "NotFound";
-              }
-
-              return selectedAlias
-
-            }).map((chipString) => (
-
-              <Chip key={chipString} label={chipString} />
-            ))}
-          </Box>
+          selected && renderChips(selected, selectedCharacterAliasMap)
         )}
         MenuProps={MenuProps}
+        {...props}
       >
         {allCharacterAliases.map((characterAliases) => (
           // need to make this a custom menu item
@@ -226,6 +234,6 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
           />
         ))}
       </Select>
-    </>
+    </FormControl>
   );
 }

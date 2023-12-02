@@ -1,10 +1,12 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
-import { Button, Dialog, Chip, Box } from '@mui/material';
+import { Button, Dialog, Chip, Box, DialogTitle, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { PlotPointData, createPlotPointChapterData, selectedCharacterAliasToMap } from '../Definitions';
 import MultipleSelectChip from './MultipleSelectChip';
 import {keysToSortedArray} from '../utils';
 import { CharacterAliasList, SelectedCharacterAlias, PlotPointChapter } from '@backend/api-types';
+import CustomTextArea from './CustomTextArea';
 
 const fandomCharacterUrl = "https://thewanderinginn.fandom.com/wiki/";
 
@@ -151,20 +153,41 @@ function PlotPointDialog(props: PlotPointDialogProps) {
       open={open}
       onClose={onDialogClose}
       aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description">
+      aria-describedby="modal-modal-description"
+      maxWidth={"md"}
+      fullWidth={true}
+      scroll={'paper'}
+    >
+
+      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Plot Point Editor
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={onDialogClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+          </IconButton>
 
       <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
+          '& .MuiTextField-root': { m: 1, width: 'auto' },
         }}
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
+        style={{display:'grid'}}
       >
 
-        <TextField id="label" label="Plot point name" defaultValue={formData.label} onChange={handleLabelChange} />
         <TextField id="id" label="Node id" defaultValue={formData.id} disabled />
+        <TextField id="label" label="Plot point name" defaultValue={formData.label} onChange={handleLabelChange} />
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
           {chapterIds.map((chapterId) => {
@@ -176,10 +199,13 @@ function PlotPointDialog(props: PlotPointDialogProps) {
           })}
         </Box>
 
-        <MultipleSelectChip id="characters" allCharacterAliases={allCharacterAlias} map={selectedCharacterAliasToMap(plotPointChapter.characters)} onCharactersChange={handlCharaterInputChange}/>
+        <MultipleSelectChip id="characters" allCharacterAliases={allCharacterAlias} 
+          map={selectedCharacterAliasToMap(plotPointChapter.characters)} onCharactersChange={handlCharaterInputChange} sx={{margin: '8px'}}/>
 
-        <TextField id="description" label="Description" defaultValue={plotPointChapter.description} onChange={handleChapterInputChange} />
-        <TextField id="location" label="Location" defaultValue={formData.location} onChange={handleLocationChange} />
+        <br/>
+        <TextField id="location" label="Location" defaultValue={formData.location} onChange={handleLocationChange} fullWidth={true}/>
+        <br/>
+        <CustomTextArea id="description" label="Description" defaultValue={plotPointChapter.description} onChange={handleChapterInputChange} />
         <Button type='submit'>Submit</Button>
       </Box>
     </Dialog >

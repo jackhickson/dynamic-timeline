@@ -1,5 +1,35 @@
 {
     "nodes": [
+        {
+            "width": 116,
+            "height": 44,
+            "id": "0-1",
+            "type": "custom",
+            "data": {
+                "id": "0-1",
+                "location": "somewhere",
+                "label": "First",
+                "chaptersMap": {
+                    "0": {
+                        "chapterIndex": 0,
+                        "characters": [],
+                        "description": "something happened"
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "selected": true,
+            "dragging": false,
+            "positionAbsolute": {
+                "x": 0,
+                "y": 0
+            }
+        }
     ],
     "edges": [],
     "viewport": {

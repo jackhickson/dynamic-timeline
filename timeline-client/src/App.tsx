@@ -8,7 +8,7 @@ import Flow from './Flow';
 
 export default() => {
 
-    const [mode, setMode] = useState('dark');
+    const [mode, setMode] = useState('light');
     const theme = mode === 'light' ? lightTheme : darkTheme;
   
     const toggleMode = () => {
