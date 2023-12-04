@@ -176,8 +176,6 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
         let plotPointData: PlotPointData = newNode.data;
 
-        console.info(plotPointData);
-
         let indexes: number[] = keysToSortedArray(plotPointData.chaptersMap.keys());
 
         let action: ChapterAction = ChapterAction.None;
@@ -240,7 +238,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
             let edgeNodes = getNodesOfEdge(edge, updatedNodes);
 
             if(!edgeNodes || edgeNodes.length != 2) {
-                console.info(`Invalid nodes of edge ${edge}`)
+                console.error(`Invalid nodes of edge ${edge}`)
                 return edge;
             }
 

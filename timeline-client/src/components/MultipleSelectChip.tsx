@@ -3,43 +3,22 @@ import { Theme, styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem, { MenuItemProps } from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent, SelectProps } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectProps } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import { mapToSelectedCharacterAliases } from '../Definitions';
 import { CharacterAliasList, SelectedCharacterAlias } from '@backend/api-types';
-import Popper, { PopperProps } from '@mui/material/Popper';
-import { FormControl, MenuList, Paper } from '@mui/material';
-import { blue, grey } from '../theme';
+import { Accordion, AccordionDetails, AccordionSummary, FormControl, Grid, Typography } from '@mui/material';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      maxHeight: '40vh',
     },
   },
 };
-
-function getStyles(option: string, selectedOptions: Map<string, string>, theme: Theme) {
-  return {
-    fontWeight:
-      selectedOptions.get(option) === undefined
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
-function getStylesOfAliases(option: string, selectedOptions: string[], theme: Theme) {
-  return {
-    fontWeight:
-      selectedOptions.indexOf(option) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 function renderChips(selected: string[], selectedCharacterAliasMap: Map<string, string>) {
 
@@ -52,79 +31,87 @@ function renderChips(selected: string[], selectedCharacterAliasMap: Map<string, 
         if (!selectedAlias) {
 
           console.error(`Selected character alias ${id} could not be found`)
-          return "NotFound";
+          return undefined;
         }
 
         return selectedAlias
 
       }).map((chipString) => (
 
-        <Chip key={chipString} label={chipString} />
+        <Chip key={chipString + "chip"} label={chipString} />
       ))
     }
   </Box>
   )
 }
 
-type NestedAliasMenuItemProps = MenuItemProps & {
+type CharacterAccordionProps = {
+  expandedAccordion: string | false;
+  handleAccordianChange: (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => void;
   characterAliases: CharacterAliasList;
-  button?: true;
-  label: string;
   onSelectAlias: (id: string, alias: string) => void;
   selectedAlias: string | undefined;
   theme: Theme;
-} & Pick<PopperProps, "placement">;
+};
 
-const NestedAliasMenuItem = (props: NestedAliasMenuItemProps) => {
+const CustomAccordion = styled(Accordion)`
 
-  const [open, setOpen] = React.useState(false);
-  const ref = React.useRef<HTMLLIElement | null>(null);
+  .MuiAccordionSummary-root.selectedCharacter {
+    background-color: grey
+  }
 
-  const { characterAliases, button, label, onSelectAlias, selectedAlias, ...supProps } = props;
+  .MuiMenuItem-root.selectedAlias {
+    background-color: grey
+  }
+`;
+
+const CharacterAccordion = (props: CharacterAccordionProps) => {
+
+  const { expandedAccordion, handleAccordianChange, characterAliases, onSelectAlias, selectedAlias } = props;
   const { id, aliases } = characterAliases;
 
-  const onClick = (value: string) => {
-    onSelectAlias(id, value)
+    // if there is atleast one alias then add id to list as when there are no alias the click to the toplevel Accordion will just set the id as the alias
+  const alaisIdList = aliases.length > 0 ? [id].concat(aliases) : aliases
+
+  const onExpandClick = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+
+    // if there is only one alias it is the same as the id
+    if(alaisIdList.length <= 1) {
+
+      onSelectAlias(id, id)
+    } else {
+
+      handleAccordianChange(id)(event, isExpanded);
+    }
+  }
+
+  const onAliasClick = (alias: string) => {
+
+    onSelectAlias(id, alias)
   }
 
   return (
-    <MenuItem
-      {...supProps}
-      ref={ref}
-      onMouseEnter={() => setOpen(true)}
-      // onFocus={() => setOpen(true)}
-      // onBlur={() => setOpen(false)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <span>{props.label}</span>
-      <Popper
-        anchorEl={ref.current}
-        open={open}
-        placement={props.placement ?? "right"}
-        style={{ zIndex: 10000 }}
+    <CustomAccordion key={id + "-accordion"} expanded={expandedAccordion === id} onChange={onExpandClick(id)}>
+      <AccordionSummary
+        expandIcon={alaisIdList.length !== 0 ? <ExpandMoreIcon />: null}
+        aria-controls="panel1bh-content"
+        id={id + "-header"}
+        className={!!selectedAlias ? "selectedCharacter": undefined}
       >
-        <Paper>
-          <MenuList>
-
-            {aliases.map((alias) => (
-
-              <MenuItem
-                key={"character-" + id + alias}
-                value={alias}
-                style={getStylesOfAliases(alias, aliases, props.theme)}
-                // calculate selected
-                onClick={(() => onClick(alias))}
-              >
-                {alias}
-              </MenuItem>
-            ))}
-
-          </MenuList>
-        </Paper>
-
-
-      </Popper>
-    </MenuItem>
+        <Typography sx={{ width: '33%', flexShrink: 0 }}>
+          {id}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Grid container direction="column">
+          {alaisIdList.map((alias) => (
+            <MenuItem key={alias} onClick={() => onAliasClick(alias)} className={selectedAlias === alias? 'selectedAlias': undefined}>
+              <Typography >{alias}</Typography>
+            </MenuItem>
+          ))}
+        </Grid>
+      </AccordionDetails>
+  </CustomAccordion>
   );
 };
 
@@ -136,73 +123,42 @@ type MultipleSelectChipProps = SelectProps<string[]> & {
 
 export default function MultipleSelectChip(props: MultipleSelectChipProps) {
 
-  const { id, allCharacterAliases, map, onCharactersChange } = props;
+  const { id, allCharacterAliases, map, onCharactersChange, ...rest } = props;
 
   const [selectedCharacterAliasMap, setSelectedCharacterAliasMap] = React.useState<Map<string, string>>(map);
+  const [expandedAccordion, setExpandedAccordion] = React.useState<string | false>(false);
 
-  let changeFromNested = false;
+  const handleAccordianChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+
+    setExpandedAccordion(isExpanded ? panel : false);
+  };
 
   const theme = useTheme();
-
-  const handleChange = (newCharacterMap: Map<string, string>) => {
-
-    setSelectedCharacterAliasMap(newCharacterMap);
-
-    onCharactersChange(mapToSelectedCharacterAliases(newCharacterMap));
-  }
-
-  const handleRealNameChange = (event: SelectChangeEvent<string[]>) => {
-
-    event.preventDefault();
-
-    // if a click comes from the nested menu then it will bubble to here but that is not wanted
-    if (changeFromNested) {
-
-      changeFromNested = false;
-      return;
-    }
-
-    let { target: { value } } = event;
-
-    // incoming value can be csv
-    if (typeof value === 'string') {
-
-      value = value.split(',');
-    }
-
-    const newMap = new Map<string, string>();
-    value.forEach((s) => newMap.set(s, s))
-
-    handleChange(newMap);
-  };
 
   /**
    * handler for the nested items to set the correct alias
    * @param id 
    * @param incomingAlias 
    */
-  const handleNestedChange = (id: string, incomingAlias: string) => {
+  const handleChange = (id: string, incomingAlias: string) => {
 
-    const newMap = new Map<string, string>(selectedCharacterAliasMap);
+    const newCharacterMap = new Map<string, string>(selectedCharacterAliasMap);
 
-    const currentAlias = newMap.get(id);
+    const currentAlias = newCharacterMap.get(id);
 
     if (currentAlias == incomingAlias) {
 
       // toggle if the same alias is clicked
-      newMap.delete(id);
+      newCharacterMap.delete(id);
 
     } else {
 
-      newMap.set(id, incomingAlias);
+      newCharacterMap.set(id, incomingAlias);
     }
 
-    console.info("nested", id, incomingAlias, newMap)
+    setSelectedCharacterAliasMap(newCharacterMap);
 
-    // let the select handle to ignore this event
-    changeFromNested = true;
-
-    handleChange(newMap);
+    onCharactersChange(mapToSelectedCharacterAliases(newCharacterMap));
   }
 
   return (
@@ -212,27 +168,25 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
         labelId="-multiple-chip-label"
         multiple
         value={Array.from(selectedCharacterAliasMap.keys())}
-        onChange={handleRealNameChange}
         input={<OutlinedInput id="select-multiple-chip" label={id} />}
         renderValue={(selected) => (
           selected && renderChips(selected, selectedCharacterAliasMap)
         )}
         MenuProps={MenuProps}
-        {...props}
+        {...rest}
       >
-        {allCharacterAliases.map((characterAliases) => (
-          // need to make this a custom menu item
-          <NestedAliasMenuItem
-            key={"character-" + characterAliases.id}
-            value={characterAliases.id}
-            style={getStyles(characterAliases.id, selectedCharacterAliasMap, theme)}
-            theme={theme}
-            label={characterAliases.id}
-            characterAliases={characterAliases}
-            onSelectAlias={handleNestedChange}
-            selectedAlias={selectedCharacterAliasMap.get(characterAliases.id)}
-          />
-        ))}
+        <div>
+          {allCharacterAliases.map((characterAliases) => (
+            <CharacterAccordion
+              key={characterAliases.id + "accordion"}
+              expandedAccordion={expandedAccordion}
+              handleAccordianChange={handleAccordianChange}
+              theme={theme}
+              characterAliases={characterAliases}
+              onSelectAlias={handleChange}
+              selectedAlias={selectedCharacterAliasMap.get(characterAliases.id)}/>
+          ))}
+        </div>
       </Select>
     </FormControl>
   );

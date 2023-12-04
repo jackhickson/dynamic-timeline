@@ -6,27 +6,50 @@ export const initialNodes: Node[] = [{ "id": "0-0", type: 'custom', position: { 
 let initialPlotPointData = createPlotPointData("0-0", 0);
 initialNodes[0].data = initialPlotPointData;
 
-console.info(initialNodes);
-
 export const initialEdges: Edge[] = [];
 
 export const initialChapterAliasList: CharacterAliasList[] = [
     {
-        "id": "Person 1",
+        "id": "Character 1",
         "aliases": [
             "one",
              "I"
         ]
     },
     {
-        "id": "Person 2",
+        "id": "Character 2",
         "aliases": [
             "two",
             "II"
         ]
     },
     {
-        "id": "Person 3",
+        "id": "Character 3",
+        "aliases": [
+        ]
+    },
+    {
+        "id": "Character 5",
+        "aliases": [
+        ]
+    },
+    {
+        "id": "Character 6",
+        "aliases": [
+        ]
+    },
+    {
+        "id": "Character 7",
+        "aliases": [
+        ]
+    },
+    {
+        "id": "Character 8",
+        "aliases": [
+        ]
+    },
+    {
+        "id": "Character 9",
         "aliases": [
         ]
     }
