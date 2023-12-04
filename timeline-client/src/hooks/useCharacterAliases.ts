@@ -13,7 +13,8 @@ export const useCharactersAliasList = (props: UseCharactersAliasList) => {
     React.useEffect(()=> {
 
         // if the alias do not contain the id, reset the selected
-        if(charactersAliasList.some(alias => alias.id == selectedCharacterId)) {
+        if(!charactersAliasList.some(alias => alias.id === selectedCharacterId)) {
+
             setSelectedCharacterId('')
         }
 

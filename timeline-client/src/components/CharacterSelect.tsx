@@ -1,4 +1,4 @@
-import { MenuItem, Select, SelectChangeEvent, useTheme } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, useTheme } from "@mui/material";
 import { CharacterAliasList } from "@backend/api-types";
 
 interface CharacterSelectProps {
@@ -15,26 +15,29 @@ export default function CharacterSelect (props: CharacterSelectProps): any {
 
     return (
 
-        <Select
-            labelId="character-select"
-            id="character-select"
-            value={selectedCharacterId}
-            label="Character Select"
-            onChange={onCharacterIdChange}
-            >
-            {allCharactersAlias.map((alias) => (
-                <MenuItem
-                    key={"alias-" + alias.id}
-                    value={alias.id}
-                    style={{fontWeight:
-                        alias.id == selectedCharacterId
-                        ? theme.typography.fontWeightRegular
-                        : theme.typography.fontWeightMedium}}
+        <FormControl>
+            <InputLabel htmlFor="character-select">Character</InputLabel>
+            <Select
+                labelId="character-select"
+                id="character-select"
+                value={selectedCharacterId}
+                label="Character Select"
+                onChange={onCharacterIdChange}
+                sx={{ width: '15vw'}}
                 >
-                    {alias.id}
-                </MenuItem>
-            ))}
-        </Select>
-
+                {allCharactersAlias.map((alias) => (
+                    <MenuItem
+                        key={"alias-" + alias.id}
+                        value={alias.id}
+                        style={{fontWeight:
+                            alias.id == selectedCharacterId
+                            ? theme.typography.fontWeightRegular
+                            : theme.typography.fontWeightMedium}}
+                    >
+                        {alias.id}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }

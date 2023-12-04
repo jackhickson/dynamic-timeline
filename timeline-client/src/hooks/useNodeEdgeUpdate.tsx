@@ -102,6 +102,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
             updatedData.inCharacterTimeline = chapterInfo.characters.some(selectedAlias => selectedAlias.id == selectedCharacterId);
         }
 
+        // what is this
         if(selectedCharacterId)
 
         triggerUpdate(UpdateElementsMode.Nodes,
