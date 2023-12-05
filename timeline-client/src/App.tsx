@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import {Panel} from 'reactflow';
 
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme';
-import Flow from './Flow';
+import Flow from './pages/Flow';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import CharacterAliasEditor from './pages/CharacterAliasEditor';
+import StoryBatchEditor from './pages/StoryBatchEditor';
 
 
 export default() => {
@@ -14,15 +16,26 @@ export default() => {
     const toggleMode = () => {
       setMode((m) => (m === 'light' ? 'dark' : 'light'));
     };
+
+    const router = createBrowserRouter([
+      {
+        path: "/",
+        element: <Flow toggleMode={toggleMode}/>,
+      },
+      {
+        path: "/characters",
+        element: <CharacterAliasEditor toggleMode={toggleMode} />
+      },
+      {
+        path: "/storyBatches",
+        element: <StoryBatchEditor toggleMode={toggleMode}/>
+      }
+    ]);
   
     return (
 
       <ThemeProvider theme={theme}>
-        <Flow>
-          <Panel position="top-left">
-            <button onClick={toggleMode}>switch mode</button>
-          </Panel>
-        </Flow>
+        <RouterProvider router={router} />
       </ThemeProvider>
     );
   };

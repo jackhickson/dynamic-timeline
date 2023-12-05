@@ -1,27 +1,30 @@
-import React, { MouseEvent as ReactMouseEvent, ReactNode } from 'react'
+import React, { MouseEvent as ReactMouseEvent } from 'react'
 import {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
+
 import { Checkbox, SelectChangeEvent } from '@mui/material';
 
-import { useDialog } from './hooks/useDialog';
-import { useFlow } from './hooks/useFlow';
-import { useNodeEdgeUpdate } from './hooks/useNodeEdgeUpdate';
-import { useAppElements } from './hooks/useAppElements';
-import { useStoryBatches } from './hooks/useStoryBatches';
-import { useCharactersAliasList } from './hooks/useCharacterAliases';
+import { useDialog } from '../hooks/useDialog';
+import { useFlow } from '../hooks/useFlow';
+import { useNodeEdgeUpdate } from '../hooks/useNodeEdgeUpdate';
+import { useAppElements } from '../hooks/useAppElements';
+import { useStoryBatches } from '../hooks/useStoryBatches';
+import { useCharactersAliasList } from '../hooks/useCharacterAliases';
 import { useTheme } from 'styled-components'
 
-import { api } from './axiosApi';
+import { api } from '../axiosApi';
 //import { isInitialState } from '../../chapter-server/src/api-types';
-import { PlotPointData, miniMapNodeBackGroundStyle, nodeJsonToData } from './Definitions';
+import { PlotPointData, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
 
-import { initialNodes, initialEdges, initialChapterAliasList, initialStoryBatches } from './initial-elements';
+import { initialNodes, initialEdges, initialChapterAliasList, initialStoryBatches } from '../initial-elements';
 
-import { ReactFlowStyled, MiniMapStyled, CustomControls} from './components/StyledReactFlow';
-import PlotPointNode from './components/PlotPointNode';
-import PlotPointDialog from './components/PlotPointDialog';
-import ChapterSelect from './components/ChapterSelect';
-import CharacterSelect from './components/CharacterSelect';
+import { ReactFlowStyled, MiniMapStyled, CustomControls} from '../components/StyledReactFlow';
+import PlotPointNode from '../components/PlotPointNode';
+import PlotPointDialog from '../components/PlotPointDialog';
+import ChapterSelect from '../components/ChapterSelect';
+import CharacterSelect from '../components/CharacterSelect';
+
+import { Link } from 'react-router-dom';
 
 
 const minimapStyle = {
@@ -29,10 +32,10 @@ const minimapStyle = {
 };
 
 interface FlowProps {
-    children: ReactNode
+    toggleMode: () => void;
 }
 
-function Flow ({children}: FlowProps): any {
+export default function Flow ({toggleMode}: FlowProps): any {
 
     const { storyBatches, setStoryBatches, allChapters, chapterNodeIdsMap } = useStoryBatches({initialStoryBatches});
     const { charactersAliasList, setCharactersAliasList, selectedCharacterId, setSelectedCharacterId } = useCharactersAliasList({initialChapterAliasList});
@@ -60,7 +63,7 @@ function Flow ({children}: FlowProps): any {
     const nodeTypes = React.useMemo(() => ({ custom: PlotPointNode }), []);
 
     // calls chapter-server to set all the deafault information
-    React.useEffect(() => {
+    /*React.useEffect(() => {
 
         api.get("/all").then((response) => {
 
@@ -80,7 +83,7 @@ function Flow ({children}: FlowProps): any {
             }
         });
 
-    }, [])
+    }, [])*/
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 
@@ -175,7 +178,6 @@ function Flow ({children}: FlowProps): any {
                 nodeTypes={nodeTypes}
                 fitView
             >
-                {children}
 
                 <Panel position="top-center" style={{display: 'inline-flex'}}>
         
@@ -187,10 +189,12 @@ function Flow ({children}: FlowProps): any {
                         onCharacterIdChange={onCharacterIdChange} 
                         selectedCharacterId={selectedCharacterId} 
                     />
+                    <Link to={`characters`}>Characters</Link>
+                    <Link to={`storyBatches`}>Story Batches</Link>
                 </Panel>
 
-                <Panel position="top-right">
-
+                <Panel position="top-left">
+                    <button onClick={toggleMode}>switch mode</button>
                 </Panel>
 
                 <Background color="#aaa" gap={16} />
@@ -211,5 +215,3 @@ function Flow ({children}: FlowProps): any {
         </div>
     )
 }
-
-export default Flow;
