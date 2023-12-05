@@ -23,8 +23,7 @@ import PlotPointNode from '../components/PlotPointNode';
 import PlotPointDialog from '../components/PlotPointDialog';
 import ChapterSelect from '../components/ChapterSelect';
 import CharacterSelect from '../components/CharacterSelect';
-
-import { Link } from 'react-router-dom';
+import EditLinkButton from '../components/EditLinkButton';
 
 
 const minimapStyle = {
@@ -63,7 +62,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
     const nodeTypes = React.useMemo(() => ({ custom: PlotPointNode }), []);
 
     // calls chapter-server to set all the deafault information
-    /*React.useEffect(() => {
+    React.useEffect(() => {
 
         api.get("/all").then((response) => {
 
@@ -83,7 +82,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
             }
         });
 
-    }, [])*/
+    }, [])
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 
@@ -182,6 +181,9 @@ export default function Flow ({toggleMode}: FlowProps): any {
                 <Panel position="top-center" style={{display: 'inline-flex'}}>
         
                     <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIndexChange}/>
+
+                    <EditLinkButton link={`storyBatches`} />
+                    
                     <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
 
                     <CharacterSelect 
@@ -189,8 +191,9 @@ export default function Flow ({toggleMode}: FlowProps): any {
                         onCharacterIdChange={onCharacterIdChange} 
                         selectedCharacterId={selectedCharacterId} 
                     />
-                    <Link to={`characters`}>Characters</Link>
-                    <Link to={`storyBatches`}>Story Batches</Link>
+
+                    <EditLinkButton link={`characters`} />
+                    
                 </Panel>
 
                 <Panel position="top-left">

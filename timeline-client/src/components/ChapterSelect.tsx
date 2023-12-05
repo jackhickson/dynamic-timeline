@@ -26,7 +26,7 @@ export default function ChapterSelect(props: ChapterSelectProps) {
 
     return (
         <div>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <FormControl sx={{ m: 1, minWidth: 150 }}>
                 <InputLabel htmlFor="chapter-select">Chapter</InputLabel>
                 <Select defaultValue="0" id="chapter-select" label="Chapter" onChange={onChange}>
                     {storyBatches.map(function(batch: StoryBatch, batchIndex){
