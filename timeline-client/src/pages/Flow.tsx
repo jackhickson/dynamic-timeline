@@ -62,7 +62,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
     const nodeTypes = React.useMemo(() => ({ custom: PlotPointNode }), []);
 
     // calls chapter-server to set all the deafault information
-    React.useEffect(() => {
+    /*React.useEffect(() => {
 
         api.get("/all").then((response) => {
 
@@ -82,7 +82,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
             }
         });
 
-    }, [])
+    }, [])*/
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 
@@ -182,7 +182,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
         
                     <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIndexChange}/>
 
-                    <EditLinkButton link={`storyBatches`} />
+                    <EditLinkButton link={`storyBatches`} state={storyBatches}/>
                     
                     <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
 
@@ -192,7 +192,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
                         selectedCharacterId={selectedCharacterId} 
                     />
 
-                    <EditLinkButton link={`characters`} />
+                    <EditLinkButton link={`characters`} state={charactersAliasList}/>
                     
                 </Panel>
 

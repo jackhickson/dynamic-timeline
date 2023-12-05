@@ -59,6 +59,10 @@ export const initialStoryBatches: StoryBatch[] = [
     {
         "name": "Batch 1",
         "chapters": ["ch 1"]
+    },
+    {
+        "name": "Batch 2",
+        "chapters": ["ch 1"]
     }
 ]
 
