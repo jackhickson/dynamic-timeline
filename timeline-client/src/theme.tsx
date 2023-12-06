@@ -6,7 +6,7 @@ export const lightTheme = {
   nodeAdded: 'blue',
   nodeModified: 'orange',
   nodeNone: '#ffffff',
-  nodeColor: '#222',
+  nodeColor: '#aaa',
   nodeBorder: '#222',
 
   minimapMaskBg: '#f2f2f5',

@@ -1,4 +1,4 @@
-import { Node, Edge, Connection, addEdge, applyNodeChanges, applyEdgeChanges, EdgeChange, NodeChange, NodePositionChange } from "reactflow";
+import { Node, Edge, Connection, addEdge, applyNodeChanges, applyEdgeChanges, EdgeChange, NodeChange, useUpdateNodeInternals  } from "reactflow";
 import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData, UNSELECTED_CHARACTER_ID } from "../Definitions";
 import { keysToSortedArray } from '../utils';
 import React from "react";
@@ -20,6 +20,7 @@ enum UpdateElementsMode {
 export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
     const { elements, setElements, triggerUpdate, selectedNodeId, hideEnabled } = props;
+    const updateNodeInternals = useUpdateNodeInternals();
 
 	// We declare these callbacks as React Flow suggests,
 	// but we don't set the state directly. Instead, we pass
@@ -102,9 +103,6 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
             updatedData.inCharacterTimeline = chapterInfo.characters.some(selectedAlias => selectedAlias.id == selectedCharacterId);
         }
 
-        // what is this
-        if(selectedCharacterId)
-
         triggerUpdate(UpdateElementsMode.Nodes,
             elements.nodes.map((node) => {
 
@@ -118,7 +116,10 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
                 return node;
             })
         );
-    }, [triggerUpdate, selectedNodeId]);
+
+        updateNodeInternals(selectedNodeId);
+
+    }, [triggerUpdate, selectedNodeId, updateNodeInternals]);
 
     /**
      * This is used to hide nodes and edges when a chapter is change.

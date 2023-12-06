@@ -167,47 +167,46 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
     return (
         <div style={{height: "100vh", width: "100vw"}}>
+                <ReactFlowStyled
+                    nodes={elements.nodes}
+                    edges={elements.edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    onInit={setRfInstance}
+                    onNodeClick={onNodeClick}
+                    nodeTypes={nodeTypes}
+                    fitView
+                >
 
-            <ReactFlowStyled
-                nodes={elements.nodes}
-                edges={elements.edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                onInit={setRfInstance}
-                onNodeClick={onNodeClick}
-                nodeTypes={nodeTypes}
-                fitView
-            >
+                    <Panel position="top-center" style={{display: 'inline-flex'}}>
+            
+                        <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIndexChange}/>
 
-                <Panel position="top-center" style={{display: 'inline-flex'}}>
-        
-                    <ChapterSelect storyBatches={storyBatches} onChapterIndexChange={onChapterIndexChange}/>
+                        <EditLinkButton link={`/storyBatches`}/>
+                        
+                        <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
 
-                    <EditLinkButton link={`/storyBatches`}/>
-                    
-                    <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
+                        <CharacterSelect 
+                            allCharacterAliasList={charactersAliasList} 
+                            onCharacterIdChange={onCharacterIdChange} 
+                            selectedCharacterId={selectedCharacterId} 
+                        />
 
-                    <CharacterSelect 
-                        allCharacterAliasList={charactersAliasList} 
-                        onCharacterIdChange={onCharacterIdChange} 
-                        selectedCharacterId={selectedCharacterId} 
-                    />
+                        <EditLinkButton link={`/characters`}/>
+                        
+                    </Panel>
 
-                    <EditLinkButton link={`/characters`}/>
-                    
-                </Panel>
+                    <Panel position="top-left">
+                        <button onClick={toggleMode}>switch mode</button>
+                    </Panel>
 
-                <Panel position="top-left">
-                    <button onClick={toggleMode}>switch mode</button>
-                </Panel>
+                    <Background color="#aaa" gap={16} />
+                    <MiniMapStyled nodeColor={((node: Node<PlotPointData>): string => miniMapNodeBackGroundStyle(node, theme))} />
 
-                <Background color="#aaa" gap={16} />
-                <MiniMapStyled nodeColor={((node: Node<PlotPointData>): string => miniMapNodeBackGroundStyle(node, theme))} />
+                    <CustomControls onAddNode={addNewNode} onRedo={redo} onReset={reset} onSave={saveAppData} onRestore={onRestore} onUndo={undo}/>
 
-                <CustomControls onAddNode={addNewNode} onRedo={redo} onReset={reset} onSave={saveAppData} onRestore={onRestore} onUndo={undo}/>
-
-            </ReactFlowStyled>
+                </ReactFlowStyled>
 
             <PlotPointDialog
                 open={dialogOpen}

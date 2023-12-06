@@ -6,6 +6,7 @@ import Flow from './pages/Flow';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import CharacterAliasEditor from './pages/CharacterAliasEditor';
 import StoryBatchEditor from './pages/StoryBatchEditor';
+import { ReactFlowProvider } from 'reactflow';
 
 
 export default() => {
@@ -20,11 +21,11 @@ export default() => {
     const router = createBrowserRouter([
       {
         path: "/",
-        element: <Flow toggleMode={toggleMode}/>,
+        element: <ReactFlowProvider><Flow toggleMode={toggleMode}/></ReactFlowProvider>,
       },
       {
         path: "/timeline",
-        element: <Flow toggleMode={toggleMode}/>,
+        element: <ReactFlowProvider><Flow toggleMode={toggleMode}/></ReactFlowProvider>,
       },
       {
         path: "/characters",
