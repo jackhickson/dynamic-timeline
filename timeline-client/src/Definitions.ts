@@ -16,11 +16,13 @@ export function nodeJsonToData(json: any) : PlotPointData {
 
     let chapterMapObject = Object.entries(json.chaptersMap);
 
-    console.info(chapterMapObject);
+    chapterMapObject.forEach((chapterProperty: [string, any]) => {console.info(chapterProperty); data.chaptersMap.set(+chapterProperty[0], chapterProperty[1])})
 
-    chapterMapObject.forEach((chapterProperty: [string, any]) => (data.chaptersMap.set(+chapterProperty[0], chapterProperty[1])))
-
-    console.info(data);
+    // if this plot point was created at the first chapter then make it added. 
+    // might want to make the selected chapter dynamic
+    if(!!data.chaptersMap.get(0)) {
+        data.chapterAction = ChapterAction.Added
+    }
 
     return data;
 }
