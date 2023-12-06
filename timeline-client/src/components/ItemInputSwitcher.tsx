@@ -48,10 +48,10 @@ const CustomInput = (props: CustomInputProps) => {
 
     const {hadleSaveValue, handleStopEdit} = props;
 
-    let {value} = props;
+    const [s, setS] = React.useState(props.value);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        value = event.target.value;
+        setS(event.target.value);
     }
 
     return (
@@ -59,10 +59,10 @@ const CustomInput = (props: CustomInputProps) => {
             <TextField id="item-input" 
                 label="Value" 
                 variant="outlined" 
-                defaultValue={value}
+                defaultValue={s}
                 onChange={onChange} 
                 size="small"/>
-            <Check onClick={() => {console.info(value); hadleSaveValue(value)}}/>
+            <Check onClick={() => {hadleSaveValue(s)}}/>
             <Close onClick={handleStopEdit}/>
         </>
     );
