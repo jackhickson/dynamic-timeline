@@ -2,14 +2,14 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, useTheme 
 import { CharacterAliasList } from "@backend/api-types";
 
 interface CharacterSelectProps {
-    allCharactersAlias: CharacterAliasList[];
+    allCharacterAliasList: CharacterAliasList[];
     onCharacterIdChange: (event: SelectChangeEvent<string>) => void;
     selectedCharacterId: string;
 }
 
 export default function CharacterSelect (props: CharacterSelectProps): any {
 
-    const { allCharactersAlias, onCharacterIdChange, selectedCharacterId } = props;
+    const { allCharacterAliasList, onCharacterIdChange, selectedCharacterId } = props;
 
     const theme = useTheme()
 
@@ -25,7 +25,7 @@ export default function CharacterSelect (props: CharacterSelectProps): any {
                 onChange={onCharacterIdChange}
                 sx={{ width: '15vw'}}
                 >
-                {allCharactersAlias.map((alias) => (
+                {allCharacterAliasList.map((alias) => (
                     <MenuItem
                         key={"alias-" + alias.id}
                         value={alias.id}

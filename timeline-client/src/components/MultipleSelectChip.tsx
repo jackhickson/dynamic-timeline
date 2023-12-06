@@ -10,7 +10,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { mapToSelectedCharacterAliases } from '../Definitions';
 import { CharacterAliasList, SelectedCharacterAlias } from '@backend/api-types';
-import { Accordion, AccordionDetails, AccordionSummary, FormControl, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, FormControl, Grid, TextField, Typography } from '@mui/material';
+import { Close } from '@mui/icons-material';
 
 const MenuProps = {
   PaperProps: {
@@ -116,15 +117,17 @@ const CharacterAccordion = (props: CharacterAccordionProps) => {
 };
 
 type MultipleSelectChipProps = SelectProps<string[]> & {
-  allCharacterAliases: CharacterAliasList[];
+  allCharacterAliasList: CharacterAliasList[];
   map: Map<string, string>;
   onCharactersChange: (selectedAlias: SelectedCharacterAlias[]) => void;
 }
 
 export default function MultipleSelectChip(props: MultipleSelectChipProps) {
 
-  const { id, allCharacterAliases, map, onCharactersChange, ...rest } = props;
+  const { id, allCharacterAliasList, map, onCharactersChange, ...rest } = props;
 
+  const [searchString, setSearchString] = React.useState<string>('');
+  const [characterAliasList, setCharacterAliasList] = React.useState<CharacterAliasList[]>(allCharacterAliasList);
   const [selectedCharacterAliasMap, setSelectedCharacterAliasMap] = React.useState<Map<string, string>>(map);
   const [expandedAccordion, setExpandedAccordion] = React.useState<string | false>(false);
 
@@ -161,6 +164,27 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
     onCharactersChange(mapToSelectedCharacterAliases(newCharacterMap));
   }
 
+  const searchCharacterIds = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    const s = event.target.value;
+
+    setSearchString(s);
+
+    setCharacterAliasList(list => 
+      list.filter((characterAlias) => {
+        return characterAlias.id.toLowerCase().includes(s.toLowerCase());
+      })
+    )
+
+    event.preventDefault();
+  }
+
+  const clearSearch = () => {
+
+    setSearchString('')
+    setCharacterAliasList(allCharacterAliasList)
+  }
+
   return (
     <FormControl>
       <InputLabel id="multiple-chip-label">{id}</InputLabel>
@@ -176,7 +200,14 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
         {...rest}
       >
         <div>
-          {allCharacterAliases.map((characterAliases) => (
+          <TextField id="item-input" 
+                label="Search For Character" 
+                variant="outlined"
+                value={searchString}
+                onChange={searchCharacterIds}
+          />
+          <Close onClick={clearSearch}/>
+          {characterAliasList.map((characterAliases) => (
             <CharacterAccordion
               key={characterAliases.id + "accordion"}
               expandedAccordion={expandedAccordion}

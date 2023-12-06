@@ -133,6 +133,8 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
     const onCharacterIdChange = (event: SelectChangeEvent<string>) => {
 
+        console.info("change")
+
         const newCharacter: string = event.target.value;
 
         setSelectedCharacterId(newCharacter);
@@ -187,7 +189,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
 
                     <CharacterSelect 
-                        allCharactersAlias={charactersAliasList} 
+                        allCharacterAliasList={charactersAliasList} 
                         onCharacterIdChange={onCharacterIdChange} 
                         selectedCharacterId={selectedCharacterId} 
                     />
@@ -214,7 +216,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
                 formData={selectedNodeData}
                 selectedChapterIndex={selectedChapterIndex}
                 allChapters={allChapters}
-                allCharacterAlias={charactersAliasList}/>
+                allCharacterAliasList={charactersAliasList}/>
         </div>
     )
 }

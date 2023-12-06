@@ -17,7 +17,7 @@ interface PlotPointDialogProps {
   formData: PlotPointData;
   selectedChapterIndex: number;
   allChapters: string[];
-  allCharacterAlias: CharacterAliasList[];
+  allCharacterAliasList: CharacterAliasList[];
 }
 
 interface ChapterId {
@@ -89,7 +89,7 @@ function removeChapterDataFromFormDataMap(formData: PlotPointData, selectedChapt
  */
 function PlotPointDialog(props: PlotPointDialogProps) {
 
-  const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters, allCharacterAlias } = props;
+  const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters, allCharacterAliasList } = props;
 
   let chapterIds: ChapterId[] = React.useMemo(()=>getPlotPointChapters(formData, allChapters),[formData, allChapters]);
 
@@ -199,7 +199,7 @@ function PlotPointDialog(props: PlotPointDialogProps) {
           })}
         </Box>
 
-        <MultipleSelectChip id="characters" allCharacterAliases={allCharacterAlias} 
+        <MultipleSelectChip id="characters" allCharacterAliasList={allCharacterAliasList} 
           map={selectedCharacterAliasToMap(plotPointChapter.characters)} onCharactersChange={handlCharaterInputChange} sx={{margin: '8px'}}/>
 
         <br/>
