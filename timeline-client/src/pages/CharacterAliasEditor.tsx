@@ -1,11 +1,12 @@
 import { CharacterAliasList } from "@backend/api-types";
-import { Paper, List, Typography } from "@mui/material";
+import { Paper, List, Typography, Button } from "@mui/material";
 import ItemInputSwitcher from "../components/ItemInputSwitcher";
 import { Direction, moveItemAtIndex } from "../utils";
 import React from "react";
 import { api } from "../axiosApi";
 import { initialCharacterAliasList } from "../initial-elements";
-import { Add, Save } from "@mui/icons-material";
+import { Add, Home, Save } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const NEW_CHARACTER = "New Character"
 const NEW_ALIAS = "New Alias"
@@ -170,6 +171,11 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
             <Typography > Story Batch Editor</Typography>
             <Add  onClick={onAddCharacter}/>
             <Save  onClick={onSave}/>
+            <Button>
+                <Link to={'/timeline'}>
+                    <Home />
+                </Link>
+            </Button>
             <List>
                 {characterAliasList.map(characterAlias => (
                     <li key={`section-${characterAlias.id}`}>

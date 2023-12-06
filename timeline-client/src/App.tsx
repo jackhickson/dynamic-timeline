@@ -23,6 +23,10 @@ export default() => {
         element: <Flow toggleMode={toggleMode}/>,
       },
       {
+        path: "/timeline",
+        element: <Flow toggleMode={toggleMode}/>,
+      },
+      {
         path: "/characters",
         element: <CharacterAliasEditor toggleMode={toggleMode} />
       },

@@ -1,11 +1,12 @@
 import { StoryBatch } from "@backend/api-types";
-import { Paper, List, Typography } from "@mui/material";
+import { Paper, List, Typography, Button } from "@mui/material";
 import ItemInputSwitcher from "../components/ItemInputSwitcher";
 import { Direction, moveItemAtIndex } from "../utils";
-import { Add, Save } from "@mui/icons-material";
+import { Add, Home, Save } from "@mui/icons-material";
 import { initialStoryBatches } from "../initial-elements";
 import React from "react";
 import { api } from "../axiosApi";
+import { Link } from "react-router-dom";
 
 const NEW_BATCH = "New Batch"
 const NEW_CHAPTER = "New Chapter"
@@ -16,7 +17,7 @@ interface StoryBatchEditorProps {
 
 export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): any {
 
-    let autoFocusString = '';
+    const [autoFocusString, setAutoFocusString] = React.useState<string>('')
     const [storyBatches, setStoryBatches] = React.useState<StoryBatch[]>(initialStoryBatches);
 
     React.useEffect(() => {
@@ -45,6 +46,8 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
             return
         }
 
+        setAutoFocusString(NEW_BATCH);
+
         setStoryBatches(oldBatches => [...oldBatches, {name: NEW_BATCH, chapters: []}]);
     }
 
@@ -56,6 +59,7 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
 
         if(!!newBatches) {
 
+            setAutoFocusString(batchName);
             setStoryBatches([...newBatches]);
         }
     }
@@ -75,6 +79,8 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
     }
 
     const onAddChapter = (batchName: string) => {
+
+        setAutoFocusString(NEW_CHAPTER);
 
         setStoryBatches((batches) =>
 
@@ -100,6 +106,8 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
 
     const moveChapter = (batchName: string, chapterName: string, direction: Direction) => {
 
+        setAutoFocusString(chapterName);
+
         setStoryBatches((batches) =>
 
             batches.map(batch => {
@@ -123,6 +131,8 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
     }
 
     const updateChapterName = (batchName: string, oldChapterName:string, newChapterName: string) => {
+
+        setAutoFocusString(newChapterName);
 
         setStoryBatches((batches) =>
 
@@ -166,11 +176,17 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
             <Typography > Story Batch Editor</Typography>
             <Add  onClick={onAddBatch}/>
             <Save  onClick={onSave}/>
+            <Button>
+                <Link to={'/timeline'}>
+                    <Home />
+                </Link>
+            </Button>
             <List>
                 {storyBatches.map(batch => (
                     <li key={`section-${batch.name}`}>
                         <ul>
                             <ItemInputSwitcher
+                                    autoFocus={batch.name === autoFocusString}
                                     key={"switcher" + batch.name}
                                     value={batch.name}
                                     onAddItem={() => onAddChapter(batch.name)}
@@ -180,6 +196,7 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
                                 />
                             {batch.chapters.map((chapter) => (
                                 <ItemInputSwitcher
+                                    autoFocus={chapter === autoFocusString}
                                     key={"switcher" + chapter}
                                     nested
                                     value={chapter}

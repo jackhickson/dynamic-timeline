@@ -5,13 +5,12 @@ import { Link } from "react-router-dom";
 
 interface EditLinkButtonProps {
     link: string;
-    state: CharacterAliasList[] | StoryBatch[];
 }
 
-export default function EditLinkButton ({link, state}: EditLinkButtonProps): any {
+export default function EditLinkButton ({link}: EditLinkButtonProps): any {
     return (
         <Button>
-            <Link to={link} state={state}>
+            <Link to={link}>
                 <Edit />
             </Link>
         </Button>
