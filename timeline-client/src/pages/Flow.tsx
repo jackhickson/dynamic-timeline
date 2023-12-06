@@ -50,6 +50,9 @@ export default function Flow ({toggleMode}: FlowProps): any {
         onNodesChange,
         onEdgesChange,
         onConnect,
+        onEdgeUpdateStart,
+        onEdgeUpdate,
+        onEdgeUpdateEnd,
         onAddNode,
         onUpdateNode,
         onUpdateFromChapterChange,
@@ -173,6 +176,9 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onConnect={onConnect}
+                    onEdgeUpdate={onEdgeUpdate}
+                    onEdgeUpdateStart={onEdgeUpdateStart}
+                    onEdgeUpdateEnd={onEdgeUpdateEnd}
                     onInit={setRfInstance}
                     onNodeClick={onNodeClick}
                     nodeTypes={nodeTypes}

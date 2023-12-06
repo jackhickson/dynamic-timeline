@@ -1,4 +1,4 @@
-import { Node, Edge, Connection, addEdge, applyNodeChanges, applyEdgeChanges, EdgeChange, NodeChange, useUpdateNodeInternals  } from "reactflow";
+import { Node, Edge, Connection, addEdge, applyNodeChanges, applyEdgeChanges, EdgeChange, NodeChange, useUpdateNodeInternals, updateEdge  } from "reactflow";
 import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData, UNSELECTED_CHARACTER_ID } from "../Definitions";
 import { keysToSortedArray } from '../utils';
 import React from "react";
@@ -20,6 +20,7 @@ enum UpdateElementsMode {
 export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
     const { elements, setElements, triggerUpdate, selectedNodeId, hideEnabled } = props;
+    const edgeUpdateSuccessful = React.useRef(true);
     const updateNodeInternals = useUpdateNodeInternals();
 
 	// We declare these callbacks as React Flow suggests,
@@ -65,6 +66,23 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 		[triggerUpdate, elements.edges]
 	);
 
+    const onEdgeUpdateStart = React.useCallback(() => {
+        edgeUpdateSuccessful.current = false;
+      }, []);
+    
+      const onEdgeUpdate = React.useCallback((oldEdge: Edge, newConnection: Connection) => {
+        edgeUpdateSuccessful.current = true;
+        triggerUpdate(UpdateElementsMode.Edges,  updateEdge(oldEdge, newConnection, elements.edges));
+      }, [triggerUpdate]);
+    
+      const onEdgeUpdateEnd = React.useCallback((_: any, edge: Edge) => {
+        if (!edgeUpdateSuccessful.current) {
+            triggerUpdate(UpdateElementsMode.Edges, elements.edges.filter((e) => e.id !== edge.id));
+        }
+    
+        edgeUpdateSuccessful.current = true;
+      }, [triggerUpdate]);
+
     // new node
     const onAddNode = React.useCallback((selectedChapterIndex: number, plotPointId: number) => {
 
@@ -78,7 +96,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
           data: addedPlotPointData,
           position: {
             x: 0,
-            y: 0,
+            y: 50,
           },
         };
 
@@ -337,6 +355,6 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
         return [edgeNodes[0], edgeNodes[1]];
     };
 
-    return {onNodesChange, onEdgesChange, onConnect, onAddNode, onUpdateNode,
+    return {onNodesChange, onEdgesChange, onConnect, onEdgeUpdateStart, onEdgeUpdate, onEdgeUpdateEnd, onAddNode, onUpdateNode,
         onUpdateFromChapterChange, onUpdateFromCharacterChange};
 }
