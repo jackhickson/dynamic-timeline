@@ -3,10 +3,10 @@
         {
             "width": 116,
             "height": 44,
-            "id": "0-1",
+            "id": "0-0",
             "type": "custom",
             "data": {
-                "id": "0-1",
+                "id": "0-0",
                 "location": "somewhere",
                 "label": "First",
                 "chaptersMap": {
