@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-import { AppData } from './api-types';
+import { AppData, CharacterAliasList, StoryBatch } from './api-types';
 import path from 'path';
 
 const CHARACTER_ALIASES_FILENAME = "characterAliases.json";
@@ -25,6 +25,18 @@ export function getAppData(): AppData {
     };
 }
 
+// fix return
+export function getCharacterAliasList(): any {
+
+    return getJsonFromAssetsFile(CHARACTER_ALIASES_FILENAME);
+}
+
+// fix return
+export function getStoryBatches(): any {
+
+    return getJsonFromAssetsFile(STORY_BATCHES_FILENAME);
+}
+
 export function saveAllData(json: AppData) {
 
     saveToFile(CHARACTER_ALIASES_FILENAME, json.characterAliasList);
@@ -32,8 +44,18 @@ export function saveAllData(json: AppData) {
     saveToFile(STORY_BATCHES_FILENAME, json.storyBatches);
 }
 
+export function saveCharacterAliasList(characterAliasList: CharacterAliasList[]) {
 
-function saveToFile(filename: string, json: string) {
+    saveToFile(CHARACTER_ALIASES_FILENAME, characterAliasList);
+}
+
+export function saveStoryBatches(storyBatches: StoryBatch[]) {
+
+    saveToFile(STORY_BATCHES_FILENAME, storyBatches);
+}
+
+
+function saveToFile(filename: string, json: any) {
 
     const data = JSON.stringify(json, null, 4);
 

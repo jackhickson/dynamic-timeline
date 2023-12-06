@@ -16,7 +16,7 @@ import { api } from '../axiosApi';
 //import { isInitialState } from '../../chapter-server/src/api-types';
 import { PlotPointData, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
 
-import { initialNodes, initialEdges, initialChapterAliasList, initialStoryBatches } from '../initial-elements';
+import { initialNodes, initialEdges, initialCharacterAliasList, initialStoryBatches } from '../initial-elements';
 
 import { ReactFlowStyled, MiniMapStyled, CustomControls} from '../components/StyledReactFlow';
 import PlotPointNode from '../components/PlotPointNode';
@@ -37,7 +37,7 @@ interface FlowProps {
 export default function Flow ({toggleMode}: FlowProps): any {
 
     const { storyBatches, setStoryBatches, allChapters, chapterNodeIdsMap } = useStoryBatches({initialStoryBatches});
-    const { charactersAliasList, setCharactersAliasList, selectedCharacterId, setSelectedCharacterId } = useCharactersAliasList({initialChapterAliasList});
+    const { charactersAliasList, setCharactersAliasList, selectedCharacterId, setSelectedCharacterId } = useCharactersAliasList({initialCharacterAliasList});
 
     const [selectedNodeId, setSelectedNodeId] = React.useState<string>(initialNodes[0].id);
     const [selectedNodeData, setSelectedNodeData] = React.useState<PlotPointData>(initialNodes[0].data);

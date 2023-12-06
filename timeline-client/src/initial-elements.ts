@@ -8,12 +8,12 @@ initialNodes[0].data = initialPlotPointData;
 
 export const initialEdges: Edge[] = [];
 
-export const initialChapterAliasList: CharacterAliasList[] = [
+export const initialCharacterAliasList: CharacterAliasList[] = [
     {
         "id": "Character 1",
         "aliases": [
             "one",
-             "I"
+            "I"
         ]
     },
     {
@@ -58,11 +58,11 @@ export const initialChapterAliasList: CharacterAliasList[] = [
 export const initialStoryBatches: StoryBatch[] = [
     {
         "name": "Batch 1",
-        "chapters": ["ch 1"]
+        "chapters": ["ch 1", "ch 2"]
     },
     {
         "name": "Batch 2",
-        "chapters": ["ch 1"]
+        "chapters": ["ch 1", "ch 2"]
     }
 ]
 

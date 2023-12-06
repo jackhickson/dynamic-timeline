@@ -14,6 +14,11 @@ export interface StoryBatch {
     chapters: string[];
 }
 
+export function isStoryBatchArray(object: any): object is StoryBatch[] {
+
+    return Array.isArray(object) && (object.length === 0 || ('name' in object[0] && 'chapters' in object[0]))
+}
+
 export interface PlotPointChapter extends PlotPointChapterInfo {
     chapterIndex: number;
 }
@@ -27,6 +32,11 @@ export interface CharacterAliasList {
     id: string;
     aliases: string[];
 };
+
+export function isCharacterAliasList(object: any): object is CharacterAliasList[] {
+
+    return Array.isArray(object) && (object.length === 0 || ('id' in object[0] && 'aliases' in object[0]))
+}
 
 export interface SelectedCharacterAlias {
     id: string;

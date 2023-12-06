@@ -2,12 +2,12 @@ import React from "react";
 import { CharacterAliasList } from "@backend/api-types";
 
 interface UseCharactersAliasList {
-    initialChapterAliasList: CharacterAliasList[];
+    initialCharacterAliasList: CharacterAliasList[];
 };
 
 export const useCharactersAliasList = (props: UseCharactersAliasList) => {
 
-    const [charactersAliasList, setCharactersAliasList] = React.useState(props.initialChapterAliasList);
+    const [charactersAliasList, setCharactersAliasList] = React.useState(props.initialCharacterAliasList);
     const [selectedCharacterId, setSelectedCharacterId] = React.useState<string>('');
     
     React.useEffect(()=> {
