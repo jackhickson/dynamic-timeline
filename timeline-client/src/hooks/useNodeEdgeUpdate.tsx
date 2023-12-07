@@ -143,14 +143,17 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
      * This is used to hide nodes and edges when a chapter is change.
      * Also changes the node action to what the state of the ChapterInfo for this chapterIndex
      */
-    const onUpdateFromChapterChange = React.useCallback((selectedChapterIndex: number) => {
+    const onUpdateFromChapterChange = React.useCallback((selectedChapterIndex: number, providedNodes?: Node[], providedEdges?: Edge[]) => {
 
-        if(elements.nodes.length == 0) {
+        let nodes = !!providedNodes ? providedNodes: elements.nodes
+        let edges = !!providedEdges ? providedEdges: elements.edges
+
+        if(nodes.length == 0) {
             return;
         }
 
         // need to do this as the both the setNodes and setEdges need the new nodes at the same time
-        let updatedNodes: Node[] = elements.nodes.map((node) => {
+        let updatedNodes: Node[] = nodes.map((node) => {
 
             if(isNodePlotPointData(node)) {
 
@@ -160,7 +163,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
             return node;
         });
 
-        let updatedEdges = elements.edges.map((edge) => {
+        let updatedEdges = edges.map((edge) => {
 
             let edgeNodes = getNodesOfEdge(edge, updatedNodes);
 

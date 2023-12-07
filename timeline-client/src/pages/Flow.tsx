@@ -75,10 +75,11 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
                 data.flow.nodes = data.flow.nodes.map((node: Node) => ({...node, data: nodeJsonToData(node.data)}));
         
-                setElements({
-                    nodes: data.flow.nodes || [],
-                    edges: data.flow.edges || []
-                })
+                onUpdateFromChapterChange(
+                    0,
+                    data.flow.nodes || [],
+                    data.flow.edges || []
+                )
         
                 setCharactersAliasList(data.characterAliasList || []);
                 setStoryBatches(data.storyBatches || []);
