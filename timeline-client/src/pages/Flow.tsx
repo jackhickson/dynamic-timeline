@@ -14,7 +14,7 @@ import { useTheme } from 'styled-components'
 
 import { api } from '../axiosApi';
 //import { isInitialState } from '../../chapter-server/src/api-types';
-import { PlotPointData, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
+import { PlotPointData, firstChapterOfNode, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
 
 import { initialNodes, initialEdges, initialCharacterAliasList, initialStoryBatches } from '../initial-elements';
 
@@ -36,7 +36,8 @@ interface FlowProps {
 
 export default function Flow ({toggleMode}: FlowProps): any {
 
-    const { storyBatches, setStoryBatches, allChapters, chapterNodeIdsMap } = useStoryBatches({initialStoryBatches});
+    const chapterNodeIdsMap: Map<number, number[]> = new Map();
+    const { storyBatches, setStoryBatches, allChapters} = useStoryBatches({initialStoryBatches});
     const { charactersAliasList, setCharactersAliasList, selectedCharacterId, setSelectedCharacterId } = useCharactersAliasList({initialCharacterAliasList});
 
     const [selectedNodeId, setSelectedNodeId] = React.useState<string>(initialNodes[0].id);
@@ -87,6 +88,11 @@ export default function Flow ({toggleMode}: FlowProps): any {
         });
 
     }, [])
+
+    React.useEffect(()=>{
+
+        firstChapterOfNode(chapterNodeIdsMap, allChapters.length, elements.nodes)
+    },[allChapters])
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
 

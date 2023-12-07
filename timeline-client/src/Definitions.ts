@@ -1,5 +1,6 @@
 import {Node} from 'reactflow';
 import { PlotPointChapter, SelectedCharacterAlias, StoryBatch } from '@backend/api-types';
+import { keysToSortedArray } from './utils';
 
 export const DEFAULT_LABEL = "Plot Name";
 
@@ -16,7 +17,7 @@ export function nodeJsonToData(json: any) : PlotPointData {
 
     let chapterMapObject = Object.entries(json.chaptersMap);
 
-    chapterMapObject.forEach((chapterProperty: [string, any]) => {console.info(chapterProperty); data.chaptersMap.set(+chapterProperty[0], chapterProperty[1])})
+    chapterMapObject.forEach((chapterProperty: [string, any]) => {data.chaptersMap.set(+chapterProperty[0], chapterProperty[1])})
 
     // if this plot point was created at the first chapter then make it added. 
     // might want to make the selected chapter dynamic
@@ -142,4 +143,45 @@ export function nodeBackGroundStyle(action: ChapterAction, theme: any): string {
     }
 
     return backgroundColor;
+}
+
+export function firstChapterOfNode(chapterNodeIdsMap: Map<number, number[]>, allChaptersLength: number, nodes: Node[]) {
+
+    // populate the map
+    for(let i = 0; i < allChaptersLength; i++) {
+            
+        let nodeIDs: number[] = [];
+
+        chapterNodeIdsMap.set(i, nodeIDs);
+    }
+
+    nodes.forEach((node, _) => {
+
+        if(!isNodePlotPointData(node)) {
+            return;
+        }
+
+        const data = node.data;
+
+        const numofChapter = Number(node.id.split('-')[1]);
+
+        const chapters: number[] = keysToSortedArray(data.chaptersMap.keys());
+
+        if(chapters.length > 0) {
+
+            const firstChapterOfNode = chapters[0];
+
+            let nodeIds: number[] | undefined = chapterNodeIdsMap.get(firstChapterOfNode);
+
+            if(nodeIds == undefined) {
+
+                nodeIds = [];
+
+                // need to take a look at this again
+                chapterNodeIdsMap.set(firstChapterOfNode, nodeIds);
+            }
+
+            nodeIds.push(numofChapter);
+        }
+    })
 }
