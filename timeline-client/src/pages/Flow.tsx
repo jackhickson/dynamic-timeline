@@ -36,7 +36,7 @@ interface FlowProps {
 
 export default function Flow ({toggleMode}: FlowProps): any {
 
-    const chapterNodeIdsMap: Map<number, number[]> = new Map();
+    const [chapterNodeIdsMap, setChapterNodeIdsMap] = React.useState(new Map());
     const { storyBatches, setStoryBatches, allChapters} = useStoryBatches({initialStoryBatches});
     const { charactersAliasList, setCharactersAliasList, selectedCharacterId, setSelectedCharacterId } = useCharactersAliasList({initialCharacterAliasList});
 
@@ -91,7 +91,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
     React.useEffect(()=>{
 
-        firstChapterOfNode(chapterNodeIdsMap, allChapters.length, elements.nodes)
+        setChapterNodeIdsMap(firstChapterOfNode(allChapters.length, elements.nodes))
     },[allChapters])
 
     const onNodeClick = (_: ReactMouseEvent, node: Node) => {
@@ -114,7 +114,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
             nodeIds = [];
 
             // need to take a look at this again
-            chapterNodeIdsMap.set(selectedChapterIndex, nodeIds);
+            setChapterNodeIdsMap(chapterNodeIdsMap.set(selectedChapterIndex, nodeIds));
         }
 
         let plotPointId: number = -1;

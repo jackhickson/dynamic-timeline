@@ -145,7 +145,9 @@ export function nodeBackGroundStyle(action: ChapterAction, theme: any): string {
     return backgroundColor;
 }
 
-export function firstChapterOfNode(chapterNodeIdsMap: Map<number, number[]>, allChaptersLength: number, nodes: Node[]) {
+export function firstChapterOfNode(allChaptersLength: number, nodes: Node[]) {
+
+    const chapterNodeIdsMap: Map<number, number[]> = new Map();
 
     // populate the map
     for(let i = 0; i < allChaptersLength; i++) {
@@ -184,4 +186,6 @@ export function firstChapterOfNode(chapterNodeIdsMap: Map<number, number[]>, all
             nodeIds.push(numofChapter);
         }
     })
+
+    return chapterNodeIdsMap;
 }
