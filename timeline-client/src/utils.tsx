@@ -33,3 +33,7 @@ export const moveItemAtIndex = (a: any[], index: number, direction: Direction) =
 
     return a;
 }
+
+export const constructNodeId = (chapterId: number, nodeId: number) => {
+    return chapterId + "-" + nodeId;
+}

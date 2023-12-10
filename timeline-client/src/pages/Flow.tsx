@@ -57,7 +57,8 @@ export default function Flow ({toggleMode}: FlowProps): any {
         onAddNode,
         onUpdateNode,
         onUpdateFromChapterChange,
-        onUpdateFromCharacterChange
+        onUpdateFromCharacterChange,
+        onDeleteNode
     } = useNodeEdgeUpdate({elements, setElements, triggerUpdate, selectedNodeId, hideEnabled});
 
     const { setRfInstance, onSave, onRestore } = useFlow({setElements});
@@ -224,6 +225,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
             <PlotPointDialog
                 open={dialogOpen}
                 onDialogClose={handleDialogClose}
+                onDeleteNode={onDeleteNode}
                 onSubmit={submitUpdatedNode}
                 formData={selectedNodeData}
                 selectedChapterIndex={selectedChapterIndex}

@@ -1,6 +1,6 @@
 import { Node, Edge, Connection, addEdge, applyNodeChanges, applyEdgeChanges, EdgeChange, NodeChange, useUpdateNodeInternals, updateEdge  } from "reactflow";
 import { ChapterAction, PlotPointData, createPlotPointData, isNodePlotPointData, UNSELECTED_CHARACTER_ID } from "../Definitions";
-import { keysToSortedArray } from '../utils';
+import { constructNodeId, keysToSortedArray } from '../utils';
 import React from "react";
 import { AppElements, TriggerUpdateProp, SetElementProp } from "./useAppElements";
 
@@ -86,7 +86,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
     // new node
     const onAddNode = React.useCallback((selectedChapterIndex: number, plotPointId: number) => {
 
-        const id = selectedChapterIndex + "-" + plotPointId;
+        const id = constructNodeId(selectedChapterIndex, plotPointId);
 
         const addedPlotPointData: PlotPointData = createPlotPointData(id, selectedChapterIndex);
 
@@ -358,6 +358,56 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
         return [edgeNodes[0], edgeNodes[1]];
     };
 
+    // not complete
+    const onDeleteNode = (id: string ) => {
+
+        const [deletingChapterId, ...rest] = id.split("-");
+
+        if(rest.length === 0 || rest.length > 1) {
+            console.error(`Error parsing the node for deleting, ${deletingChapterId}: ${rest}`)
+        }
+
+        const deletingNodeId = Number(rest[0]);
+
+        // first filter out the node to be deleted and then shift the nodes on the same chapter
+        triggerUpdate(UpdateElementsMode.Nodes,
+            elements.nodes
+            .filter((node) => {
+                node.id !== id
+            })
+            .map((node) => {
+
+                const [chapterId, ...rest] = node.id.split("-");
+
+                if(rest.length === 0 || rest.length > 1) {
+                    console.error(`Error parsing the node while deleting, ${chapterId}: ${rest}`)
+                }
+
+                const nodeId = Number(rest[0]);
+
+                if(chapterId !== deletingChapterId ){
+                    return node;
+                }
+
+                // dont shift if before the node being deleted
+                if(nodeId < deletingNodeId) {
+                    return node;
+                } else if (nodeId === deletingNodeId) {
+
+                    console.error("Should not get here as it should have been filtered out above")
+
+                } else {
+
+                    //shift node down
+                    node.id = constructNodeId(Number(chapterId), nodeId - 1);
+                }
+                
+                return node;
+            })
+        );
+
+    }
+
     return {onNodesChange, onEdgesChange, onConnect, onEdgeUpdateStart, onEdgeUpdate, onEdgeUpdateEnd, onAddNode, onUpdateNode,
-        onUpdateFromChapterChange, onUpdateFromCharacterChange};
+        onUpdateFromChapterChange, onUpdateFromCharacterChange, onDeleteNode};
 }

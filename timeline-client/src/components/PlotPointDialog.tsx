@@ -7,12 +7,15 @@ import MultipleSelectChip from './MultipleSelectChip';
 import {keysToSortedArray} from '../utils';
 import { CharacterAliasList, SelectedCharacterAlias, PlotPointChapter } from '@backend/api-types';
 import CustomTextArea from './CustomTextArea';
+import {PullRightDiv} from './PullRightDiv';
+import { Delete } from '@mui/icons-material';
 
 const fandomCharacterUrl = "https://thewanderinginn.fandom.com/wiki/";
 
 interface PlotPointDialogProps {
   open: boolean;
   onDialogClose: () => void;
+  onDeleteNode: (id: string) => void;
   onSubmit: (data: PlotPointData) => void;
   formData: PlotPointData;
   selectedChapterIndex: number;
@@ -160,20 +163,31 @@ function PlotPointDialog(props: PlotPointDialogProps) {
     >
 
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Plot Point Editor
-        </DialogTitle>
+        Plot Point Editor
+      </DialogTitle>
+
+      <PullRightDiv>
+
+        <IconButton
+          aria-label="delete"
+          //onClick={() => props.onDeleteNode(formData.id)}
+          sx={{
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <Delete />
+        </IconButton>
+
         <IconButton
           aria-label="close"
           onClick={onDialogClose}
           sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
             color: (theme) => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
-          </IconButton>
+        </IconButton>
+      </PullRightDiv>
 
       <Box
         component="form"
