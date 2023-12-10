@@ -25,14 +25,14 @@
                         "description": "Erin Solstice finds an abandoned dilapidated inn on a hill. She is hurt tired and afraid of the Dragon and the \"red-eyed things\" she saw. She determines that it's probably safer inside than outside."
                     }
                 },
-                "chapterAction": 1,
-                "inCharacterTimeline": true
+                "chapterAction": 0,
+                "inCharacterTimeline": false
             },
             "position": {
                 "x": 0,
                 "y": 0
             },
-            "selected": true,
+            "selected": false,
             "dragging": false,
             "positionAbsolute": {
                 "x": 0,
@@ -61,8 +61,8 @@
                         "description": "Erin teleported from her bathroom to this world after playing chess, without her phone. She believes the world is magic, not VR"
                     }
                 },
-                "chapterAction": 1,
-                "inCharacterTimeline": true
+                "chapterAction": 0,
+                "inCharacterTimeline": false
             },
             "position": {
                 "x": 235,
@@ -94,20 +94,20 @@
                                 "alias": "Erin Solstice"
                             }
                         ],
-                        "description": "After teleporting into a cave with a fire-breathing dragon, she then ran for her life. Through \"rolling valleys and foothills\" she looked for help. She stumbled apon \"a bunch of little green things with red eyes and mouths full of teeth\" that tried to cut here. She wondered if they were goblins"
+                        "description": "After teleporting into a cave with a fire-breathing dragon, she then ran for her life. Through \"rolling valleys and foothills\" she looked for help. She stumbled upon \"a bunch of little green things with red eyes and mouths full of teeth\" that tried to cut her. She wondered if they were goblins."
                     }
                 },
-                "chapterAction": 1,
-                "inCharacterTimeline": true
+                "chapterAction": 0,
+                "inCharacterTimeline": false
             },
             "position": {
-                "x": 236.5,
-                "y": -65
+                "x": 238.79739670999402,
+                "y": -152.30107497977468
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 236.5,
-                "y": -65
+                "x": 238.79739670999402,
+                "y": -152.30107497977468
             },
             "dragging": false,
             "hidden": false
@@ -133,19 +133,20 @@
                         "description": "Erin explores the first floor of the inn looking for cleaning equipment. She walks into the kitchen and sees, \"A pot, cast-iron pan, and a few other utensils\". She finds a bucket to hold water from the rain outside to use in cleaning up."
                     }
                 },
-                "chapterAction": 1,
-                "inCharacterTimeline": true
+                "chapterAction": 0,
+                "inCharacterTimeline": false
             },
             "position": {
-                "x": 233,
-                "y": 62.5
+                "x": 239.89219012998223,
+                "y": 190.0055174046709
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 233,
-                "y": 62.5
+                "x": 239.89219012998223,
+                "y": 190.0055174046709
             },
-            "dragging": false
+            "dragging": false,
+            "hidden": false
         },
         {
             "width": 180,
@@ -168,19 +169,20 @@
                         "description": "Erin didn't find a dustrag on the first floor so she had to go to the second. She finds curtains to use a replacement and cleans the chairs and tables as there is no mop to clean the floor."
                     }
                 },
-                "chapterAction": 1,
-                "inCharacterTimeline": true
+                "chapterAction": 0,
+                "inCharacterTimeline": false
             },
             "position": {
-                "x": 506.5,
-                "y": 63.5
+                "x": 463.99816086510964,
+                "y": 189.85681904967387
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 506.5,
-                "y": 63.5
+                "x": 463.99816086510964,
+                "y": 189.85681904967387
             },
-            "dragging": false
+            "dragging": false,
+            "hidden": false
         },
         {
             "width": 108,
@@ -203,19 +205,172 @@
                         "description": "The first leveling in the story. As Erin Solstice falls asleep she hears \"[Innkeeper Level 1!]\" and \"[Skill – Basic Cleaning obtained!]\" for her cleaning and supplementally, and gets \"[Skill – Basic Cooking obtained!]\" due to the acquiring of the class."
                     }
                 },
-                "chapterAction": 1,
-                "inCharacterTimeline": true
+                "chapterAction": 0,
+                "inCharacterTimeline": false
             },
             "position": {
-                "x": 737.6049221220479,
-                "y": 62.535325152342494
+                "x": 668.6830208222258,
+                "y": 190.0408425570134
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 737.6049221220479,
-                "y": 62.535325152342494
+                "x": 668.6830208222258,
+                "y": 190.0408425570134
             },
-            "dragging": false
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 190,
+            "height": 44,
+            "id": "1-2",
+            "type": "custom",
+            "data": {
+                "id": "1-2",
+                "location": "An inn",
+                "label": "Taking a look around",
+                "chaptersMap": {
+                    "1": {
+                        "chapterIndex": 1,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "After waking up and hearing the level-up announcement, Erin comes to terms with being in a new world. Full of magic, Dragons, and Goblins. She heads outside she notices the oddities of this world, the clouds in the sky are much higher and larger than Earth. The land around the inn is rolling hills and valleys. \"If you walked carelessly, you could lose track of your surroundings and find yourself in a valley thousands of feet wide\". Seemingly the season was Fall, Earth was at some time in Summer but she couldn't remember when. All this helped bring home that this was a different world. She also spots \"what looked vaguely like buildings. No, a wall of stone? Was there a town out there? Or a village? A…city?\". It was too far to tell from this distance. Another thing she spots is a \"small collection of trees in the distance\", with specks of yellow and blue on the trees."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 883.4184957485699,
+                "y": 0.40401536646810854
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 883.4184957485699,
+                "y": 0.40401536646810854
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 92,
+            "height": 44,
+            "id": "1-3",
+            "type": "custom",
+            "data": {
+                "id": "1-3",
+                "location": "Walking between the inn and blue fruit trees",
+                "label": "A rock!",
+                "chaptersMap": {
+                    "1": {
+                        "chapterIndex": 1,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Erin starts walking to the trees in the distance to identify what is on them. On the way there she meets a wild rock! or well a giant crab, \"it was also taller than a school bus, if not as wide.\", under a rock that tries to kill her. She escapes the encounter and then heads to the trees."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 1169.1494065066952,
+                "y": -65.78322491838453
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1169.1494065066952,
+                "y": -65.78322491838453
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 124,
+            "height": 44,
+            "id": "1-4",
+            "type": "custom",
+            "data": {
+                "id": "1-4",
+                "location": "Blue fruit trees",
+                "label": "Weird Trees",
+                "chaptersMap": {
+                    "1": {
+                        "chapterIndex": 1,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Upon inspecting the trees she finds that they are unnaturally tough, not able to even break off a twig from the branches. She shakes the trees to get the fruit to fall and picks it up but no system announcement for getting the fruit."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 1164.7966536902145,
+                "y": 61.31715732284961
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1164.7966536902145,
+                "y": 61.31715732284961
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 246,
+            "height": 44,
+            "id": "1-5",
+            "type": "custom",
+            "data": {
+                "id": "1-5",
+                "location": "Dragons Cave",
+                "label": "A Dragons mussing over Erin",
+                "chaptersMap": {
+                    "1": {
+                        "chapterIndex": 1,
+                        "characters": [
+                            {
+                                "id": "Teriarch",
+                                "alias": "Unknown Dragon"
+                            },
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Magnolia Reinhart",
+                                "alias": "A female friend of a Dragon"
+                            }
+                        ],
+                        "description": "A dragon remembering the human that teleported into his cave. He was sleeping so he was surprised at her appearance, not as much as her. He wonders if it was a spy from a [Necromancer], another dragon, or maybe \" [Knights]? A random [Hero]?\". A contingency message was sent in his surprise during the encounter to an unknown friend, wondering about his status. After finding no one or magic tracking or out-of-place after two weeks he determines it to be bad luck. \"She had to have been the subject of—of some chance. Maybe a [Gambler] or whatnot\". After doing some errands through magic to a nearby city he falls asleep in his cave."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 566.728416705777,
+                "y": -150.22662955810858
+            },
+            "selected": true,
+            "positionAbsolute": {
+                "x": 566.728416705777,
+                "y": -150.22662955810858
+            },
+            "dragging": false,
+            "hidden": false
         }
     ],
     "edges": [
@@ -243,7 +398,8 @@
             "target": "0-3",
             "targetHandle": null,
             "id": "reactflow__edge-0-0-0-3",
-            "animated": true
+            "animated": true,
+            "hidden": false
         },
         {
             "source": "0-3",
@@ -251,7 +407,8 @@
             "target": "0-4",
             "targetHandle": null,
             "id": "reactflow__edge-0-3-0-4",
-            "animated": true
+            "animated": true,
+            "hidden": false
         },
         {
             "source": "0-4",
@@ -259,7 +416,56 @@
             "target": "0-5",
             "targetHandle": null,
             "id": "reactflow__edge-0-4-0-5",
-            "animated": true
+            "animated": true,
+            "hidden": false
+        },
+        {
+            "source": "0-5",
+            "sourceHandle": null,
+            "target": "1-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-5-1-2",
+            "hidden": false
+        },
+        {
+            "source": "0-1",
+            "sourceHandle": null,
+            "target": "1-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-1-1-2",
+            "hidden": false
+        },
+        {
+            "source": "0-2",
+            "sourceHandle": null,
+            "target": "1-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-2-1-2",
+            "hidden": false
+        },
+        {
+            "source": "1-2",
+            "sourceHandle": null,
+            "target": "1-3",
+            "targetHandle": null,
+            "id": "reactflow__edge-1-2-1-3",
+            "hidden": false
+        },
+        {
+            "source": "1-2",
+            "sourceHandle": null,
+            "target": "1-4",
+            "targetHandle": null,
+            "id": "reactflow__edge-1-2-1-4",
+            "hidden": false
+        },
+        {
+            "source": "0-2",
+            "sourceHandle": null,
+            "target": "1-5",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-2-1-5",
+            "hidden": false
         }
     ],
     "viewport": {
