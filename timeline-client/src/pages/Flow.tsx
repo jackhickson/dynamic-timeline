@@ -1,6 +1,7 @@
 import React, { MouseEvent as ReactMouseEvent } from 'react'
 import {Background, Panel, Edge, Node } from 'reactflow';
 import 'reactflow/dist/style.css';
+import './Flow.css'
 
 import { Checkbox, SelectChangeEvent } from '@mui/material';
 
