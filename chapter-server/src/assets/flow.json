@@ -92,6 +92,10 @@
                             {
                                 "id": "Erin Solstice",
                                 "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Teriarch",
+                                "alias": "Unknown Dragon"
                             }
                         ],
                         "description": "After teleporting into a cave with a fire-breathing dragon, she then ran for her life. Through \"rolling valleys and foothills\" she looked for help. She stumbled upon \"a bunch of little green things with red eyes and mouths full of teeth\" that tried to cut her. She wondered if they were goblins."
@@ -113,14 +117,14 @@
             "hidden": false
         },
         {
-            "width": 204,
+            "width": 162,
             "height": 44,
             "id": "0-3",
             "type": "custom",
             "data": {
                 "id": "0-3",
-                "location": "The first floor of an inn",
-                "label": "Exploring the first floor",
+                "location": "The inn",
+                "label": "Exploring the inn",
                 "chaptersMap": {
                     "0": {
                         "chapterIndex": 0,
@@ -130,7 +134,7 @@
                                 "alias": "Erin Solstice"
                             }
                         ],
-                        "description": "Erin explores the first floor of the inn looking for cleaning equipment. She walks into the kitchen and sees, \"A pot, cast-iron pan, and a few other utensils\". She finds a bucket to hold water from the rain outside to use in cleaning up."
+                        "description": "Erin explores the first floor of the inn looking for cleaning equipment. She walks into the kitchen and sees, \"A pot, cast-iron pan, and a few other utensils\". She finds a bucket to hold water from the rain outside to use in cleaning up. She looks for a dustrag on the second floor but instead finds curtains as a replacement."
                     }
                 },
                 "chapterAction": 0,
@@ -144,42 +148,6 @@
             "positionAbsolute": {
                 "x": 239.89219012998223,
                 "y": 190.0055174046709
-            },
-            "dragging": false,
-            "hidden": false
-        },
-        {
-            "width": 180,
-            "height": 44,
-            "id": "0-4",
-            "type": "custom",
-            "data": {
-                "id": "0-4",
-                "location": "Second floor of an inn",
-                "label": "Finding the dustrag",
-                "chaptersMap": {
-                    "0": {
-                        "chapterIndex": 0,
-                        "characters": [
-                            {
-                                "id": "Erin Solstice",
-                                "alias": "Erin Solstice"
-                            }
-                        ],
-                        "description": "Erin didn't find a dustrag on the first floor so she had to go to the second. She finds curtains to use a replacement and cleans the chairs and tables as there is no mop to clean the floor."
-                    }
-                },
-                "chapterAction": 0,
-                "inCharacterTimeline": false
-            },
-            "position": {
-                "x": 463.99816086510964,
-                "y": 189.85681904967387
-            },
-            "selected": false,
-            "positionAbsolute": {
-                "x": 463.99816086510964,
-                "y": 189.85681904967387
             },
             "dragging": false,
             "hidden": false
@@ -187,10 +155,10 @@
         {
             "width": 108,
             "height": 44,
-            "id": "0-5",
+            "id": "0-4",
             "type": "custom",
             "data": {
-                "id": "0-5",
+                "id": "0-4",
                 "location": "An inn",
                 "label": "First level",
                 "chaptersMap": {
@@ -209,13 +177,13 @@
                 "inCharacterTimeline": false
             },
             "position": {
-                "x": 668.6830208222258,
-                "y": 190.0408425570134
+                "x": 455.84959571175534,
+                "y": 247.4757603068651
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 668.6830208222258,
-                "y": 190.0408425570134
+                "x": 455.84959571175534,
+                "y": 247.4757603068651
             },
             "dragging": false,
             "hidden": false
@@ -241,17 +209,17 @@
                         "description": "After waking up and hearing the level-up announcement, Erin comes to terms with being in a new world. Full of magic, Dragons, and Goblins. She heads outside she notices the oddities of this world, the clouds in the sky are much higher and larger than Earth. The land around the inn is rolling hills and valleys. \"If you walked carelessly, you could lose track of your surroundings and find yourself in a valley thousands of feet wide\". Seemingly the season was Fall, Earth was at some time in Summer but she couldn't remember when. All this helped bring home that this was a different world. She also spots \"what looked vaguely like buildings. No, a wall of stone? Was there a town out there? Or a village? A…city?\". It was too far to tell from this distance. Another thing she spots is a \"small collection of trees in the distance\", with specks of yellow and blue on the trees."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
-                "x": 883.4184957485699,
-                "y": 0.40401536646810854
+                "x": 472.2112029679404,
+                "y": -1.5959846335318915
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 883.4184957485699,
-                "y": 0.40401536646810854
+                "x": 472.2112029679404,
+                "y": -1.5959846335318915
             },
             "dragging": false,
             "hidden": false
@@ -277,17 +245,17 @@
                         "description": "Erin starts walking to the trees in the distance to identify what is on them. On the way there she meets a wild rock! or well a giant crab, \"it was also taller than a school bus, if not as wide.\", under a rock that tries to kill her. She escapes the encounter and then heads to the trees."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
-                "x": 1169.1494065066952,
-                "y": -65.78322491838453
+                "x": 788.039505437806,
+                "y": 2.1197190187131625
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 1169.1494065066952,
-                "y": -65.78322491838453
+                "x": 788.039505437806,
+                "y": 2.1197190187131625
             },
             "dragging": false,
             "hidden": false
@@ -310,20 +278,20 @@
                                 "alias": "Erin Solstice"
                             }
                         ],
-                        "description": "Upon inspecting the trees she finds that they are unnaturally tough, not able to even break off a twig from the branches. She shakes the trees to get the fruit to fall and picks it up but no system announcement for getting the fruit."
+                        "description": "Upon inspecting the trees she finds that they are unnaturally tough, not able to even break off a twig from the branches. She shakes the trees to get the blue fruit to fall and picks it up but no system announcement for getting the fruit."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
-                "x": 1164.7966536902145,
-                "y": 61.31715732284961
+                "x": 787.483209854404,
+                "y": 89.52513751641325
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 1164.7966536902145,
-                "y": 61.31715732284961
+                "x": 787.483209854404,
+                "y": 89.52513751641325
             },
             "dragging": false,
             "hidden": false
@@ -357,17 +325,475 @@
                         "description": "A dragon remembering the human that teleported into his cave. He was sleeping so he was surprised at her appearance, not as much as her. He wonders if it was a spy from a [Necromancer], another dragon, or maybe \" [Knights]? A random [Hero]?\". A contingency message was sent in his surprise during the encounter to an unknown friend, wondering about his status. After finding no one or magic tracking or out-of-place after two weeks he determines it to be bad luck. \"She had to have been the subject of—of some chance. Maybe a [Gambler] or whatnot\". After doing some errands through magic to a nearby city he falls asleep in his cave."
                     }
                 },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 464.60216938890267,
+                "y": -152.09718012140473
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 464.60216938890267,
+                "y": -152.09718012140473
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 157,
+            "height": 44,
+            "id": "2-0",
+            "type": "custom",
+            "data": {
+                "id": "2-0",
+                "location": "Blue fruit forest",
+                "label": "Eating Blue Fruit",
+                "chaptersMap": {
+                    "2": {
+                        "chapterIndex": 2,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Erin gets hungry and dissects the blue-looking fruit. She finds it is mostly skin with a giant seed that upon breaking with a rock splits open with pulp and juice that smells like \"an incredibly powerful chemical smell similar to antifreeze\". Next attempt she tries to eat only the skin of another fruit and find out they're really tasty."
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 948.3588829649518,
+                "y": 89.07618016893652
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 948.3588829649518,
+                "y": 89.07618016893652
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 203,
+            "height": 44,
+            "id": "2-1",
+            "type": "custom",
+            "data": {
+                "id": "2-1",
+                "location": "Somewhere outside the inn",
+                "label": "Weaponizing blue fruit",
+                "chaptersMap": {
+                    "2": {
+                        "chapterIndex": 2,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Erin needs to get back to the inn past the inn and use the blue fruit cores to hopefully dissuade the rock crab creature from attacking her. It's super effective! She goes back to the trees to get more for her \"breakfast, lunch, and dinner\", but she finds goblins where she just was and runs away when they start approaching her"
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 1154.6289220883577,
+                "y": 2.8829313460842485
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1154.6289220883577,
+                "y": 2.8829313460842485
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 171,
+            "height": 44,
+            "id": "2-2",
+            "type": "custom",
+            "data": {
+                "id": "2-2",
+                "location": "Outside the inn",
+                "label": "Chased by goblins",
+                "chaptersMap": {
+                    "2": {
+                        "chapterIndex": 2,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Rags",
+                                "alias": "Unknown young female goblin"
+                            }
+                        ],
+                        "description": "The chapter opens with Erin jumping over a stream \"down a hill a few hundred feet away from the inn\", where she could gather water from if not being chased by goblins. They carried crude weapons. She gets back to the inn before they catch her but they were most likely just \"letting her use up all her energy before closing in for the kill.\""
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 1430.4886856081914,
+                "y": 2.9902695820092973
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1430.4886856081914,
+                "y": 2.9902695820092973
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 196,
+            "height": 44,
+            "id": "2-3",
+            "type": "custom",
+            "data": {
+                "id": "2-3",
+                "location": "The inn",
+                "label": "Goblins attack the inn",
+                "chaptersMap": {
+                    "2": {
+                        "chapterIndex": 2,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Rags",
+                                "alias": "Unknown young female goblin"
+                            }
+                        ],
+                        "description": "She closes the front door with a bar to hold it closed and shutters all the windows on the first floor. She then realizes there is a second floor and needs to close those windows as well. While closing them she finds a skeleton in one of the beds. While she is upstairs seven goblins get in by breaking the shutters. Erin runs downstairs to defend. She gets cut but starts to punch, kick, and throw chairs to defend herself. She beats/knocks out more than half of them and scares them off because she is not the easy prey they assumed. After the fight ends she falls asleep and reaches \"[Innkeeper Level 4!]\"."
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 1636.027968464617,
+                "y": -50.99855310285132
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1636.027968464617,
+                "y": -50.99855310285132
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 147,
+            "height": 44,
+            "id": "2-4",
+            "type": "custom",
+            "data": {
+                "id": "2-4",
+                "location": "Blue fruit forest and a cave",
+                "label": "Goblins retreat",
+                "chaptersMap": {
+                    "2": {
+                        "chapterIndex": 2,
+                        "characters": [
+                            {
+                                "id": "Rags",
+                                "alias": "Unknown young female goblin"
+                            }
+                        ],
+                        "description": "The point of view changes to a small young goblin reflecting on the failed attack. She has no name as \" Goblins didn’t have names. Only their [Chieftain] had any real title\". 3 of the goblins weren't even warriors but \"They should have killed her\". They went back to the blue fruit trees to get the fruit they left behind. They went back to the cave where their tribe stayed. The tribe's chieftain wanted to know why they were hurt but they didn't want to tell him they were beaten by one human, and that they let her live. The chieftain mentions that there should be more goblins and a [Shaman]."
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 1934.641499435689,
+                "y": -133.4227088242822
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1934.641499435689,
+                "y": -133.4227088242822
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 290,
+            "height": 44,
+            "id": "3-0",
+            "type": "custom",
+            "data": {
+                "id": "3-0",
+                "location": "Inn and blue fruit forest",
+                "label": "The morning after the goblin \"raid\"",
+                "chaptersMap": {
+                    "3": {
+                        "chapterIndex": 3,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Erin wakes up hungry, so she goes back to the blue fruit trees, eats fourteen, and brings the cores back to use as weapons. She tries to look for branches for firewood but finds none on the ground. She cleans up the inn after the raid and thinks about the raid. She realizes that the goblins are like little kids. She also remembers that that they were not hunting her originally, but harvesting the fruit, making her realize they live close and worries her. The cleaning seems to be going much faster than she would think it would take but ignores that. Her most pressing issue it a lack of water."
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 1893.8263064870073,
+                "y": 89.1585424576263
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 1893.8263064870073,
+                "y": 89.1585424576263
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 166,
+            "height": 44,
+            "id": "3-1",
+            "type": "custom",
+            "data": {
+                "id": "3-1",
+                "location": "Stream near the inn",
+                "label": "Looking for water",
+                "chaptersMap": {
+                    "3": {
+                        "chapterIndex": 3,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "After the Erin attack and not drinking anything in two days, Erin goes looking for some water. She walks around, a bit delirious from the dehydration but remembers the stram she jumped over during the chase. She drinks and bathes in the creak. While in the water she realizes that the reason that she was able to clean the inn so well was due to the  [Basic Cleaning] skill she received the first night. As she was bathing and thinking about the world and what she has experienced so far, a massive, \"mutant fish with teeth\" jumped at her. Ering makes it to the bank without being too hurt and waits for it to die, with some shenanigans."
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 2229.147218395987,
+                "y": 11.61324379354351
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 2229.147218395987,
+                "y": 11.61324379354351
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 86,
+            "height": 44,
+            "id": "3-2",
+            "type": "custom",
+            "data": {
+                "id": "3-2",
+                "location": "Inn kitchen",
+                "label": "Sushi?",
+                "chaptersMap": {
+                    "3": {
+                        "chapterIndex": 3,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "After Erin carries the heavy fish to the inn's kitchen, she attempts to butcher it with a knife she found. It is difficult to cut it, but when she finally pierces the fish and looks inside she can see a yellow thing that vibrates when poked. It also sees some \"pale yellow-white pus ooze\" from inside. She assumes that this would be easy due to having the [Basic Cooking] skill but nothing special is happening. She realizes that maybe it needs to be cooked with a pan in the kitchen. As she goes back to butchering, her hand slips and slices her palm open."
+                    }
+                },
+                "chapterAction": 0,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 2481.22801937752,
+                "y": 90.16648901252552
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 2481.22801937752,
+                "y": 90.16648901252552
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 132,
+            "height": 44,
+            "id": "3-3",
+            "type": "custom",
+            "data": {
+                "id": "3-3",
+                "location": "Inn",
+                "label": "Bleeding out",
+                "chaptersMap": {
+                    "3": {
+                        "chapterIndex": 3,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Due to slicing her hand and not having any bandages she makes use of the curtains from upstairs but it does not help much. She eventually passes out and wakes back up in the morning with her hand still hurting and slightly bleeding into a puddle on the floor. She sat there all day in agony trying to not scream and trying to play chess in her mind to distract her."
+                    },
+                    "4": {
+                        "chapterIndex": 4,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Due to slicing her hand and not having any bandages she makes use of the curtains from upstairs but it does not help much. She eventually passes out and wakes back up in the morning with her hand still hurting and slightly bleeding into a puddle on the floor. She sat there all day in agony trying to not scream and trying to play chess in her mind to distract her. The next day she decides to go outside but when coming back she doesn't realize that the door of the inn had been opened when she purposely closed it behind her when she left. The 'bandage' needed to come off as it was \"sodden with water\" after attempting to clean it off in the stream. She couldn't get the entire bandage off and went looking for something else than a knife to remove the left over pieces."
+                    }
+                },
+                "chapterAction": 2,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 2621.329646103233,
+                "y": 91.35314077989324
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 2621.329646103233,
+                "y": 91.35314077989324
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 160,
+            "height": 44,
+            "id": "4-0",
+            "type": "custom",
+            "data": {
+                "id": "4-0",
+                "location": "Inn kitchen",
+                "label": "Preserved food?!",
+                "chaptersMap": {
+                    "4": {
+                        "chapterIndex": 4,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "In the kitchen cupboards, Erin finds flour and butter perfectly preserved. But as \"Erin stared around the kitchen. Dust and cobwebs seemed to make up most of the room\". She finds \" a line of glowing, incomprehensible symbols\" on the cupboard and figures out it must be some magical runes. She finds them on most cupboards in the room but only one is still functional after all this time. Curiously she touches the working rune and breaks off a splinter, breaking the rune and disrupting the magic until it fades to dark and stops functioning."
+                    }
+                },
                 "chapterAction": 1,
                 "inCharacterTimeline": false
             },
             "position": {
-                "x": 566.728416705777,
-                "y": -150.22662955810858
+                "x": 2799.183216140543,
+                "y": 13.305559735171428
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 2799.183216140543,
+                "y": 13.305559735171428
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 237,
+            "height": 44,
+            "id": "4-1",
+            "type": "custom",
+            "data": {
+                "id": "4-1",
+                "location": "Inn",
+                "label": "Where did the skeleton go?",
+                "chaptersMap": {
+                    "4": {
+                        "chapterIndex": 4,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "After destroying the rune in the kitchen Erin falls into a bit of depression and questions what the circumstances of the previous owner. She remembers the skeleton upstairs and goes to take a look. When she gets there it is gone. She spirals further wondering if the skeleton can move through magic or if it was valuable to the goblins and they took it. She then realized that the door was open when she arrived back in the morning. From behind her, she heard a creak coming up the stairs. She spiraled even further wondering who or what would be there and she was no hero. To her relief, it was just a goblin and not something she couldn't handle."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 3019.4069150980367,
+                "y": 90.34309560644205
+            },
+            "selected": false,
+            "dragging": false,
+            "positionAbsolute": {
+                "x": 3019.4069150980367,
+                "y": 90.34309560644205
+            },
+            "hidden": false
+        },
+        {
+            "width": 254,
+            "height": 44,
+            "id": "4-2",
+            "type": "custom",
+            "data": {
+                "id": "4-2",
+                "location": "Inn",
+                "label": "Goblin raid 2: no longer afraid",
+                "chaptersMap": {
+                    "4": {
+                        "chapterIndex": 4,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Rags",
+                                "alias": "Unknown young female goblin"
+                            },
+                            {
+                                "id": "Pisces Jealnet",
+                                "alias": "Skeleton thief"
+                            }
+                        ],
+                        "description": "A group of 7 goblins wait outside the inn prepared to ambush the human when they expect her to chase the goblin that went inside. Surprisingly the human throws the small goblin and then retreats into the inn. The young female goblin followed this raiding party to see what would happen. An unknown third party watches both the inn and the goblins, realizing that a woman did live in there and wondering why she was doing out there. He seemed to have been in the inn and stolen the skeleton trying to work on a project with them."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 3314.9033674451193,
+                "y": 87.88689713863396
             },
             "selected": true,
             "positionAbsolute": {
-                "x": 566.728416705777,
-                "y": -150.22662955810858
+                "x": 3314.9033674451193,
+                "y": 87.88689713863396
             },
             "dragging": false,
             "hidden": false
@@ -380,8 +806,7 @@
             "target": "0-1",
             "targetHandle": null,
             "id": "reactflow__edge-0-0-0-1",
-            "hidden": false,
-            "animated": true
+            "hidden": false
         },
         {
             "source": "0-0",
@@ -389,8 +814,7 @@
             "target": "0-2",
             "targetHandle": null,
             "id": "reactflow__edge-0-0-0-2",
-            "hidden": false,
-            "animated": true
+            "hidden": false
         },
         {
             "source": "0-0",
@@ -398,7 +822,6 @@
             "target": "0-3",
             "targetHandle": null,
             "id": "reactflow__edge-0-0-0-3",
-            "animated": true,
             "hidden": false
         },
         {
@@ -407,24 +830,6 @@
             "target": "0-4",
             "targetHandle": null,
             "id": "reactflow__edge-0-3-0-4",
-            "animated": true,
-            "hidden": false
-        },
-        {
-            "source": "0-4",
-            "sourceHandle": null,
-            "target": "0-5",
-            "targetHandle": null,
-            "id": "reactflow__edge-0-4-0-5",
-            "animated": true,
-            "hidden": false
-        },
-        {
-            "source": "0-5",
-            "sourceHandle": null,
-            "target": "1-2",
-            "targetHandle": null,
-            "id": "reactflow__edge-0-5-1-2",
             "hidden": false
         },
         {
@@ -465,6 +870,184 @@
             "target": "1-5",
             "targetHandle": null,
             "id": "reactflow__edge-0-2-1-5",
+            "hidden": false
+        },
+        {
+            "source": "1-4",
+            "sourceHandle": null,
+            "target": "2-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-1-4-2-0",
+            "hidden": false
+        },
+        {
+            "source": "2-0",
+            "sourceHandle": null,
+            "target": "2-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-0-2-1",
+            "hidden": false
+        },
+        {
+            "source": "1-3",
+            "sourceHandle": null,
+            "target": "2-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-1-3-2-1",
+            "hidden": false
+        },
+        {
+            "source": "2-1",
+            "sourceHandle": null,
+            "target": "2-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-1-2-2",
+            "hidden": false
+        },
+        {
+            "source": "2-2",
+            "sourceHandle": null,
+            "target": "2-3",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-2-2-3",
+            "hidden": false
+        },
+        {
+            "source": "2-3",
+            "sourceHandle": null,
+            "target": "2-4",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-3-2-4",
+            "hidden": false
+        },
+        {
+            "source": "2-3",
+            "sourceHandle": null,
+            "target": "3-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-3-3-0",
+            "hidden": false
+        },
+        {
+            "source": "2-1",
+            "sourceHandle": null,
+            "target": "3-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-1-3-0",
+            "hidden": false
+        },
+        {
+            "source": "2-0",
+            "sourceHandle": null,
+            "target": "3-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-0-3-0",
+            "hidden": false
+        },
+        {
+            "source": "0-4",
+            "sourceHandle": null,
+            "target": "3-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-4-3-0",
+            "hidden": false
+        },
+        {
+            "source": "3-0",
+            "sourceHandle": null,
+            "target": "3-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-0-3-1",
+            "hidden": false
+        },
+        {
+            "source": "2-2",
+            "sourceHandle": null,
+            "target": "3-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-2-3-1",
+            "hidden": false
+        },
+        {
+            "source": "3-1",
+            "sourceHandle": null,
+            "target": "3-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-1-3-2",
+            "hidden": false
+        },
+        {
+            "source": "0-3",
+            "sourceHandle": null,
+            "target": "2-3",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-3-2-3",
+            "selected": false,
+            "hidden": false
+        },
+        {
+            "source": "0-3",
+            "sourceHandle": null,
+            "target": "3-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-3-3-2",
+            "hidden": false
+        },
+        {
+            "source": "3-2",
+            "sourceHandle": null,
+            "target": "3-3",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-2-3-3",
+            "hidden": false
+        },
+        {
+            "source": "3-3",
+            "sourceHandle": null,
+            "target": "4-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-3-4-0",
+            "hidden": false
+        },
+        {
+            "source": "4-0",
+            "sourceHandle": null,
+            "target": "4-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-4-0-4-1",
+            "hidden": false
+        },
+        {
+            "source": "3-3",
+            "sourceHandle": null,
+            "target": "4-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-3-4-1",
+            "selected": false,
+            "hidden": false
+        },
+        {
+            "source": "2-3",
+            "sourceHandle": null,
+            "target": "4-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-3-4-1",
+            "hidden": false
+        },
+        {
+            "source": "4-1",
+            "sourceHandle": null,
+            "target": "4-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-4-1-4-2",
+            "hidden": false
+        },
+        {
+            "source": "2-4",
+            "sourceHandle": null,
+            "target": "4-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-2-4-4-2",
             "hidden": false
         }
     ],

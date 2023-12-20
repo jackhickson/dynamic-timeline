@@ -200,15 +200,15 @@
         "aliases": []
     },
     {
+        "id": "Az’kerash",
+        "aliases": []
+    },
+    {
         "id": "Azam’du",
         "aliases": []
     },
     {
         "id": "Azemith",
-        "aliases": []
-    },
-    {
-        "id": "Az’kerash",
         "aliases": []
     },
     {
@@ -2839,7 +2839,9 @@
     },
     {
         "id": "Pisces Jealnet",
-        "aliases": []
+        "aliases": [
+            "Skeleton thief"
+        ]
     },
     {
         "id": "Pivr",
@@ -2971,7 +2973,9 @@
     },
     {
         "id": "Rags",
-        "aliases": []
+        "aliases": [
+            "Unknown young female goblin"
+        ]
     },
     {
         "id": "Raich",
@@ -3091,6 +3095,10 @@
     },
     {
         "id": "Relz Hauscale",
+        "aliases": []
+    },
+    {
+        "id": "Rémi",
         "aliases": []
     },
     {
@@ -3218,7 +3226,7 @@
         "aliases": []
     },
     {
-        "id": "Rémi",
+        "id": "Sa’la",
         "aliases": []
     },
     {
@@ -3287,10 +3295,6 @@
     },
     {
         "id": "Saturniel Cometscale",
-        "aliases": []
-    },
-    {
-        "id": "Sa’la",
         "aliases": []
     },
     {
@@ -3498,6 +3502,10 @@
         "aliases": []
     },
     {
+        "id": "Sóve",
+        "aliases": []
+    },
+    {
         "id": "Spiderslicer",
         "aliases": []
     },
@@ -3538,7 +3546,7 @@
         "aliases": []
     },
     {
-        "id": "Sóve",
+        "id": "T’shar",
         "aliases": []
     },
     {
@@ -3905,10 +3913,6 @@
     },
     {
         "id": "Tyrion Veltras",
-        "aliases": []
-    },
-    {
-        "id": "T’shar",
         "aliases": []
     },
     {
