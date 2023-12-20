@@ -68,20 +68,20 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
     const onEdgeUpdateStart = React.useCallback(() => {
         edgeUpdateSuccessful.current = false;
-      }, []);
+    }, []);
     
-      const onEdgeUpdate = React.useCallback((oldEdge: Edge, newConnection: Connection) => {
+    const onEdgeUpdate = React.useCallback((oldEdge: Edge, newConnection: Connection) => {
         edgeUpdateSuccessful.current = true;
         triggerUpdate(UpdateElementsMode.Edges,  updateEdge(oldEdge, newConnection, elements.edges));
-      }, [triggerUpdate]);
+    }, [triggerUpdate]);
     
-      const onEdgeUpdateEnd = React.useCallback((_: any, edge: Edge) => {
+    const onEdgeUpdateEnd = React.useCallback((_: any, edge: Edge) => {
         if (!edgeUpdateSuccessful.current) {
             triggerUpdate(UpdateElementsMode.Edges, elements.edges.filter((e) => e.id !== edge.id));
         }
     
         edgeUpdateSuccessful.current = true;
-      }, [triggerUpdate]);
+    }, [triggerUpdate]);
 
     // new node
     const onAddNode = React.useCallback((selectedChapterIndex: number, plotPointId: number) => {
@@ -168,7 +168,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
             let edgeNodes = getNodesOfEdge(edge, updatedNodes);
 
             if(!edgeNodes || edgeNodes.length != 2) {
-                console.info(`Invalid nodes of edge ${edge}`)
+                console.info(`Invalid nodes of edge ${edge.id}`)
                 return edge;
             }
 
@@ -344,13 +344,13 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
         if(edgeNodes.length > 3) {
 
-            console.error(`Too many nodes ${updatedNodes}, found for edge : ${edge}`);
+            console.error(`Too many nodes ${edgeNodes.length}, found for edge : ${edge.id}`);
 
             return undefined;
 
         } else if(edgeNodes.length <= 1) {
 
-            console.error(`Impossible, not enough nodes ${updatedNodes} found for edge: ${edge}`);
+            console.error(`Impossible, not enough nodes "${edgeNodes.length}" found for edge: ${edge.id}`);
 
             return undefined;
         }
