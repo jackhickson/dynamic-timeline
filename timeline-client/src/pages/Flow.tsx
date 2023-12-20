@@ -15,7 +15,7 @@ import { useTheme } from 'styled-components'
 
 import { api } from '../axiosApi';
 //import { isInitialState } from '../../chapter-server/src/api-types';
-import { PlotPointData, firstChapterOfNode, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
+import { PlotPointData, UNSELECTED_CHARACTER_ID, firstChapterOfNode, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
 
 import { initialNodes, initialEdges, initialCharacterAliasList, initialStoryBatches } from '../initial-elements';
 
@@ -25,6 +25,7 @@ import PlotPointDialog from '../components/PlotPointDialog';
 import ChapterSelect from '../components/ChapterSelect';
 import CharacterSelect from '../components/CharacterSelect';
 import EditLinkButton from '../components/EditLinkButton';
+import { CharacterAliasList } from '@backend/api-types';
 
 
 const minimapStyle = {
@@ -83,6 +84,11 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     data.flow.nodes || [],
                     data.flow.edges || []
                 )
+
+                const characterAliasList = data.characterAliasList || [];
+
+                const unselectedAlias: CharacterAliasList = {id: UNSELECTED_CHARACTER_ID,  aliases:[]};
+                characterAliasList.unshift(unselectedAlias);
         
                 setCharactersAliasList(data.characterAliasList || []);
                 setStoryBatches(data.storyBatches || []);
@@ -144,8 +150,6 @@ export default function Flow ({toggleMode}: FlowProps): any {
     }
 
     const onCharacterIdChange = (event: SelectChangeEvent<string>) => {
-
-        console.info("change")
 
         const newCharacter: string = event.target.value;
 
