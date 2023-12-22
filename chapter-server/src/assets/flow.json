@@ -667,7 +667,7 @@
                         "description": "Due to slicing her hand and not having any bandages she makes use of the curtains from upstairs but it does not help much. She eventually passes out and wakes back up in the morning with her hand still hurting and slightly bleeding into a puddle on the floor. She sat there all day in agony trying to not scream and trying to play chess in her mind to distract her. The next day she decides to go outside but when coming back she doesn't realize that the door of the inn had been opened when she purposely closed it behind her when she left. The 'bandage' needed to come off as it was \"sodden with water\" after attempting to clean it off in the stream. She couldn't get the entire bandage off and went looking for something else than a knife to remove the left over pieces."
                     }
                 },
-                "chapterAction": 2,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
@@ -703,7 +703,7 @@
                         "description": "In the kitchen cupboards, Erin finds flour and butter perfectly preserved. But as \"Erin stared around the kitchen. Dust and cobwebs seemed to make up most of the room\". She finds \" a line of glowing, incomprehensible symbols\" on the cupboard and figures out it must be some magical runes. She finds them on most cupboards in the room but only one is still functional after all this time. Curiously she touches the working rune and breaks off a splinter, breaking the rune and disrupting the magic until it fades to dark and stops functioning."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
@@ -739,7 +739,7 @@
                         "description": "After destroying the rune in the kitchen Erin falls into a bit of depression and questions what the circumstances of the previous owner. She remembers the skeleton upstairs and goes to take a look. When she gets there it is gone. She spirals further wondering if the skeleton can move through magic or if it was valuable to the goblins and they took it. She then realized that the door was open when she arrived back in the morning. From behind her, she heard a creak coming up the stairs. She spiraled even further wondering who or what would be there and she was no hero. To her relief, it was just a goblin and not something she couldn't handle."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
@@ -783,20 +783,241 @@
                         "description": "A group of 7 goblins wait outside the inn prepared to ambush the human when they expect her to chase the goblin that went inside. Surprisingly the human throws the small goblin and then retreats into the inn. The young female goblin followed this raiding party to see what would happen. An unknown third party watches both the inn and the goblins, realizing that a woman did live in there and wondering why she was doing out there. He seemed to have been in the inn and stolen the skeleton trying to work on a project with them."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
                 "x": 3314.9033674451193,
                 "y": 87.88689713863396
             },
-            "selected": true,
+            "selected": false,
             "positionAbsolute": {
                 "x": 3314.9033674451193,
                 "y": 87.88689713863396
             },
             "dragging": false,
             "hidden": false
+        },
+        {
+            "width": 188,
+            "height": 44,
+            "id": "5-0",
+            "type": "custom",
+            "data": {
+                "id": "5-0",
+                "location": "Stream near the inn",
+                "label": "Discovered Acid flies",
+                "chaptersMap": {
+                    "5": {
+                        "chapterIndex": 5,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "When waking up after the goblin raid Erin smells the foul fish in the kitchen. She brings it outside and drops it on the ground but it exploded on the ground. She then tries to was off the cuttingh board the fish was on in the stream. She then see a bunch of flies from inside the fish hanging on to the cutting board. When she flicks one it explodes and some of it hits her and \"both the board and her arm began to smoke and dissolve\". Erin then names them \"Acid flies\"."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 3647.1172771155866,
+                "y": 163.72113714470646
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 3647.1172771155866,
+                "y": 163.72113714470646
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 159,
+            "height": 44,
+            "id": "5-1",
+            "type": "custom",
+            "data": {
+                "id": "5-1",
+                "location": "Inn kitchen",
+                "label": "Lets get cooking",
+                "chaptersMap": {
+                    "5": {
+                        "chapterIndex": 5,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": ""
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 3898.16978819261,
+                "y": 23.934396310133742
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 3898.16978819261,
+                "y": 23.934396310133742
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 214,
+            "height": 44,
+            "id": "5-2",
+            "type": "custom",
+            "data": {
+                "id": "5-2",
+                "location": "On a wall some where",
+                "label": "There's smoke at the inn",
+                "chaptersMap": {
+                    "5": {
+                        "chapterIndex": 5,
+                        "characters": [
+                            {
+                                "id": "Beilmark",
+                                "alias": "Beilmark"
+                            },
+                            {
+                                "id": "Relc Grasstongue",
+                                "alias": "Relc Grasstongue"
+                            },
+                            {
+                                "id": "Klbkch",
+                                "alias": "Klbkch"
+                            }
+                        ],
+                        "description": "A [Guardswoman] Beilmark and a rookie see some smoke coming out of the inn on the hill in the distance contemplating who or what could be starting a fire. Belimark then tells the rookie to get two Senior Guardsmen to do a patrol to see what is the situation. Those two's names are Relc and Klbkch."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 3899.182230300415,
+                "y": -263.06692138503854
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 3899.182230300415,
+                "y": -263.06692138503854
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 160,
+            "height": 44,
+            "id": "5-3",
+            "type": "custom",
+            "data": {
+                "id": "5-3",
+                "location": "Outside the Inn",
+                "label": "Water and a bird",
+                "chaptersMap": {
+                    "5": {
+                        "chapterIndex": 5,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Erin goes to get water for the baking and gets scared by what she believes is a pterodactyl. It flies away and leaves eggs for her to grab."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 4117.776696620223,
+                "y": 109.31395520302019
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 4117.776696620223,
+                "y": 109.31395520302019
+            },
+            "dragging": false
+        },
+        {
+            "width": 108,
+            "height": 44,
+            "id": "5-4",
+            "type": "custom",
+            "data": {
+                "id": "5-4",
+                "location": "Inn",
+                "label": "Inn's sign",
+                "chaptersMap": {
+                    "5": {
+                        "chapterIndex": 5,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "While walking back to the inn Erin notices a sign that says 'Open' and 'Closed' outside and realizes they also speak English in this world. There was also another word below in another language she didn't know. She jokes and wants to create a sign saying ‘no Goblins allowed’"
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 4360.5877715502875,
+                "y": 243.26222505173953
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 4360.5877715502875,
+                "y": 243.26222505173953
+            },
+            "dragging": false
+        },
+        {
+            "width": 248,
+            "height": 44,
+            "id": "5-5",
+            "type": "custom",
+            "data": {
+                "id": "5-5",
+                "location": "Inn kitchen",
+                "label": "Pasta and blue fruit juice (tm)",
+                "chaptersMap": {
+                    "5": {
+                        "chapterIndex": 5,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "After getting water and eggs Erin decides to make pasta. She freaks out a bit when some red streak comes out from the eggs realizing the chicks were alive. While waiting for the noodles to boil she decides to turn the blue fruits into blue fruit juice, similar to a smoothie."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 4543.75161006779,
+                "y": 26.495134791004624
+            },
+            "selected": true,
+            "positionAbsolute": {
+                "x": 4543.75161006779,
+                "y": 26.495134791004624
+            },
+            "dragging": false
         }
     ],
     "edges": [
@@ -1049,6 +1270,74 @@
             "targetHandle": null,
             "id": "reactflow__edge-2-4-4-2",
             "hidden": false
+        },
+        {
+            "source": "4-2",
+            "sourceHandle": null,
+            "target": "5-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-4-2-5-0",
+            "hidden": false
+        },
+        {
+            "source": "3-2",
+            "sourceHandle": null,
+            "target": "5-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-2-5-0",
+            "selected": false,
+            "hidden": false
+        },
+        {
+            "source": "5-0",
+            "sourceHandle": null,
+            "target": "5-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-0-5-1",
+            "hidden": false
+        },
+        {
+            "source": "4-0",
+            "sourceHandle": null,
+            "target": "5-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-4-0-5-1",
+            "hidden": false
+        },
+        {
+            "source": "5-1",
+            "sourceHandle": null,
+            "target": "5-3",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-1-5-3"
+        },
+        {
+            "source": "5-3",
+            "sourceHandle": null,
+            "target": "5-4",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-3-5-4"
+        },
+        {
+            "source": "5-1",
+            "sourceHandle": null,
+            "target": "5-5",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-1-5-5"
+        },
+        {
+            "source": "5-3",
+            "sourceHandle": null,
+            "target": "5-5",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-3-5-5"
+        },
+        {
+            "source": "5-4",
+            "sourceHandle": null,
+            "target": "5-5",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-4-5-5"
         }
     ],
     "viewport": {
