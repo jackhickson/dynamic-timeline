@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, useTheme } from "@mui/material";
 import { CharacterAliasList } from "@backend/api-types";
+import React from "react";
 
 interface CharacterSelectProps {
     allCharacterAliasList: CharacterAliasList[];
@@ -7,11 +8,29 @@ interface CharacterSelectProps {
     selectedCharacterId: string;
 }
 
+const characterMenuRender = (allCharacterAliasList: CharacterAliasList[], selectedCharacterId: string, theme: any) => {
+    return allCharacterAliasList.map((alias) => (
+        <MenuItem
+            key={"alias-" + alias.id}
+            value={alias.id}
+            style={{fontWeight:
+                alias.id == selectedCharacterId
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium}}
+        >
+            {alias.id}
+        </MenuItem>
+    ));
+}
+
 export default function CharacterSelect (props: CharacterSelectProps): any {
 
     const { allCharacterAliasList, onCharacterIdChange, selectedCharacterId } = props;
 
     const theme = useTheme()
+
+    const characterMenu = React.useMemo(() => characterMenuRender(allCharacterAliasList, selectedCharacterId, theme),
+        [allCharacterAliasList, selectedCharacterId, theme])
 
     return (
 
@@ -25,18 +44,7 @@ export default function CharacterSelect (props: CharacterSelectProps): any {
                 onChange={onCharacterIdChange}
                 sx={{ width: '15vw'}}
                 >
-                {allCharacterAliasList.map((alias) => (
-                    <MenuItem
-                        key={"alias-" + alias.id}
-                        value={alias.id}
-                        style={{fontWeight:
-                            alias.id == selectedCharacterId
-                            ? theme.typography.fontWeightRegular
-                            : theme.typography.fontWeightMedium}}
-                    >
-                        {alias.id}
-                    </MenuItem>
-                ))}
+                {characterMenu}
             </Select>
         </FormControl>
     );

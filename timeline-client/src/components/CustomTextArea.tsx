@@ -37,6 +37,6 @@ export default function CustomTextArea(props: any) {
   );
 
   return (
-    <Textarea aria-label="minimum height" minRows={3} maxRows={15} placeholder={props.label} {...props} />
+    <Textarea aria-label={props.label} minRows={3} maxRows={15} placeholder={props.label} {...props} />
   );
 }

@@ -116,6 +116,22 @@ const CharacterAccordion = (props: CharacterAccordionProps) => {
   );
 };
 
+const characterAliasRender = (characterAliasList: CharacterAliasList[], expandedAccordion: string | false,
+  handleAccordianChange: (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => void,
+  theme: any, handleChange: (id: string, incomingAlias: string) => void, selectedCharacterAliasMap: Map<string, string>) => {
+
+  return characterAliasList.map((characterAliases) => (
+    <CharacterAccordion
+      key={characterAliases.id + "accordion"}
+      expandedAccordion={expandedAccordion}
+      handleAccordianChange={handleAccordianChange}
+      theme={theme}
+      characterAliases={characterAliases}
+      onSelectAlias={handleChange}
+      selectedAlias={selectedCharacterAliasMap.get(characterAliases.id)}/>
+  ))
+}
+
 type MultipleSelectChipProps = SelectProps<string[]> & {
   allCharacterAliasList: CharacterAliasList[];
   map: Map<string, string>;
@@ -131,10 +147,10 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
   const [selectedCharacterAliasMap, setSelectedCharacterAliasMap] = React.useState<Map<string, string>>(map);
   const [expandedAccordion, setExpandedAccordion] = React.useState<string | false>(false);
 
-  const handleAccordianChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+  const handleAccordianChange = React.useCallback((panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
 
     setExpandedAccordion(isExpanded ? panel : false);
-  };
+  }, [setExpandedAccordion]);
 
   const theme = useTheme();
 
@@ -143,7 +159,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
    * @param id 
    * @param incomingAlias 
    */
-  const handleChange = (id: string, incomingAlias: string) => {
+  const handleChange = React.useCallback((id: string, incomingAlias: string) => {
 
     const newCharacterMap = new Map<string, string>(selectedCharacterAliasMap);
 
@@ -162,7 +178,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
     setSelectedCharacterAliasMap(newCharacterMap);
 
     onCharactersChange(mapToSelectedCharacterAliases(newCharacterMap));
-  }
+  }, [selectedCharacterAliasMap, setSelectedCharacterAliasMap, onCharactersChange]);
 
   const searchCharacterIds = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -185,6 +201,14 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
     setCharacterAliasList(allCharacterAliasList)
   }
 
+  const chracterAliasMenu = React.useMemo(() => characterAliasRender(characterAliasList, expandedAccordion,
+    handleAccordianChange, theme, handleChange, selectedCharacterAliasMap)
+    ,[characterAliasList, expandedAccordion, handleAccordianChange, theme, handleChange, selectedCharacterAliasMap]);
+
+  const renderChipsCallBack = React.useCallback((selected: string[]) => 
+    renderChips(selected, selectedCharacterAliasMap)
+  ,[selectedCharacterAliasMap])
+
   return (
     <FormControl>
       <InputLabel id="multiple-chip-label">{id}</InputLabel>
@@ -194,7 +218,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
         value={Array.from(selectedCharacterAliasMap.keys())}
         input={<OutlinedInput id="select-multiple-chip" label={id} />}
         renderValue={(selected) => (
-          selected && renderChips(selected, selectedCharacterAliasMap)
+          selected && renderChipsCallBack(selected)
         )}
         MenuProps={MenuProps}
         {...rest}
@@ -207,16 +231,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
                 onChange={searchCharacterIds}
           />
           <Close onClick={clearSearch}/>
-          {characterAliasList.map((characterAliases) => (
-            <CharacterAccordion
-              key={characterAliases.id + "accordion"}
-              expandedAccordion={expandedAccordion}
-              handleAccordianChange={handleAccordianChange}
-              theme={theme}
-              characterAliases={characterAliases}
-              onSelectAlias={handleChange}
-              selectedAlias={selectedCharacterAliasMap.get(characterAliases.id)}/>
-          ))}
+          {chracterAliasMenu}
         </div>
       </Select>
     </FormControl>

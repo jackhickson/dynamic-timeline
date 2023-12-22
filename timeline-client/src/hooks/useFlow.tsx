@@ -51,7 +51,7 @@ export const useFlow = ( props: UseFlowProps ) => {
         };
     
         restoreFlow();
-    }, []);
+    }, [setElements]);
 
     const toObject = (rfInstance: ReactFlowInstance) : ReactFlowJsonObject<any, any> => {
 

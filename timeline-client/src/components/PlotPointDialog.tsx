@@ -101,35 +101,32 @@ function PlotPointDialog(props: PlotPointDialogProps) {
    * If it doesnt exist it will be created
    * 
    */
-  const getPlotPointChapter = (): PlotPointChapter => {
+  let plotPointChapter: PlotPointChapter = React.useMemo(() => {
+    makeSureChapterMapExists(formData)
 
-    makeSureChapterMapExists(formData);
+    return getChapterDataFromMap(formData, selectedChapterIndex)
+  }, [formData, selectedChapterIndex]);
 
-    return getChapterDataFromMap(formData, selectedChapterIndex);
-  }
-
-  let plotPointChapter: PlotPointChapter = getPlotPointChapter();
-
-  function handleChapterInputChange(event: ChangeEvent<HTMLInputElement>) {
+  const handleChapterInputChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
 
     plotPointChapter = { ...plotPointChapter, [id]: value };
-  }
+  }, [plotPointChapter]);
 
-  function handlCharaterInputChange(selectedAliases: SelectedCharacterAlias[]) {
+  const handlCharaterInputChange = React.useCallback((selectedAliases: SelectedCharacterAlias[]) => {
 
     plotPointChapter.characters = selectedAliases;
-  }
+  }, [plotPointChapter]);
 
-  function handleLocationChange(event: ChangeEvent<HTMLInputElement>) {
+  const handleLocationChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
     formData.location = event.target.value;
-  }
+  }, [formData])
 
-  function handleLabelChange(event: ChangeEvent<HTMLInputElement>) {
+  const handleLabelChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
     formData.label = event.target.value;
-  }
+  },[formData])
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = React.useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // if the selected chapter id is the same as the first in the chapters list then the location must also but updateable
@@ -138,18 +135,18 @@ function PlotPointDialog(props: PlotPointDialogProps) {
 
     onSubmit(formData);
     onDialogClose();
-  }
+  },[formData, selectedChapterIndex, onSubmit, onDialogClose])
 
   function sameChapterIndexAsSelected(chapterIndex: number): boolean {
 
     return chapterIndex === selectedChapterIndex;
   }
 
-  function onDelete(chapterIndex: number) {
+  const onDelete = React.useCallback((chapterIndex: number) =>{
 
     removeChapterDataFromFormDataMap(formData, selectedChapterIndex);
     onDialogClose()
-  }
+  }, [formData, selectedChapterIndex, onDialogClose])
 
   return (
     <Dialog

@@ -84,11 +84,6 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     data.flow.nodes || [],
                     data.flow.edges || []
                 )
-
-                const characterAliasList = data.characterAliasList || [];
-
-                const unselectedAlias: CharacterAliasList = {id: UNSELECTED_CHARACTER_ID,  aliases:[]};
-                characterAliasList.unshift(unselectedAlias);
         
                 setCharactersAliasList(data.characterAliasList || []);
                 setStoryBatches(data.storyBatches || []);
@@ -102,18 +97,16 @@ export default function Flow ({toggleMode}: FlowProps): any {
         setChapterNodeIdsMap(firstChapterOfNode(allChapters.length, elements.nodes))
     },[allChapters])
 
-    const onNodeClick = (_: ReactMouseEvent, node: Node) => {
+    const onNodeClick = React.useCallback((_: ReactMouseEvent, node: Node) => {
 
         console.info("node clicked", node);
 
         setSelectedNodeId(node.id);
         setSelectedNodeData(node.data);
         handleDialogOpen();
-    }
+    }, [setSelectedNodeId, setSelectedNodeData, handleDialogOpen])
 
-    const addNewNode = () => {
-
-        console.info(chapterNodeIdsMap);
+    const addNewNode = React.useCallback(() => {
 
         let nodeIds: number[] | undefined = chapterNodeIdsMap.get(selectedChapterIndex);
 
@@ -141,37 +134,37 @@ export default function Flow ({toggleMode}: FlowProps): any {
         nodeIds.push(plotPointId);
 
         onAddNode(selectedChapterIndex, plotPointId);
-    }
+    }, [chapterNodeIdsMap, selectedChapterIndex, setChapterNodeIdsMap, onAddNode])
 
-    const onChapterIndexChange = (newChapterIndex: number) => {
+    const onChapterIndexChange = React.useCallback((newChapterIndex: number) => {
 
         setSelectedChapterIndex(newChapterIndex);
         onUpdateFromChapterChange(newChapterIndex);
-    }
+    }, [setSelectedChapterIndex, onUpdateFromChapterChange]);
 
-    const onCharacterIdChange = (event: SelectChangeEvent<string>) => {
+    const onCharacterIdChange = React.useCallback((event: SelectChangeEvent<string>) => {
 
         const newCharacter: string = event.target.value;
 
         setSelectedCharacterId(newCharacter);
-        onUpdateFromCharacterChange(selectedChapterIndex,newCharacter);
-    }
+        onUpdateFromCharacterChange(selectedChapterIndex, newCharacter);
+    }, [setSelectedCharacterId, selectedChapterIndex, onUpdateFromCharacterChange]);
 
-    const onHideChange = (_: any, checked: boolean) => {
+    const onHideChange =  React.useCallback((_: any, checked: boolean) => {
 
         setHideEnabled(checked);
-    };
+    }, [setHideEnabled]);
 
-    const submitUpdatedNode = (updatedData: PlotPointData) => {
+    const submitUpdatedNode =  React.useCallback((updatedData: PlotPointData) => {
 
         onUpdateNode(updatedData, selectedCharacterId, selectedChapterIndex);
-    }
+    }, [onUpdateNode, selectedCharacterId, selectedChapterIndex])
 
-    const saveAppData = () => {
+    const saveAppData = React.useCallback(() => {
 
         // save already has access to the rfInstance
         onSave(storyBatches, charactersAliasList);
-    }
+    }, [onSave, storyBatches, charactersAliasList])
 
     // used to hide/ unhide when not changing chapters
     React.useEffect(() => {
