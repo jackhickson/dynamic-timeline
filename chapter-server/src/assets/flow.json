@@ -329,13 +329,13 @@
                 "inCharacterTimeline": false
             },
             "position": {
-                "x": 464.60216938890267,
-                "y": -152.09718012140473
+                "x": 482.60216938890267,
+                "y": -220.09718012140473
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 464.60216938890267,
-                "y": -152.09718012140473
+                "x": 482.60216938890267,
+                "y": -220.09718012140473
             },
             "dragging": false,
             "hidden": false
@@ -819,7 +819,7 @@
                         "description": "When waking up after the goblin raid Erin smells the foul fish in the kitchen. She brings it outside and drops it on the ground but it exploded on the ground. She then tries to was off the cuttingh board the fish was on in the stream. She then see a bunch of flies from inside the fish hanging on to the cutting board. When she flicks one it explodes and some of it hits her and \"both the board and her arm began to smoke and dissolve\". Erin then names them \"Acid flies\"."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
@@ -855,7 +855,7 @@
                         "description": ""
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
@@ -899,17 +899,17 @@
                         "description": "A [Guardswoman] Beilmark and a rookie see some smoke coming out of the inn on the hill in the distance contemplating who or what could be starting a fire. Belimark then tells the rookie to get two Senior Guardsmen to do a patrol to see what is the situation. Those two's names are Relc and Klbkch."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
-                "x": 3899.182230300415,
-                "y": -263.06692138503854
+                "x": 4144.728314075099,
+                "y": -269.12978765108016
             },
             "selected": false,
             "positionAbsolute": {
-                "x": 3899.182230300415,
-                "y": -263.06692138503854
+                "x": 4144.728314075099,
+                "y": -269.12978765108016
             },
             "dragging": false,
             "hidden": false
@@ -933,9 +933,19 @@
                             }
                         ],
                         "description": "Erin goes to get water for the baking and gets scared by what she believes is a pterodactyl. It flies away and leaves eggs for her to grab."
+                    },
+                    "6": {
+                        "chapterIndex": 6,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            }
+                        ],
+                        "description": "Erin goes to get water for the baking and gets scared by a Razorbeak. It flies away and leaves eggs for her to grab."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 2,
                 "inCharacterTimeline": false
             },
             "position": {
@@ -947,7 +957,8 @@
                 "x": 4117.776696620223,
                 "y": 109.31395520302019
             },
-            "dragging": false
+            "dragging": false,
+            "hidden": false
         },
         {
             "width": 108,
@@ -970,7 +981,7 @@
                         "description": "While walking back to the inn Erin notices a sign that says 'Open' and 'Closed' outside and realizes they also speak English in this world. There was also another word below in another language she didn't know. She jokes and wants to create a sign saying ‘no Goblins allowed’"
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
@@ -982,7 +993,8 @@
                 "x": 4360.5877715502875,
                 "y": 243.26222505173953
             },
-            "dragging": false
+            "dragging": false,
+            "hidden": false
         },
         {
             "width": 248,
@@ -1005,17 +1017,189 @@
                         "description": "After getting water and eggs Erin decides to make pasta. She freaks out a bit when some red streak comes out from the eggs realizing the chicks were alive. While waiting for the noodles to boil she decides to turn the blue fruits into blue fruit juice, similar to a smoothie."
                     }
                 },
-                "chapterAction": 1,
+                "chapterAction": 0,
                 "inCharacterTimeline": false
             },
             "position": {
                 "x": 4543.75161006779,
                 "y": 26.495134791004624
             },
-            "selected": true,
+            "selected": false,
             "positionAbsolute": {
                 "x": 4543.75161006779,
                 "y": 26.495134791004624
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 122,
+            "height": 44,
+            "id": "6-0",
+            "type": "custom",
+            "data": {
+                "id": "6-0",
+                "location": "Inn",
+                "label": "First guests",
+                "chaptersMap": {
+                    "6": {
+                        "chapterIndex": 6,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Klbkch",
+                                "alias": "Klbkch"
+                            },
+                            {
+                                "id": "Relc Grasstongue",
+                                "alias": "Relc Grasstongue"
+                            }
+                        ],
+                        "description": "\"A giant insect\" / \"ant-creature\", later in the encounter found out to be Klbkch, knocks on the door and greets Erin, as \"Miss Human\". She immediately slams the door and starts looking for her knife. After Relc says Klbkch did it wrong he tries to instead. Erin looks out the window and sees a \"Dragon-man\". She drags a table in front of the door. She calls out asking if he is a dragon but responds that he is a drake. He goes on to tell her that the two of them are \"Senior Guardsman\" on the City Watch of Liscor and are on patrol. She lets them in and asks them if they want something to eat. She offers her pasta, some water, and blue juice; scared they might hurt her if she doesn't offer food. They tell her that they saw the smoke and came to investigate. Then they start asking questions about her origins. She tells them she was teleported and they assume a [Teleport] spell which would be a discussion for the Mage Guild. She says that she met a dragon and that there was a distinction between dragons and drakes and it was very unlikely for her to meet a dragon. Also learned the pterodactyl she saw earlier was a Razorbeak. They tell her it is dangerous living outside the city. They find out she is an innkeeper ask how she made the food and discuss the \"preservation spell\" on the cupboards.\n\nTerms first heard in this scene: Ancestors (exasperation), Oldblood, Drake, City Watch, Corusdeer, Mage Guild, Razorbeak, City of Liscor"
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 4883.498777770482,
+                "y": 27.568365516860766
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 4883.498777770482,
+                "y": 27.568365516860766
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 175,
+            "height": 44,
+            "id": "6-1",
+            "type": "custom",
+            "data": {
+                "id": "6-1",
+                "location": "Inn",
+                "label": "Discussing leveling",
+                "chaptersMap": {
+                    "6": {
+                        "chapterIndex": 6,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Klbkch",
+                                "alias": "Klbkch"
+                            },
+                            {
+                                "id": "Relc Grasstongue",
+                                "alias": "Relc Grasstongue"
+                            }
+                        ],
+                        "description": "After eating Erin asks Klbkch and Relc some roundabout questions of leveling. She finds out Relc is a [Spearmaster] and Klbkch is a [Swordslayer] and both are [Guards]. So people can have more than one class. They find it odd that Erin only has 4 levels in [Innkeeper]. They also talk about how you level only when you go to sleep. They also tell her that she \"must have satisfied the requirements for the class\" which can happen suddenly from time to time. Erin finds out some species are incapable of leveling like dragons and non-thinking creatures. In the pasts there was a fight from all species to get the ability to level, some creatures decided not to gain the ability to level and kept their innate abilities instead. Relc also gets mad when Erin calls him a lizard person, he specifies \"I’m a Drake, not one of the Lizardfolk. There’s a big difference.\" Some drakes can breathe fire but he can't. After leaving, later, she will receive \"[Innkeeper Level 5!][Skill – Basic Crafting obtained!]\"\n\nTerms learned: classes, Lizardfolk"
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 5057.217368078953,
+                "y": 28.093047348137084
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 5057.217368078953,
+                "y": 28.093047348137084
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 139,
+            "height": 44,
+            "id": "6-2",
+            "type": "custom",
+            "data": {
+                "id": "6-2",
+                "location": "Inn",
+                "label": "Health potion",
+                "chaptersMap": {
+                    "6": {
+                        "chapterIndex": 6,
+                        "characters": [
+                            {
+                                "id": "Erin Solstice",
+                                "alias": "Erin Solstice"
+                            },
+                            {
+                                "id": "Klbkch",
+                                "alias": "Klbkch"
+                            },
+                            {
+                                "id": "Relc Grasstongue",
+                                "alias": "Relc Grasstongue"
+                            }
+                        ],
+                        "description": "Relc noticed that Erin cut and asked for her to remove the bandage. She says it's infected but Relc identifies it to be poised by the fish in the waters in the area. Kldkch grabs a bottle of glowing green liquid and says it's a \" low-grade healing potion. If you pour it over your injury, it should heal your affliction.\" It works and Erin gives him a hug for treating her. They leave after this and do not expect her to pay."
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 5284.802561695863,
+                "y": 29.223303379776752
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 5284.802561695863,
+                "y": 29.223303379776752
+            },
+            "dragging": false,
+            "hidden": false
+        },
+        {
+            "width": 196,
+            "height": 44,
+            "id": "6-3",
+            "type": "custom",
+            "data": {
+                "id": "6-3",
+                "location": "Between the inn and Liscor",
+                "label": "Guardsmen walk back",
+                "chaptersMap": {
+                    "6": {
+                        "chapterIndex": 6,
+                        "characters": [
+                            {
+                                "id": "Klbkch",
+                                "alias": "Klbkch"
+                            },
+                            {
+                                "id": "Relc Grasstongue",
+                                "alias": "Relc Grasstongue"
+                            }
+                        ],
+                        "description": "The two of them discuss Erin on the way back to the city before nightfall to clock out and give a report to Watch Captain Zevara. While discussing her they obviously have never interacted with a human for very long even a female one at that. Klbkch species is not \"Ant\" but \"Antinium\". They believe she is a runaway [Lady], maybe not even from this continent. They could tell she was not lying about seeing a dragon but believed she was most likely mistaken she would not have survived as they are known to defeat armies and none were nearby. They decide to go back to the inn during work the next day as part of an \"investigation\". The low-grade health potion was not merely low-grade and was a special order for other events. They would need to wait for a new shipment from \"Pallas\" when the \"Blood Fields are frozen\". Klbkch deems it worth using on a civilian in need.\n\nTerms first heard: Antinium, Watch Captain, Pallass, Blood Fields"
+                    }
+                },
+                "chapterAction": 1,
+                "inCharacterTimeline": false
+            },
+            "position": {
+                "x": 5533.585237323186,
+                "y": -210.59753955386446
+            },
+            "selected": false,
+            "positionAbsolute": {
+                "x": 5533.585237323186,
+                "y": -210.59753955386446
             },
             "dragging": false
         }
@@ -1309,35 +1493,111 @@
             "sourceHandle": null,
             "target": "5-3",
             "targetHandle": null,
-            "id": "reactflow__edge-5-1-5-3"
+            "id": "reactflow__edge-5-1-5-3",
+            "hidden": false
         },
         {
             "source": "5-3",
             "sourceHandle": null,
             "target": "5-4",
             "targetHandle": null,
-            "id": "reactflow__edge-5-3-5-4"
+            "id": "reactflow__edge-5-3-5-4",
+            "hidden": false
         },
         {
             "source": "5-1",
             "sourceHandle": null,
             "target": "5-5",
             "targetHandle": null,
-            "id": "reactflow__edge-5-1-5-5"
+            "id": "reactflow__edge-5-1-5-5",
+            "hidden": false
         },
         {
             "source": "5-3",
             "sourceHandle": null,
             "target": "5-5",
             "targetHandle": null,
-            "id": "reactflow__edge-5-3-5-5"
+            "id": "reactflow__edge-5-3-5-5",
+            "hidden": false
         },
         {
             "source": "5-4",
             "sourceHandle": null,
             "target": "5-5",
             "targetHandle": null,
-            "id": "reactflow__edge-5-4-5-5"
+            "id": "reactflow__edge-5-4-5-5",
+            "hidden": false
+        },
+        {
+            "source": "5-5",
+            "sourceHandle": null,
+            "target": "6-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-5-6-0",
+            "hidden": false
+        },
+        {
+            "source": "5-2",
+            "sourceHandle": null,
+            "target": "6-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-2-6-0",
+            "hidden": false
+        },
+        {
+            "source": "0-2",
+            "sourceHandle": null,
+            "target": "6-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-0-2-6-0",
+            "selected": false,
+            "hidden": false
+        },
+        {
+            "source": "6-0",
+            "sourceHandle": null,
+            "target": "6-1",
+            "targetHandle": null,
+            "id": "reactflow__edge-6-0-6-1",
+            "hidden": false
+        },
+        {
+            "source": "6-1",
+            "sourceHandle": null,
+            "target": "6-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-6-1-6-2",
+            "hidden": false
+        },
+        {
+            "source": "6-2",
+            "sourceHandle": null,
+            "target": "6-3",
+            "targetHandle": null,
+            "id": "reactflow__edge-6-2-6-3"
+        },
+        {
+            "source": "3-3",
+            "sourceHandle": null,
+            "target": "6-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-3-3-6-2",
+            "selected": false
+        },
+        {
+            "source": "5-1",
+            "sourceHandle": null,
+            "target": "5-2",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-1-5-2"
+        },
+        {
+            "source": "5-3",
+            "sourceHandle": null,
+            "target": "6-0",
+            "targetHandle": null,
+            "id": "reactflow__edge-5-3-6-0",
+            "selected": true
         }
     ],
     "viewport": {
