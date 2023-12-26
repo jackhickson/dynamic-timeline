@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { PlotPointData, createPlotPointChapterData, selectedCharacterAliasToMap } from '../Definitions';
 import MultipleSelectChip from './MultipleSelectChip';
 import {keysToSortedArray} from '../utils';
-import { CharacterAliasList, SelectedCharacterAlias, PlotPointChapter } from '@backend/api-types';
+import { CharacterAliasList, SelectedCharacterAlias, PlotPointChapter } from '../api-types';
 import CustomTextArea from './CustomTextArea';
 import {PullRightDiv} from './PullRightDiv';
 import { Delete } from '@mui/icons-material';

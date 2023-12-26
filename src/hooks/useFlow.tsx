@@ -2,7 +2,7 @@ import React from "react";
 import { Node, ReactFlowInstance, ReactFlowJsonObject } from "reactflow";
 import { nodeDataToJson, nodeJsonToData } from "../Definitions";
 import { SetElementProp } from "./useAppElements";
-import { AppData, CharacterAliasList, StoryBatch } from "@backend/api-types";
+import { AppData, CharacterAliasList, StoryBatch } from "../api-types";
 import { api } from "../axiosApi";
 
 interface UseFlowProps {

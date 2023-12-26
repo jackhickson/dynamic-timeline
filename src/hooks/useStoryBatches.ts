@@ -1,5 +1,5 @@
 import React from "react";
-import { StoryBatch } from "@backend/api-types";
+import { StoryBatch } from "../api-types";
 import { storyBatchesToChapterList } from "../Definitions";
 
 interface UseStoryBatchesProps {

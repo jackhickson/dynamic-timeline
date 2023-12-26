@@ -1,5 +1,5 @@
 import React from "react";
-import { CharacterAliasList } from "@backend/api-types";
+import { CharacterAliasList } from "../api-types";
 
 interface UseCharactersAliasList {
     initialCharacterAliasList: CharacterAliasList[];

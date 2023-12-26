@@ -1,5 +1,5 @@
 {
-  "name": "timeline-client",
+  "name": "dynamic-timeline",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

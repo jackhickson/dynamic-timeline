@@ -1,4 +1,3 @@
-import { CharacterAliasList, StoryBatch } from "@backend/api-types";
 import { Edit } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";

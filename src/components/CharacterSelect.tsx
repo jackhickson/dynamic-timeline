@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, useTheme } from "@mui/material";
-import { CharacterAliasList } from "@backend/api-types";
+import { CharacterAliasList } from "../api-types";
 import React from "react";
 
 interface CharacterSelectProps {

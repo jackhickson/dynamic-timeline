@@ -9,7 +9,7 @@ import Chip from '@mui/material/Chip';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { mapToSelectedCharacterAliases } from '../Definitions';
-import { CharacterAliasList, SelectedCharacterAlias } from '@backend/api-types';
+import { CharacterAliasList, SelectedCharacterAlias } from '../api-types';
 import { Accordion, AccordionDetails, AccordionSummary, FormControl, Grid, TextField, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
 

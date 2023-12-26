@@ -1,4 +1,4 @@
-import { CharacterAliasList } from "@backend/api-types";
+import { CharacterAliasList } from "../api-types";
 import { Paper, List, Typography, Button } from "@mui/material";
 import ItemInputSwitcher from "../components/ItemInputSwitcher";
 import { Direction, moveItemAtIndex } from "../utils";

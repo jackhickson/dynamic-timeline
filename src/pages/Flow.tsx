@@ -25,7 +25,6 @@ import PlotPointDialog from '../components/PlotPointDialog';
 import ChapterSelect from '../components/ChapterSelect';
 import CharacterSelect from '../components/CharacterSelect';
 import EditLinkButton from '../components/EditLinkButton';
-import { CharacterAliasList } from '@backend/api-types';
 
 
 const minimapStyle = {
@@ -71,7 +70,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
     // calls chapter-server to set all the deafault information
     React.useEffect(() => {
 
-        api.get("/all").then((response) => {
+        /*api.get("/all").then((response) => {
 
             const data = response.data;
         
@@ -88,7 +87,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
                 setCharactersAliasList(data.characterAliasList || []);
                 setStoryBatches(data.storyBatches || []);
             }
-        });
+        });*/
 
     }, [])
 

@@ -1,4 +1,4 @@
-import { CharacterAliasList, StoryBatch } from '@backend/api-types';
+import { CharacterAliasList, StoryBatch } from './api-types';
 import { Edge, Node } from 'reactflow';
 import { createPlotPointData } from './Definitions';
 

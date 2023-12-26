@@ -1,5 +1,5 @@
 import {Node} from 'reactflow';
-import { PlotPointChapter, SelectedCharacterAlias, StoryBatch } from '@backend/api-types';
+import { PlotPointChapter, SelectedCharacterAlias, StoryBatch } from './api-types';
 import { keysToSortedArray } from './utils';
 
 export const DEFAULT_LABEL = "Plot Name";
