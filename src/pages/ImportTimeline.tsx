@@ -2,7 +2,7 @@ import { Button, Paper, Stack, TextField, Typography } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styled from "styled-components";
 import React, { ChangeEvent } from "react";
-import { FLOW, CHARACTERALIASES, STORYBATCHES, TIMELINE, setDBNode, setDBEdge, setDBStoryBatches, setDBCharacterAlias } from "../firebaseUtils";
+import { FLOW, CHARACTERALIASES, STORYBATCHES, TIMELINE, addDBNode, addDBEdge, addDBStoryBatch, addDBCharacterAlias } from "../firebaseUtils";
 import { readUploadedFileAsJson } from "../utils";
 
 interface ImportTimelineProps {
@@ -25,11 +25,11 @@ async function addFlowData(timelineName: string, data: any) {
     }
 
     for(const node of nodes) {
-        setDBNode(timelineName, node);
+        addDBNode(timelineName, node);
     }
 
     for(const edge of edges) {
-        setDBEdge(timelineName, edge);
+        addDBEdge(timelineName, edge);
     }
 }
 
@@ -41,7 +41,7 @@ async function addCharacterAliases(timelineName: string, data: any) {
     }
 
     for(const characterAlias of data) {
-        setDBCharacterAlias(timelineName, characterAlias);
+        addDBCharacterAlias(timelineName, characterAlias);
     }
 }
 
@@ -52,7 +52,9 @@ async function addStoryBatches(timelineName: string, data: any) {
         return;
     }
 
-    setDBStoryBatches(timelineName, {"batches": data});
+    for(const storyBatch of data) {
+        addDBStoryBatch(timelineName, storyBatch);
+    }
 }
 
 const VisuallyHiddenInput = styled('input')({

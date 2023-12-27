@@ -11,11 +11,11 @@ export const TIMELINE = "timeline";
 const NODES = "nodes"
 const EDGES = "edges";
 
-export async function setDBNode(timelineName: string, node: Node) {
+export async function addDBNode(timelineName: string, node: Node) {
 
     try {
 
-        await setDoc(doc(db, timelineName, FLOW, NODES, node.id), node)
+        await addDoc(collection(db, NODES), {timeline: timelineName, ...node})
         console.debug('Node successfully added')
     }
     catch(e) {
@@ -23,11 +23,11 @@ export async function setDBNode(timelineName: string, node: Node) {
     }
 }
 
-export async function setDBEdge(timelineName: string, edge: Edge) {
+export async function addDBEdge(timelineName: string, edge: Edge) {
 
     try {
 
-        await setDoc(doc(db, timelineName, FLOW, EDGES, edge.id), edge)
+        await addDoc(collection(db, EDGES), {timeline: timelineName, ...edge})
         console.debug('Edge successfully added')
     }
     catch(e) {
@@ -35,11 +35,11 @@ export async function setDBEdge(timelineName: string, edge: Edge) {
     }
 }
 
-export async function setDBCharacterAlias(timelineName: string, characterAlias: CharacterAliasList) {
+export async function addDBCharacterAlias(timelineName: string, characterAlias: CharacterAliasList) {
 
     try {
 
-        await addDoc(collection(db, timelineName, CHARACTERALIASES), characterAlias)
+        await addDoc(collection(db, CHARACTERALIASES),  {timeline: timelineName, ...characterAlias})
         console.debug('Character alias successfully added')
     }
     catch(e) {
@@ -47,11 +47,11 @@ export async function setDBCharacterAlias(timelineName: string, characterAlias: 
     }
 }
 
-export async function setDBStoryBatches(timelineName: string, storyBatches: any) {
+export async function addDBStoryBatch(timelineName: string, storyBatch: any) {
 
     try {
 
-        await setDoc(doc(db, timelineName, STORYBATCHES), storyBatches)
+        await addDoc(collection(db, STORYBATCHES), {timeline: timelineName, ...storyBatch})
         console.debug('Character alias successfully added')
     }
     catch(e) {
