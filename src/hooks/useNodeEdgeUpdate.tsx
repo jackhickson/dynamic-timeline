@@ -118,7 +118,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
 
         if(chapterInfo !== undefined) {
 
-            updatedData.inCharacterTimeline = chapterInfo.characters.some(selectedAlias => selectedAlias.id == selectedCharacterId);
+            updatedData.inCharacterTimeline = chapterInfo.characters.some(selectedAlias => selectedAlias.characterId == selectedCharacterId);
         }
 
         triggerUpdate(UpdateElementsMode.Nodes,
@@ -304,7 +304,7 @@ export const useNodeEdgeUpdate = ( props: UseNodeUpdateProps ) => {
             for (let [chapterIndex, chapter] of plotPointData.chaptersMap.entries()){
 
                 // if the chapter the current selected chapter doesnt have knowledge of the character do not put it in animated timeline
-                if(chapterIndex <= selectedChapterIndex && chapter.characters.some((character) => character.id == selectedCharacterId)) {
+                if(chapterIndex <= selectedChapterIndex && chapter.characters.some((character) => character.characterId == selectedCharacterId)) {
 
                     characterFound = true;
                     break;

@@ -29,14 +29,14 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
 
     const onAddCharacter = () => {
 
-        if(characterAliasList.some(characterAlias => characterAlias.id === NEW_CHARACTER)) {
+        if(characterAliasList.some(characterAlias => characterAlias.characterId === NEW_CHARACTER)) {
             console.warn(NEW_CHARACTER + " already exist")
             return
         }
 
         setAutoFocusString(NEW_CHARACTER);
 
-        setCharacterAliasList(oldList => [...oldList, {id: NEW_CHARACTER, aliases: []}]);
+        setCharacterAliasList(oldList => [...oldList, {characterId: NEW_CHARACTER, aliases: []}]);
     }
 
     const updateCharacterId = (oldCharacterId: string, newCharacterId:string) => {
@@ -47,20 +47,20 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
 
             characterAliases.map(characterAlias => {
 
-                if(characterAlias.id !== oldCharacterId) { 
+                if(characterAlias.characterId !== oldCharacterId) { 
                     return characterAlias
                 }
 
-                characterAlias.id = newCharacterId;
+                characterAlias.characterId = newCharacterId;
 
                 return characterAlias;
-            }).sort((a,b) => a.id.localeCompare(b.id))
+            }).sort((a,b) => a.characterId.localeCompare(b.characterId))
         );
     }
 
     const deleteCharacter = (characterId: string) => {
 
-        setCharacterAliasList(characterAliasList.filter(aliasList => aliasList.id !== characterId))
+        setCharacterAliasList(characterAliasList.filter(aliasList => aliasList.characterId !== characterId))
     }
 
     const onAddAlias = (characterId: string) => {
@@ -71,7 +71,7 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
 
             characterAliases.map(characterAlias => {
 
-                if(characterAlias.id !== characterId) { 
+                if(characterAlias.characterId !== characterId) { 
                     return characterAlias
                 }
 
@@ -95,7 +95,7 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
 
             characterAliases.map(characterAlias => {
 
-                if(characterAlias.id !== characterId) { 
+                if(characterAlias.characterId !== characterId) { 
                     return characterAlias
                 }
 
@@ -120,7 +120,7 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
 
             characterAliases.map(characterAlias => {
 
-                if(characterAlias.id !== characterId) {
+                if(characterAlias.characterId !== characterId) {
 
                     return characterAlias;
                 }
@@ -141,7 +141,7 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
 
             characterAliases.map(characterAlias => {
 
-                if(characterAlias.id !== characterId) {
+                if(characterAlias.characterId !== characterId) {
 
                     return characterAlias;
                 }
@@ -166,15 +166,15 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
             </Button>
             <List>
                 {characterAliasList.map(characterAlias => (
-                    <li key={`section-${characterAlias.id}`}>
+                    <li key={`section-${characterAlias.characterId}`}>
                         <ul>
                             <ItemInputSwitcher
-                                    autoFocus={characterAlias.id === autoFocusString}
-                                    key={"switcher" + characterAlias.id}
-                                    value={characterAlias.id}
-                                    onAddItem={() => onAddAlias(characterAlias.id)}
-                                    onChange={(newValue) => updateCharacterId(characterAlias.id, newValue)} 
-                                    onDeleteItem={() => deleteCharacter(characterAlias.id)}
+                                    autoFocus={characterAlias.characterId === autoFocusString}
+                                    key={"switcher" + characterAlias.characterId}
+                                    value={characterAlias.characterId}
+                                    onAddItem={() => onAddAlias(characterAlias.characterId)}
+                                    onChange={(newValue) => updateCharacterId(characterAlias.characterId, newValue)} 
+                                    onDeleteItem={() => deleteCharacter(characterAlias.characterId)}
                                 />
                             {characterAlias.aliases.map((alias) => (
                                 <ItemInputSwitcher
@@ -182,9 +182,9 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
                                     key={"switcher" + alias}
                                     nested
                                     value={alias}
-                                    onChange={(newValue) => updateAlias(characterAlias.id, alias, newValue)} 
-                                    onDeleteItem={() => deleteAlias(characterAlias.id, alias)}
-                                    onMoveItem={(direction: Direction) => moveAlias(characterAlias.id, alias, direction)}
+                                    onChange={(newValue) => updateAlias(characterAlias.characterId, alias, newValue)} 
+                                    onDeleteItem={() => deleteAlias(characterAlias.characterId, alias)}
+                                    onMoveItem={(direction: Direction) => moveAlias(characterAlias.characterId, alias, direction)}
                                 />
                             ))}
                         </ul>

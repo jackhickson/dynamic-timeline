@@ -69,38 +69,40 @@ const CustomAccordion = styled(Accordion)`
 const CharacterAccordion = (props: CharacterAccordionProps) => {
 
   const { expandedAccordion, handleAccordianChange, characterAliases, onSelectAlias, selectedAlias } = props;
-  const { id, aliases } = characterAliases;
+  const { characterId, aliases } = characterAliases;
 
     // if there is atleast one alias then add id to list as when there are no alias the click to the toplevel Accordion will just set the id as the alias
-  const alaisIdList = aliases.length > 0 ? [id].concat(aliases) : aliases
+  const alaisIdList = aliases.length > 0 ? [characterId].concat(aliases) : aliases
 
   const onExpandClick = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
 
     // if there is only one alias it is the same as the id
     if(alaisIdList.length <= 1) {
 
-      onSelectAlias(id, id)
+      onSelectAlias(characterId, characterId)
     } else {
 
-      handleAccordianChange(id)(event, isExpanded);
+      handleAccordianChange(characterId)(event, isExpanded);
     }
   }
 
   const onAliasClick = (alias: string) => {
 
-    onSelectAlias(id, alias)
+    onSelectAlias(characterId, alias)
   }
 
   return (
-    <CustomAccordion key={id + "-accordion"} expanded={expandedAccordion === id} onChange={onExpandClick(id)}>
+    <CustomAccordion key={characterId + "-accordion"} 
+      expanded={expandedAccordion === characterId} 
+      onChange={onExpandClick(characterId)}>
       <AccordionSummary
         expandIcon={alaisIdList.length !== 0 ? <ExpandMoreIcon />: null}
         aria-controls="panel1bh-content"
-        id={id + "-header"}
+        id={characterId + "-header"}
         className={!!selectedAlias ? "selectedCharacter": undefined}
       >
         <Typography sx={{ width: '33%', flexShrink: 0 }}>
-          {id}
+          {characterId}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -118,17 +120,17 @@ const CharacterAccordion = (props: CharacterAccordionProps) => {
 
 const characterAliasRender = (characterAliasList: CharacterAliasList[], expandedAccordion: string | false,
   handleAccordianChange: (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => void,
-  theme: any, handleChange: (id: string, incomingAlias: string) => void, selectedCharacterAliasMap: Map<string, string>) => {
+  theme: any, handleChange: (characterId: string, incomingAlias: string) => void, selectedCharacterAliasMap: Map<string, string>) => {
 
   return characterAliasList.map((characterAliases) => (
     <CharacterAccordion
-      key={characterAliases.id + "accordion"}
+      key={characterAliases.characterId + "accordion"}
       expandedAccordion={expandedAccordion}
       handleAccordianChange={handleAccordianChange}
       theme={theme}
       characterAliases={characterAliases}
       onSelectAlias={handleChange}
-      selectedAlias={selectedCharacterAliasMap.get(characterAliases.id)}/>
+      selectedAlias={selectedCharacterAliasMap.get(characterAliases.characterId)}/>
   ))
 }
 
@@ -188,7 +190,7 @@ export default function MultipleSelectChip(props: MultipleSelectChipProps) {
 
     setCharacterAliasList(list => 
       list.filter((characterAlias) => {
-        return characterAlias.id.toLowerCase().includes(s.toLowerCase());
+        return characterAlias.characterId.toLowerCase().includes(s.toLowerCase());
       })
     )
 

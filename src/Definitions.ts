@@ -87,9 +87,9 @@ export function mapToSelectedCharacterAliases(characterAliasMap: Map<string, str
 
     let selectedAliases: SelectedCharacterAlias[] = [];
 
-    for (let [id, alias] of characterAliasMap) {
+    for (let [characterId, alias] of characterAliasMap) {
 
-        selectedAliases.push({id, alias})
+        selectedAliases.push({characterId, alias})
     }
 
     return selectedAliases;
@@ -97,7 +97,7 @@ export function mapToSelectedCharacterAliases(characterAliasMap: Map<string, str
 
 export function selectedCharacterAliasToMap(selectedAliases: SelectedCharacterAlias[]): Map<string, string> {
 
-    return new Map(selectedAliases.map((alias) => [alias.id, alias.alias]));
+    return new Map(selectedAliases.map((alias) => [alias.characterId, alias.alias]));
 }
 
 // TODO: not sure what to do with this for now

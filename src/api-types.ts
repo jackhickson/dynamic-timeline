@@ -29,7 +29,7 @@ export interface PlotPointChapterInfo {
 }
 
 export interface CharacterAliasList {
-    id: string;
+    characterId: string;
     aliases: string[];
 };
 
@@ -39,6 +39,6 @@ export function isCharacterAliasList(object: any): object is CharacterAliasList[
 }
 
 export interface SelectedCharacterAlias {
-    id: string;
+    characterId: string;
     alias: string;
 };

@@ -11,14 +11,14 @@ interface CharacterSelectProps {
 const characterMenuRender = (allCharacterAliasList: CharacterAliasList[], selectedCharacterId: string, theme: any) => {
     return allCharacterAliasList.map((alias) => (
         <MenuItem
-            key={"alias-" + alias.id}
-            value={alias.id}
+            key={"alias-" + alias.characterId}
+            value={alias.characterId}
             style={{fontWeight:
-                alias.id == selectedCharacterId
+                alias.characterId == selectedCharacterId
                 ? theme.typography.fontWeightRegular
                 : theme.typography.fontWeightMedium}}
         >
-            {alias.id}
+            {alias.characterId}
         </MenuItem>
     ));
 }

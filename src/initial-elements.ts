@@ -10,46 +10,46 @@ export const initialEdges: Edge[] = [];
 
 export const initialCharacterAliasList: CharacterAliasList[] = [
     {
-        "id": "Character 1",
+        "characterId": "Character 1",
         "aliases": [
             "one",
             "I"
         ]
     },
     {
-        "id": "Character 2",
+        "characterId": "Character 2",
         "aliases": [
             "two",
             "II"
         ]
     },
     {
-        "id": "Character 3",
+        "characterId": "Character 3",
         "aliases": [
         ]
     },
     {
-        "id": "Character 5",
+        "characterId": "Character 5",
         "aliases": [
         ]
     },
     {
-        "id": "Character 6",
+        "characterId": "Character 6",
         "aliases": [
         ]
     },
     {
-        "id": "Character 7",
+        "characterId": "Character 7",
         "aliases": [
         ]
     },
     {
-        "id": "Character 8",
+        "characterId": "Character 8",
         "aliases": [
         ]
     },
     {
-        "id": "Character 9",
+        "characterId": "Character 9",
         "aliases": [
         ]
     }
