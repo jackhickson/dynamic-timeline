@@ -5,7 +5,6 @@ import { Direction, moveItemAtIndex } from "../utils";
 import { Add, Home, Save } from "@mui/icons-material";
 import { initialStoryBatches } from "../initial-elements";
 import React from "react";
-import { api } from "../axiosApi";
 import { Link } from "react-router-dom";
 
 const NEW_BATCH = "New Batch"
@@ -22,21 +21,11 @@ export default function StoryBatchEditor ({toggleMode}: StoryBatchEditorProps): 
 
     React.useEffect(() => {
 
-        api.get("/storyBatches").then((response) => {
-
-            const data = response.data;
-
-            setStoryBatches(data || []);
-        });
 
     }, [])
 
     const onSave = () => {
 
-        api.post("/save/storyBatches", storyBatches).then((response) => {
-
-            console.info(response);
-        });
     }
 
     const onAddBatch = () => {

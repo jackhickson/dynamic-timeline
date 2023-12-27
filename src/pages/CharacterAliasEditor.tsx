@@ -3,7 +3,6 @@ import { Paper, List, Typography, Button } from "@mui/material";
 import ItemInputSwitcher from "../components/ItemInputSwitcher";
 import { Direction, moveItemAtIndex } from "../utils";
 import React from "react";
-import { api } from "../axiosApi";
 import { initialCharacterAliasList } from "../initial-elements";
 import { Add, Home, Save } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -22,21 +21,10 @@ export default function CharacterAliasEditor ({toggleMode}: CharacterAliasEditor
 
     React.useEffect(() => {
 
-        api.get("/characters").then((response) => {
-
-            const data = response.data;
-
-            setCharacterAliasList(data || []);
-        });
-
     }, [])
 
     const onSave = () => {
 
-        api.post("/save/characters", characterAliasList).then((response) => {
-
-            console.info(response);
-        });
     }
 
     const onAddCharacter = () => {

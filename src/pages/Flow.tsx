@@ -13,7 +13,6 @@ import { useStoryBatches } from '../hooks/useStoryBatches';
 import { useCharactersAliasList } from '../hooks/useCharacterAliases';
 import { useTheme } from 'styled-components'
 
-import { api } from '../axiosApi';
 //import { isInitialState } from '../../chapter-server/src/api-types';
 import { PlotPointData, UNSELECTED_CHARACTER_ID, firstChapterOfNode, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
 

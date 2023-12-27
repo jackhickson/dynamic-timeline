@@ -3,7 +3,6 @@ import { Node, ReactFlowInstance, ReactFlowJsonObject } from "reactflow";
 import { nodeDataToJson, nodeJsonToData } from "../Definitions";
 import { SetElementProp } from "./useAppElements";
 import { AppData, CharacterAliasList, StoryBatch } from "../api-types";
-import { api } from "../axiosApi";
 
 interface UseFlowProps {
     setElements: SetElementProp;
@@ -27,10 +26,7 @@ export const useFlow = ( props: UseFlowProps ) => {
                 storyBatches: storyBatches
             }
 
-            api.post("/save", json).then((response) => {
-
-                console.info(response);
-            });
+            //save functionality
         }
     }, [rfInstance]);
     
