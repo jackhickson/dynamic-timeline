@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import CharacterAliasEditor from './pages/CharacterAliasEditor';
 import StoryBatchEditor from './pages/StoryBatchEditor';
 import { ReactFlowProvider } from 'reactflow';
+import ImportTimeline from './pages/ImportTimeline';
 
 
 export default() => {
@@ -34,6 +35,10 @@ export default() => {
       {
         path: "/storyBatches",
         element: <StoryBatchEditor toggleMode={toggleMode}/>
+      },
+      {
+        path: "/importTimeline",
+        element: <ImportTimeline toggleMode={toggleMode}/>
       }
     ]);
   
