@@ -1,36 +1,35 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, useTheme } from "@mui/material";
-import { CharacterAliasList } from "../api-types";
 import React from "react";
 
 interface CharacterSelectProps {
-    allCharacterAliasList: CharacterAliasList[];
+    allCharacters: string[];
     onCharacterIdChange: (event: SelectChangeEvent<string>) => void;
     selectedCharacterId: string;
 }
 
-const characterMenuRender = (allCharacterAliasList: CharacterAliasList[], selectedCharacterId: string, theme: any) => {
-    return allCharacterAliasList.map((alias) => (
+const characterMenuRender = (allCharacters: string[], selectedCharacterName: string, theme: any) => {
+    return allCharacters.map((characterName) => (
         <MenuItem
-            key={"alias-" + alias.characterId}
-            value={alias.characterId}
+            key={"character-" + characterName}
+            value={characterName}
             style={{fontWeight:
-                alias.characterId == selectedCharacterId
+                characterName == selectedCharacterName
                 ? theme.typography.fontWeightRegular
                 : theme.typography.fontWeightMedium}}
         >
-            {alias.characterId}
+            {characterName}
         </MenuItem>
     ));
 }
 
 export default function CharacterSelect (props: CharacterSelectProps): any {
 
-    const { allCharacterAliasList, onCharacterIdChange, selectedCharacterId } = props;
+    const { allCharacters, onCharacterIdChange, selectedCharacterId } = props;
 
     const theme = useTheme()
 
-    const characterMenu = React.useMemo(() => characterMenuRender(allCharacterAliasList, selectedCharacterId, theme),
-        [allCharacterAliasList, selectedCharacterId, theme])
+    const characterMenu = React.useMemo(() => characterMenuRender(allCharacters, selectedCharacterId, theme),
+        [allCharacters, selectedCharacterId, theme])
 
     return (
 

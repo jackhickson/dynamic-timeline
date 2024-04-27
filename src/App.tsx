@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme';
 import Flow from './pages/Flow';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import CharacterAliasEditor from './pages/CharacterAliasEditor';
+import CharacterEditor from './pages/CharacterEditor';
 import StoryBatchEditor from './pages/StoryBatchEditor';
 import { ReactFlowProvider } from 'reactflow';
 import ImportTimeline from './pages/ImportTimeline';
@@ -30,7 +30,7 @@ export default() => {
       },
       {
         path: "/characters",
-        element: <CharacterAliasEditor toggleMode={toggleMode} />
+        element: <CharacterEditor toggleMode={toggleMode} />
       },
       {
         path: "/storyBatches",

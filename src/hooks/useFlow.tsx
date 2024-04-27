@@ -1,8 +1,8 @@
 import React from "react";
 import { Node, ReactFlowInstance, ReactFlowJsonObject } from "reactflow";
-import { nodeDataToJson, nodeJsonToData } from "../Definitions";
+import { nodeJsonToData } from "../utils";
 import { SetElementProp } from "./useAppElements";
-import { AppData, CharacterAliasList, StoryBatch } from "../api-types";
+import { AppData, StoryBatch } from "../api-types";
 
 interface UseFlowProps {
     setElements: SetElementProp;
@@ -16,12 +16,12 @@ export const useFlow = ( props: UseFlowProps ) => {
 
     const [rfInstance, setRfInstance] = React.useState<ReactFlowInstance | null>(null);
 
-    const onSave = React.useCallback((storyBatches: StoryBatch[], charactersAliasList: CharacterAliasList[]) => {
+    const onSave = React.useCallback((storyBatches: StoryBatch[], allCharacters: string[]) => {
         if (rfInstance) {
             const flow = toObject(rfInstance);
 
             const json : AppData = {
-                characterAliasList: charactersAliasList,
+                allCharacters: allCharacters,
                 flow: flow,
                 storyBatches: storyBatches
             }
@@ -52,7 +52,7 @@ export const useFlow = ( props: UseFlowProps ) => {
     const toObject = (rfInstance: ReactFlowInstance) : ReactFlowJsonObject<any, any> => {
 
         return {
-            nodes: rfInstance.getNodes().map((n) => ({...n,data:nodeDataToJson(n.data)})),
+            nodes: rfInstance.getNodes().map((n) => ({...n})),
             edges: rfInstance.getEdges().map((e) => ({ ...e })),
             viewport: {
                 x: 0,

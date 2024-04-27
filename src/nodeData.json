@@ -1,0 +1,25 @@
+[{
+    "chapterIndex": 0,
+    "id": "0-4",
+    "label": "First level",
+    "position": {
+        "x": 0,
+        "y": 0
+    }
+},
+{
+    "id": "0-4",
+    "location": "An inn",
+    "label": "First level",
+    "chapterIndex": 0,
+    "characters": [
+        "Erin Solstice"
+    ],
+    "description": "The first leveling in the story. As Erin Solstice falls asleep she hears \"[Innkeeper Level 1!]\" and \"[Skill – Basic Cleaning obtained!]\" for her cleaning and supplementally, and gets \"[Skill – Basic Cooking obtained!]\" due to the acquiring of the class."
+},
+{
+    "source": "0-0",
+    "target": "0-1",
+    "id": "0-0:0-1"
+},
+{}]

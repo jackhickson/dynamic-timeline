@@ -1,87 +1,44 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
-import { Button, Dialog, Chip, Box, DialogTitle, IconButton } from '@mui/material';
+import { Button, Dialog, Chip, Grid, DialogTitle, IconButton, Skeleton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { PlotPointData, createPlotPointChapterData, selectedCharacterAliasToMap } from '../Definitions';
+import Delete from '@mui/icons-material/Delete';
+import { PlotPointFormData, DEFAULT_LABEL } from '../Definitions';
 import MultipleSelectChip from './MultipleSelectChip';
-import {keysToSortedArray} from '../utils';
-import { CharacterAliasList, SelectedCharacterAlias, PlotPointChapter } from '../api-types';
 import CustomTextArea from './CustomTextArea';
-import {PullRightDiv} from './PullRightDiv';
-import { Delete } from '@mui/icons-material';
+import PullRightDiv from './PullRightDiv';
+import { getDBNodeData, setDBNodeData } from '../firebaseUtils';
 
 const fandomCharacterUrl = "https://thewanderinginn.fandom.com/wiki/";
 
 interface PlotPointDialogProps {
   open: boolean;
+  onUpdatePlotLabel: (label: string) => void;
   onDialogClose: () => void;
   onDeleteNode: (id: string) => void;
-  onSubmit: (data: PlotPointData) => void;
-  formData: PlotPointData;
+  selectedNodeId: string;
   selectedChapterIndex: number;
   allChapters: string[];
-  allCharacterAliasList: CharacterAliasList[];
+  allCharacters: string[];
 }
 
-interface ChapterId {
-  index: number;
-  id: string;
+const defaultFormData: PlotPointFormData = {
+  id: "id",
+  label: DEFAULT_LABEL,
+  location: "location",
+  characters: ["Character"],
+  chapterIndex: 0,
+  description: "description",
 }
 
-function getPlotPointChapters(formData: PlotPointData, allChapters: string[]): ChapterId[] {
+function RenderSkeleton(): JSX.Element {
+  return <Grid container spacing={{ sm: 2 }} >
 
-  if (!formData || !formData.chaptersMap) {
-    return [];
-  }
+    {Array.from({ length: 6 }, (_, i) => <Grid item xs={6}>
+      <Skeleton variant="text" />
+    </Grid>)}
 
-  const chapterIndexes: number[] = keysToSortedArray(formData.chaptersMap.keys());
-
-  return chapterIndexes.map(index => ({index, id: allChapters[index]}));
-}
-
-/**
- * Verify that the formData objects chapterMap exists, if it doesnt then empty initialize a Map
- * @param formData 
- */
-function makeSureChapterMapExists(formData: PlotPointData) {
-
-  if (!formData.chaptersMap) {
-
-    formData.chaptersMap = new Map();
-  }
-}
-
-/**
- * Get the chapterData from the formData chapterMap based on what on the selectedChapterId
- * If the chapterData does not exist then create it
- * 
- * @param formData 
- * @param selectedChapterIndex 
- * @returns chapterData: PlotPointChapter
- */
-function getChapterDataFromMap(formData: PlotPointData, selectedChapterIndex: number): PlotPointChapter {
-
-  //find the chapter data on this plot point with the selectedChapterId
-  let chapter = formData.chaptersMap.get(selectedChapterIndex);
-
-  // new chapter for this plot point
-  if (chapter === undefined) {
-
-    const mostRecenetChapterInfo: PlotPointChapter| undefined = Array.from(formData.chaptersMap.values()).pop();
-
-    chapter = createPlotPointChapterData(selectedChapterIndex, mostRecenetChapterInfo);
-  }
-
-  return chapter;
-}
-
-function removeChapterDataFromFormDataMap(formData: PlotPointData, selectedChapterIndex: number) {
-
-  if(!formData.chaptersMap) {
-    return;
-  }
-
-  formData.chaptersMap.delete(selectedChapterIndex)
+  </Grid>
 }
 
 /**
@@ -92,61 +49,55 @@ function removeChapterDataFromFormDataMap(formData: PlotPointData, selectedChapt
  */
 function PlotPointDialog(props: PlotPointDialogProps) {
 
-  const { open, onDialogClose, onSubmit, formData, selectedChapterIndex, allChapters, allCharacterAliasList } = props;
+  const { open, onDialogClose, onUpdatePlotLabel, selectedNodeId, selectedChapterIndex, allChapters, allCharacters } = props;
 
-  let chapterIds: ChapterId[] = React.useMemo(()=>getPlotPointChapters(formData, allChapters),[formData, allChapters]);
+  const [formData, setFormData] = React.useState<PlotPointFormData>(defaultFormData);
+  const [loadingData, setLoadingData] = React.useState(true)
 
-  /**
-   * Get the chapterData from the formData for the selectedChapterId
-   * If it doesnt exist it will be created
-   * 
-   */
-  let plotPointChapter: PlotPointChapter = React.useMemo(() => {
-    makeSureChapterMapExists(formData)
+  const handleChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
 
-    return getChapterDataFromMap(formData, selectedChapterIndex)
-  }, [formData, selectedChapterIndex]);
-
-  const handleChapterInputChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
 
-    plotPointChapter = { ...plotPointChapter, [id]: value };
-  }, [plotPointChapter]);
+    setFormData({
+      ...formData,
+      [id]: value
+    });
+  }, [formData, setFormData])
 
-  const handlCharaterInputChange = React.useCallback((selectedAliases: SelectedCharacterAlias[]) => {
+  const handleCharatersChange = React.useCallback((selectedCharacters: string[]) => {
 
-    plotPointChapter.characters = selectedAliases;
-  }, [plotPointChapter]);
-
-  const handleLocationChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    formData.location = event.target.value;
-  }, [formData])
-
-  const handleLabelChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    formData.label = event.target.value;
-  },[formData])
+    setFormData({
+      ...formData,
+      characters: selectedCharacters
+    });
+  }, [formData, setFormData]);
 
   const handleSubmit = React.useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // if the selected chapter id is the same as the first in the chapters list then the location must also but updateable
-
-    formData.chaptersMap.set(selectedChapterIndex, plotPointChapter);
-
-    onSubmit(formData);
+    setDBNodeData(formData);
+    onUpdatePlotLabel(formData.label);
     onDialogClose();
-  },[formData, selectedChapterIndex, onSubmit, onDialogClose])
+  }, [formData])
 
-  function sameChapterIndexAsSelected(chapterIndex: number): boolean {
+  const onDelete = React.useCallback(() => {
 
-    return chapterIndex === selectedChapterIndex;
-  }
-
-  const onDelete = React.useCallback((chapterIndex: number) =>{
-
-    removeChapterDataFromFormDataMap(formData, selectedChapterIndex);
     onDialogClose()
-  }, [formData, selectedChapterIndex, onDialogClose])
+  }, [formData, selectedChapterIndex])
+
+  React.useEffect(() => {
+
+    if (!open) {
+
+      return
+    }
+
+    getDBNodeData(selectedNodeId).then((data): void => {
+
+      setFormData(data)
+      setLoadingData(false)
+    })
+  }, [open, setFormData, setLoadingData])
 
   return (
     <Dialog
@@ -167,7 +118,7 @@ function PlotPointDialog(props: PlotPointDialogProps) {
 
         <IconButton
           aria-label="delete"
-          //onClick={() => props.onDeleteNode(formData.id)}
+          //onClick={onDelete}
           sx={{
             color: (theme) => theme.palette.grey[500],
           }}
@@ -186,39 +137,65 @@ function PlotPointDialog(props: PlotPointDialogProps) {
         </IconButton>
       </PullRightDiv>
 
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: 'auto' },
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-        style={{display:'grid'}}
-      >
+      {loadingData ? (
+        <RenderSkeleton />
+      ) : (
 
-        <TextField id="id" label="Node id" defaultValue={formData.id} disabled />
-        <TextField id="label" label="Plot point name" defaultValue={formData.label} onChange={handleLabelChange} />
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={{ sm: 2 }} sx={{
+            '& .MuiTextField-root, & .Custom-Textarea, & .MuiFormControl-root': { m: 1, width: '100%' },
+          }}>
 
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          {chapterIds.map((chapterId) => {
-            return <Chip 
-                      key={"form-chip-" + chapterId.id} 
-                      label={chapterId.id} 
-                      variant={sameChapterIndexAsSelected(chapterId.index) ? 'filled': 'outlined'} 
-                      onDelete={() => {if(chapterIds.length != 1) onDelete}}/>
-          })}
-        </Box>
+            <Grid item xs={6}>
+              <TextField
+                id="id"
+                label="Node id"
+                value={formData.id}
+                disabled />
+            </Grid>
 
-        <MultipleSelectChip id="characters" allCharacterAliasList={allCharacterAliasList} 
-          map={selectedCharacterAliasToMap(plotPointChapter.characters)} onCharactersChange={handlCharaterInputChange} sx={{margin: '8px'}}/>
+            <Grid item xs={6}>
+              <TextField
+                id="chapter"
+                label="Chapter Name"
+                value={allChapters[selectedChapterIndex]}
+                disabled />
+            </Grid>
 
-        <br/>
-        <TextField id="location" label="Location" defaultValue={formData.location} onChange={handleLocationChange} fullWidth={true}/>
-        <br/>
-        <CustomTextArea id="description" label="Description" defaultValue={plotPointChapter.description} onChange={handleChapterInputChange} />
-        <Button type='submit'>Submit</Button>
-      </Box>
+            <Grid item xs={6}>
+              <TextField
+                id="label"
+                label="Plot point name"
+                value={formData.label}
+                onChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={6}>
+              <TextField
+                id="location"
+                label="Plot Location"
+                value={formData.location}
+                onChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={6}>
+              <MultipleSelectChip
+                id="characters"
+                allCharacters={allCharacters}
+                selectedCharacters={formData.characters}
+                onCharactersChange={handleCharatersChange}
+                sx={{ margin: '8px' }} />
+            </Grid>
+
+            <Grid item xs={12}>
+              <CustomTextArea
+                id="description"
+                label="Plot Description"
+                value={formData.description}
+                onChange={handleChange} />
+            </Grid>
+            <Button type='submit'>Submit</Button>
+          </Grid></form>)}
     </Dialog >
   );
 }

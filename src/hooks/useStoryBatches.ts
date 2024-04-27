@@ -1,6 +1,6 @@
 import React from "react";
 import { StoryBatch } from "../api-types";
-import { storyBatchesToChapterList } from "../Definitions";
+import { storyBatchesToChapterList } from "../utils";
 
 interface UseStoryBatchesProps {
     initialStoryBatches: StoryBatch[];

@@ -2,14 +2,14 @@ import { Button, Paper, Stack, TextField, Typography } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styled from "styled-components";
 import React, { ChangeEvent } from "react";
-import { FLOW, CHARACTERALIASES, STORYBATCHES, TIMELINE, addDBNode, addDBEdge, addDBStoryBatch, addDBCharacterAlias } from "../firebaseUtils";
+import { FLOW, CHARACTERS, STORYBATCHES, TIMELINES, setDBNode, setDBEdge, setDBStoryBatch, setDBCharacter } from "../firebaseUtils";
 import { readUploadedFileAsJson } from "../utils";
 
 interface ImportTimelineProps {
     toggleMode: () => void;
 }
 
-async function addFlowData(timelineName: string, data: any) {
+async function addFlowData(data: any) {
 
     const nodes = data.nodes;
     const edges = data.edges;
@@ -25,27 +25,27 @@ async function addFlowData(timelineName: string, data: any) {
     }
 
     for(const node of nodes) {
-        addDBNode(timelineName, node);
+        setDBNode(node);
     }
 
     for(const edge of edges) {
-        addDBEdge(timelineName, edge);
+        setDBEdge(edge);
     }
 }
 
-async function addCharacterAliases(timelineName: string, data: any) {
+async function addCharacters(data: any) {
 
     if(!data || !Array.isArray(data)) {
-        console.error("Character alias data is not an array")
+        console.error("Character data is not an array")
         return;
     }
 
-    for(const characterAlias of data) {
-        addDBCharacterAlias(timelineName, characterAlias);
+    for(const character of data) {
+        setDBCharacter(character);
     }
 }
 
-async function addStoryBatches(timelineName: string, data: any) {
+async function setStoryBatches(data: any) {
 
     if(!data || !Array.isArray(data)) {
         console.error("Story batch data is not an array")
@@ -53,7 +53,7 @@ async function addStoryBatches(timelineName: string, data: any) {
     }
 
     for(const storyBatch of data) {
-        addDBStoryBatch(timelineName, storyBatch);
+        setDBStoryBatch(storyBatch);
     }
 }
 
@@ -101,17 +101,17 @@ export default function ImportTimeline ({toggleMode}: ImportTimelineProps): any 
 
             if(FLOW === id) {
 
-                addFlowData(timelineName, data);
+                addFlowData(data);
 
-            } else if (CHARACTERALIASES === id) {
+            } else if (CHARACTERS === id) {
 
-                addCharacterAliases(timelineName, data);
+                addCharacters(data);
 
             } else if (STORYBATCHES === id) {
 
-                addStoryBatches(timelineName, data);
+                setStoryBatches(data);
 
-            } else if (TIMELINE === id) {
+            } else if (TIMELINES === id) {
 
             }
 
@@ -141,7 +141,7 @@ export default function ImportTimeline ({toggleMode}: ImportTimelineProps): any 
                     </Button>
                     <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                         Upload CharacterAlias json file
-                        <VisuallyHiddenInput type="file" onChange={onFileUploaded} id={CHARACTERALIASES}/>
+                        <VisuallyHiddenInput type="file" onChange={onFileUploaded} id={CHARACTERS}/>
                     </Button>
                     <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                         Upload StoryBatch json file
@@ -149,7 +149,7 @@ export default function ImportTimeline ({toggleMode}: ImportTimelineProps): any 
                     </Button>
                     <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                         Upload full json for timeline
-                        <VisuallyHiddenInput type="file" onChange={onFileUploaded} id={TIMELINE}/>
+                        <VisuallyHiddenInput type="file" onChange={onFileUploaded} id={TIMELINES}/>
                     </Button>
                 </Stack>
             </form>

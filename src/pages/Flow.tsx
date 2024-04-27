@@ -10,13 +10,12 @@ import { useFlow } from '../hooks/useFlow';
 import { useNodeEdgeUpdate } from '../hooks/useNodeEdgeUpdate';
 import { useAppElements } from '../hooks/useAppElements';
 import { useStoryBatches } from '../hooks/useStoryBatches';
-import { useCharactersAliasList } from '../hooks/useCharacterAliases';
 import { useTheme } from 'styled-components'
 
 //import { isInitialState } from '../../chapter-server/src/api-types';
-import { PlotPointData, UNSELECTED_CHARACTER_ID, firstChapterOfNode, miniMapNodeBackGroundStyle, nodeJsonToData } from '../Definitions';
+import { NodeMetaData, UNSELECTED_CHARACTER_ID } from '../Definitions';
 
-import { initialNodes, initialEdges, initialCharacterAliasList, initialStoryBatches } from '../initial-elements';
+import { initialNodes, initialEdges, initialCharacters, initialStoryBatches } from '../initial-elements';
 
 import { ReactFlowStyled, MiniMapStyled, CustomControls} from '../components/StyledReactFlow';
 import PlotPointNode from '../components/PlotPointNode';
@@ -24,6 +23,8 @@ import PlotPointDialog from '../components/PlotPointDialog';
 import ChapterSelect from '../components/ChapterSelect';
 import CharacterSelect from '../components/CharacterSelect';
 import EditLinkButton from '../components/EditLinkButton';
+import { addDBNodeData, getAppData, getDBNodes, setDBNode, updateDBNodeLabel } from '../firebaseUtils';
+import { constructNodeId, firstChapterOfNode, miniMapNodeBackGroundStyle, updateDBNode } from '../utils';
 
 
 const minimapStyle = {
@@ -38,10 +39,11 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
     const [chapterNodeIdsMap, setChapterNodeIdsMap] = React.useState(new Map());
     const { storyBatches, setStoryBatches, allChapters} = useStoryBatches({initialStoryBatches});
-    const { charactersAliasList, setCharactersAliasList, selectedCharacterId, setSelectedCharacterId } = useCharactersAliasList({initialCharacterAliasList});
+    const [ allCharacters, setAllCharacters ] =  React.useState<string[]>(initialCharacters);
+    const [ selectedCharacterId, setSelectedCharacterId ] = React.useState<string>("");
+
 
     const [selectedNodeId, setSelectedNodeId] = React.useState<string>(initialNodes[0].id);
-    const [selectedNodeData, setSelectedNodeData] = React.useState<PlotPointData>(initialNodes[0].data);
     const [selectedChapterIndex, setSelectedChapterIndex] = React.useState<number>(0);
     const [hideEnabled, setHideEnabled] = React.useState<boolean>(true);
 
@@ -55,7 +57,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
         onEdgeUpdate,
         onEdgeUpdateEnd,
         onAddNode,
-        onUpdateNode,
+        onUpdateNodeLabel,
         onUpdateFromChapterChange,
         onUpdateFromCharacterChange,
         onDeleteNode
@@ -69,11 +71,17 @@ export default function Flow ({toggleMode}: FlowProps): any {
     // calls chapter-server to set all the deafault information
     React.useEffect(() => {
 
-        /*api.get("/all").then((response) => {
+        getAppData().then((data: [Node[], Edge[]]) => {
 
-            const data = response.data;
+            let nodes = data[0].map(node => updateDBNode(node))
+
+            onUpdateFromChapterChange(
+                0,
+                nodes,
+                data[1]
+            )
         
-            if(true){//isInitialState(data)) {
+            /*if(true){//isInitialState(data)) {
 
                 data.flow.nodes = data.flow.nodes.map((node: Node) => ({...node, data: nodeJsonToData(node.data)}));
         
@@ -83,10 +91,10 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     data.flow.edges || []
                 )
         
-                setCharactersAliasList(data.characterAliasList || []);
+                setallCharacters(data.characterAliasList || []);
                 setStoryBatches(data.storyBatches || []);
-            }
-        });*/
+            }*/
+        });
 
     }, [])
 
@@ -97,12 +105,11 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
     const onNodeClick = React.useCallback((_: ReactMouseEvent, node: Node) => {
 
-        console.info("node clicked", node);
+        console.debug("node clicked", node);
 
         setSelectedNodeId(node.id);
-        setSelectedNodeData(node.data);
         handleDialogOpen();
-    }, [setSelectedNodeId, setSelectedNodeData, handleDialogOpen])
+    }, [setSelectedNodeId, handleDialogOpen])
 
     const addNewNode = React.useCallback(() => {
 
@@ -131,7 +138,13 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
         nodeIds.push(plotPointId);
 
-        onAddNode(selectedChapterIndex, plotPointId);
+        const id = constructNodeId(selectedChapterIndex, plotPointId);
+
+        let newNode = onAddNode(id, selectedChapterIndex);
+
+        setDBNode(newNode);
+        addDBNodeData(id, selectedChapterIndex)
+        
     }, [chapterNodeIdsMap, selectedChapterIndex, setChapterNodeIdsMap, onAddNode])
 
     const onChapterIndexChange = React.useCallback((newChapterIndex: number) => {
@@ -153,16 +166,17 @@ export default function Flow ({toggleMode}: FlowProps): any {
         setHideEnabled(checked);
     }, [setHideEnabled]);
 
-    const submitUpdatedNode =  React.useCallback((updatedData: PlotPointData) => {
-
-        onUpdateNode(updatedData, selectedCharacterId, selectedChapterIndex);
-    }, [onUpdateNode, selectedCharacterId, selectedChapterIndex])
-
     const saveAppData = React.useCallback(() => {
 
         // save already has access to the rfInstance
-        onSave(storyBatches, charactersAliasList);
-    }, [onSave, storyBatches, charactersAliasList])
+        onSave(storyBatches, allCharacters);
+    }, [onSave, storyBatches, allCharacters])
+
+    const onUpdatePlotLabel = (label: string) => {
+
+        updateDBNodeLabel(selectedNodeId, label)
+        onUpdateNodeLabel(label)
+    }
 
     // used to hide/ unhide when not changing chapters
     React.useEffect(() => {
@@ -198,7 +212,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
                         <Checkbox id="hideEnabled" aria-label='Enable Hide' checked={hideEnabled} onChange={onHideChange}/>
 
                         <CharacterSelect 
-                            allCharacterAliasList={charactersAliasList} 
+                            allCharacters={allCharacters} 
                             onCharacterIdChange={onCharacterIdChange} 
                             selectedCharacterId={selectedCharacterId} 
                         />
@@ -212,7 +226,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     </Panel>
 
                     <Background color="#aaa" gap={16} />
-                    <MiniMapStyled nodeColor={((node: Node<PlotPointData>): string => miniMapNodeBackGroundStyle(node, theme))} />
+                    <MiniMapStyled nodeColor={((node: Node<NodeMetaData>): string => miniMapNodeBackGroundStyle(node, theme))} />
 
                     <CustomControls onAddNode={addNewNode} onRedo={redo} onReset={reset} onSave={saveAppData} onRestore={onRestore} onUndo={undo}/>
 
@@ -222,11 +236,11 @@ export default function Flow ({toggleMode}: FlowProps): any {
                 open={dialogOpen}
                 onDialogClose={handleDialogClose}
                 onDeleteNode={onDeleteNode}
-                onSubmit={submitUpdatedNode}
-                formData={selectedNodeData}
+                onUpdatePlotLabel={onUpdatePlotLabel}
+                selectedNodeId={selectedNodeId}
                 selectedChapterIndex={selectedChapterIndex}
                 allChapters={allChapters}
-                allCharacterAliasList={charactersAliasList}/>
+                allCharacters={allCharacters}/>
         </div>
     )
 }

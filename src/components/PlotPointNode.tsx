@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { ChapterAction, PlotPointData, nodeBackGroundStyle } from '../Definitions';
+import { ChapterAction, NodeMetaData } from '../Definitions';
 import styled from 'styled-components';
+import { nodeBackGroundStyle } from '../utils';
 
 const Node = styled.div<{ selected: boolean; action: ChapterAction, $dashed: boolean}>`
     padding: 10px 20px;
@@ -18,7 +19,7 @@ const Node = styled.div<{ selected: boolean; action: ChapterAction, $dashed: boo
     }
 `;
 
-function PlotPointNode(props: NodeProps<PlotPointData>) {
+function PlotPointNode(props: NodeProps<NodeMetaData>) {
 
     const { data, selected } = props;
 

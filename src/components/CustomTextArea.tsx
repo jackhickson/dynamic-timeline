@@ -7,7 +7,7 @@ export default function CustomTextArea(props: any) {
 
   const Textarea = styled(BaseTextareaAutosize)(
     ({ theme }) => `
-    width: auto;
+    width: 100%;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.875rem;
     font-weight: 400;
@@ -37,6 +37,6 @@ export default function CustomTextArea(props: any) {
   );
 
   return (
-    <Textarea aria-label={props.label} minRows={3} maxRows={15} placeholder={props.label} {...props} />
+    <Textarea aria-label={props.label} placeholder={props.label} value={props.value}/>
   );
 }
