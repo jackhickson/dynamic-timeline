@@ -5,13 +5,20 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme';
 
 
+const useThemeDetector = (): ["dark" | "light", React.Dispatch<React.SetStateAction<"dark" | "light">>] => {
+  const getCurrentTheme = () => window.matchMedia("(prefers-color-scheme: dark)") ? "dark" : "light";
+  const [themeMode, setThemeMode] = useState<"dark" | "light">(getCurrentTheme());  
+  return [themeMode, setThemeMode];
+}
+
+
 export default function App() {
 
-  const [mode, setMode] = useState('light');
-  const theme = mode === 'light' ? lightTheme : darkTheme;
+  const [themeMode, setThemeMode] = useThemeDetector();
+  const theme = themeMode === 'light' ? lightTheme : darkTheme;
 
   const toggleMode = () => {
-    setMode((m) => (m === 'light' ? 'dark' : 'light'));
+    setThemeMode(mode => mode === 'light' ? 'dark' : 'light');
   };
 
     const router = createBrowserRouter([
