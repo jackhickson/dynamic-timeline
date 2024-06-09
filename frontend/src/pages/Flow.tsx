@@ -1,14 +1,16 @@
-import { useCallback, useMemo } from 'react'
-import { Background, Connection, Panel, addEdge, useNodesState, useEdgesState } from 'reactflow';
+import React, { MouseEvent as ReactMouseEvent, useCallback, useMemo } from 'react'
+import { Background, Connection, Node, Edge,  Panel, addEdge, useNodesState, useEdgesState } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './Flow.css'
 import { useTheme } from 'styled-components'
+import { useDialog } from '../hooks/useDialog';
 
 import { initialNodes, initialEdges } from '../initial-elements';
 
 import PlotPointNode from '../components/PlotPointNode';
 import { ReactFlowStyled, MiniMapStyled, CustomControls} from '../components/StyledReactFlow';
 import { miniMapNodeBackGroundStyle } from '../utils';
+import PlotPointDialog from '../components/PlotPointDialog';
 
 interface FlowProps {
     toggleMode: () => void;
@@ -18,7 +20,9 @@ export default function Flow ({toggleMode}: FlowProps): any {
 
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [selectedNode, setSelectedNode] = React.useState<Node | undefined>(undefined);
     const theme = useTheme()
+    const { dialogOpen, handleDialogOpen, handleDialogClose } = useDialog();
 
     const nodeTypes = useMemo(() => ({ custom: PlotPointNode }), []);
 
@@ -31,6 +35,12 @@ export default function Flow ({toggleMode}: FlowProps): any {
     const handleAddNewNode = useCallback(()=> {
 
     },[]);
+
+    const handleNodeClick = React.useCallback((_: ReactMouseEvent, node: Node) => {
+
+        setSelectedNode(nodes.find( n => n.id === node.id));
+        handleDialogOpen();
+    }, [nodes, handleDialogOpen])
 
     const handleResetFlow = useCallback(()=> {
         setNodes(initialNodes);
@@ -45,6 +55,7 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onConnect={onConnect}
+                    onNodeClick={handleNodeClick}
                     nodeTypes={nodeTypes}
                     fitView
                 >
@@ -57,6 +68,12 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     <MiniMapStyled nodeColor={miniMapNodeBackGroundStyle(theme)} />
                     <CustomControls onAddNode={handleAddNewNode} onReset={handleResetFlow}/>
                 </ReactFlowStyled>
+
+                <PlotPointDialog
+                    open={dialogOpen}
+                    onDialogClose={handleDialogClose}
+                    node={selectedNode}
+                />
         </div>
     )
 }
