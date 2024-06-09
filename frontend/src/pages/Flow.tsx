@@ -1,14 +1,18 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import ReactFlow, { Background, Connection, addEdge, useNodesState, useEdgesState } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './Flow.css'
 
 import { initialNodes, initialEdges } from '../initial-elements';
 
+import PlotPointNode from '../components/PlotPointNode';
+
 export default function Flow (): any {
 
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+    const nodeTypes = useMemo(() => ({ custom: PlotPointNode }), []);
 
     const onConnect = useCallback(
         (edge: Connection) =>
@@ -24,6 +28,7 @@ export default function Flow (): any {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onConnect={onConnect}
+                    nodeTypes={nodeTypes}
                     fitView
                 >
 
