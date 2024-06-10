@@ -64,6 +64,8 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     <Panel position="top-center" style={{display: 'inline-flex'}}>
 
                         <EditLinkButton link={`/storyBatches`}/>
+
+                        <EditLinkButton link={`/characters`}/>
                         
                     </Panel>
 

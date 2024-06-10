@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme';
 
 import Flow from './pages/Flow'
+import CharacterEditor from './pages/CharacterEditor';
 import StoryBatchEditor from './pages/StoryBatchEditor';
 
 
@@ -31,6 +32,10 @@ export default function App() {
       {
         path: "/timeline",
         element: <Flow toggleMode={toggleMode}/>,
+      },
+      {
+        path: "/characters",
+        element: <CharacterEditor toggleMode={toggleMode} />
       },
       {
         path: "/storyBatches",

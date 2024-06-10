@@ -9,6 +9,12 @@ export const initialNodes: Node[] = [
 
 export const initialEdges: Edge[] = [];
 
+export const initialCharacters: string[] = [
+    "Character 1",
+    "Character 2",
+    "Character 3",
+];
+
 export const initialStoryBatches: StoryBatch[] = [
     {
         "name": "Batch 1",
