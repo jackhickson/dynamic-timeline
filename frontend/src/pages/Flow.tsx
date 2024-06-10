@@ -11,6 +11,7 @@ import PlotPointNode from '../components/PlotPointNode';
 import { ReactFlowStyled, MiniMapStyled, CustomControls} from '../components/StyledReactFlow';
 import { miniMapNodeBackGroundStyle } from '../utils';
 import PlotPointDialog from '../components/PlotPointDialog';
+import EditLinkButton from '../components/EditLinkButton';
 
 interface FlowProps {
     toggleMode: () => void;
@@ -59,6 +60,12 @@ export default function Flow ({toggleMode}: FlowProps): any {
                     nodeTypes={nodeTypes}
                     fitView
                 >
+
+                    <Panel position="top-center" style={{display: 'inline-flex'}}>
+
+                        <EditLinkButton link={`/storyBatches`}/>
+                        
+                    </Panel>
 
                     <Panel position="top-left">
                         <button onClick={toggleMode}>switch mode</button>

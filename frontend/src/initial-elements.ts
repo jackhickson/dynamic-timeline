@@ -1,3 +1,4 @@
+import { StoryBatch } from './api-types';
 import { Edge, Node } from 'reactflow';
 
 export const initialNodes: Node[] = [
@@ -7,3 +8,14 @@ export const initialNodes: Node[] = [
 ];
 
 export const initialEdges: Edge[] = [];
+
+export const initialStoryBatches: StoryBatch[] = [
+    {
+        "name": "Batch 1",
+        "chapters": ["ch 1", "ch 2"]
+    },
+    {
+        "name": "Batch 2",
+        "chapters": ["ch 3", "ch 4"]
+    }
+]

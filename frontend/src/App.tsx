@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import Flow from './pages/Flow'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './theme';
+
+import Flow from './pages/Flow'
+import StoryBatchEditor from './pages/StoryBatchEditor';
 
 
 const useThemeDetector = (): ["dark" | "light", React.Dispatch<React.SetStateAction<"dark" | "light">>] => {
@@ -29,6 +31,10 @@ export default function App() {
       {
         path: "/timeline",
         element: <Flow toggleMode={toggleMode}/>,
+      },
+      {
+        path: "/storyBatches",
+        element: <StoryBatchEditor toggleMode={toggleMode}/>
       },
     ]);
   
